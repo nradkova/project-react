@@ -1,0 +1,19 @@
+.comment-container{
+    box-shadow: inset 0px 0px 3px 3px lightgrey;
+    border-radius: 12px;
+    padding: 10px;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.comment-author{
+    border-bottom: 1px solid lightgrey;
+}
+
+.fa-user-circle{
+    margin-right: 8px;
+}
+
+.comment-text{
+    margin-top: 6px;
+}
