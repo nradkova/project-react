@@ -8,7 +8,7 @@ import LogoLink from '../logoLink';
 const Header = () => {
   //   const context = useContext(UserContext)
   //   const user = context.user
-  const user = '';
+  const user = 'aaaa';
 
   const links = getNavigation(user)
   const date=new Date().toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric'})

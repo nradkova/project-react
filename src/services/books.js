@@ -38,7 +38,7 @@ const getBookById = async function (id) {
       imageUrl: data.get('imageUrl'),
       rating: data.get('rating'),
       createdAt: date,
-      creator:Parse.User.current(data.get('creator'))
+      creator:"Default"
     }
     console.log(result);
     return result;
@@ -110,6 +110,7 @@ const createBook = async () => {
 
 export {
   getBookById,
+  getAllBooks,
   getLastFourBooks,
   getMostLikedBooks,
   createBook

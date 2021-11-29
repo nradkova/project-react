@@ -1,13 +1,13 @@
 import PageLayout from "../../components/pageLayout";
 import Title from "../../components/title";
 
-const Posts=()=>{
+const Books=()=>{
     return(
         <PageLayout>
-        <Title title="Posts" />
+        <Title title="Books" />
         {/* <Origamis /> */}
       </PageLayout>
     )
 }
 
-export default Posts;
+export default Books;

@@ -1,15 +1,8 @@
-import Link from '../navLink'
 import './index.css'
-import getNavigation from '../../utils/navigation'
 import LogoLink from '../logoLink';
-// import UserContext from '../../Context'
 
 
 const Footer = () => {
-  //   const context = useContext(UserContext)
-  //   const user = context.user
-  const user = '';
-
   return (
     <footer className="footer-wrapper">
       <div className="logo-container-footer" >

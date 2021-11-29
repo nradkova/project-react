@@ -1,14 +1,6 @@
 import Parse from "../config/server";
 
-const User = Parse.Object.extend('User');
-
-function getUserData() {
-    let user = localStorage.getItem(`user`);
-
-    if (user) {
-        return JSON.parse(user);
-    }
-}
+// const User = Parse.Object.extend('User');
 
 const login= async(userCredentials)=> {
     const { username, password } = userCredentials;
@@ -42,6 +34,14 @@ function saveUserData(data) {
 
 function clearUserData() {
     localStorage.removeItem(`user`);
+}
+
+function getUserData() {
+    let user = localStorage.getItem(`user`);
+
+    if (user) {
+        return JSON.parse(user);
+    }
 }
 
 const authServices = {
