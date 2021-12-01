@@ -13,16 +13,6 @@ const Home = () => {
   const [labelPopularEvents, setPopularEvents]=useState('')
 
 
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const res = await getLastFourBooks();
-  //     console.log(res);
-  //     setBooks(res)
-  //   }
-  //   fetchData()
-  // }, [])
-
   useEffect(() => {
     latestBooksHandler()
     setLabelLatestBooks('selected')
@@ -38,9 +28,8 @@ const Home = () => {
   
   const latestBooksHandler=async(e)=>{
     const res = await getLastFourBooks();
-    setBooks(res)
-    console.log(books);
-    // setBooks([])
+    // setBooks(res)
+    setBooks([])
     setLabelLatestBooks('selected')
     setLabelLikedBooks('')
   }

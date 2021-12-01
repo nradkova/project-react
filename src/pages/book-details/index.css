@@ -1,32 +1,69 @@
-.book-details-container{
+.book-details-container {
   display: flex;
   justify-content: space-around;
 }
 
-.book-main{
+.book-main {
   width: 40%;
 }
 
-.book-author{
+.book-author {
   margin-top: 0%;
 }
 
-.book-details span{
+.book-details span {
   margin-left: 15px;
 }
 
-.book-details span i{
+.book-details span i {
   margin-right: 5px;
 }
 
-.book-additional{
+.book-image {
+  width: 100%;
+}
+
+.book-image img {
+  max-width: 450px;
+  max-height: 450px;
+}
+
+.book-additional {
   max-width: 40%;
 }
 
-.edit-link,.delete-link{
+.edit-link,
+.delete-link {
   margin: 15px 30px;
   text-decoration: none;
   font-size: 1.8em;
   color: cadetblue;
   font-weight: bold;
+}
+
+.book-comments {
+  overflow-y: scroll;
+  height: 300px;
+  border: 2px solid lightgray;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

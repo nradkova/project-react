@@ -91,7 +91,7 @@
 
 .inner-container-books-events .label:hover,
 .inner-container-books-events .label.selected{
-  /* background-color: rgb(96, 116, 153); */
+  box-shadow: 4px 5px 4px 1px rgb(0 0 0 / 50%);
   background-color: rgb(133, 159, 160);
   cursor: pointer;
 }

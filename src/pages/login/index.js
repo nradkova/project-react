@@ -1,13 +1,17 @@
-import { useState } from "react";
-import Input from "../../components/input";
-import PageLayout from "../../components/pageLayout";
-import SubmitButton from "../../components/submitButton";
-import Title from "../../components/title";
-import authServices from "../../services/user";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
 import './index.css'
+import Title from "../../components/title";
+import authServices from "../../services/auth";
+import AuthContext from "../../context/authContext";
+import PageLayout from "../../components/pageLayout";
+// import Input from "../../components/input";
+// import SubmitButton from "../../components/submitButton";
 
-const Login = ({ history }) => {
-
+const Login = () => {
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate()
   const onLoginSubmitHandler = (e) => {
     e.preventDefault();
 
@@ -15,10 +19,9 @@ const Login = ({ history }) => {
     const password = e.target.password.value;
 
     authServices.login({ username, password })
-      .then(userCredential => {
-        console.log('Login');
-
-        history.push('/home');
+      .then(authData => {
+        login(authData)
+        navigate('/home');
       });
   }
 
@@ -41,7 +44,7 @@ const Login = ({ history }) => {
               </li>
               <li>
                 <label htmlFor="password"></label>
-                <input type="password" className="input-fields" id="password" name="password" placeholder="Password"  required />
+                <input type="password" className="input-fields" id="password" name="password" placeholder="Password" required />
               </li>
               <li >
                 <input type="submit" className="join-btn" name="join" alt="Join" value="Join" />

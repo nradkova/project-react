@@ -29,7 +29,7 @@ const getBookById = async function (id) {
     const query = new Parse.Query(Post);
     query.equalTo('objectId', id);
     const data = await query.first();
-    const date = new Date(data.createdAt).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric'})
+    const date = new Date(data.createdAt).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric',hour: 'numeric', minute: 'numeric', second: 'numeric',})
     const result = {
       id: data.id,
       title: data.get('title'),

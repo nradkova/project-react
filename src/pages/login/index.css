@@ -24,7 +24,7 @@
     background-image: url("../../components/images/flowers-g9a10bbc29_1920.jpg");
     object-fit: scale-down;
     z-index: -10;
-}
+  }
 
 .signin-section-info {
   width: 45%;

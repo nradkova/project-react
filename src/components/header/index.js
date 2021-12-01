@@ -1,23 +1,27 @@
-import Link from '../navLink'
+import { useContext, useEffect, useState } from 'react';
 import './index.css'
-import getNavigation from '../../utils/navigation'
+import Link from '../navLink'
 import LogoLink from '../logoLink';
+import getNavigation from '../../utils/navigation'
+import AuthContext from '../../context/authContext';
 // import UserContext from '../../Context'
 
 
 const Header = () => {
-  //   const context = useContext(UserContext)
-  //   const user = context.user
-  const user = 'aaaa';
+  const { user } = useContext(AuthContext);
+  const [links, setLinks] = useState([])
 
-  const links = getNavigation(user)
-  const date=new Date().toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric'})
+  useEffect(() => {
+    setLinks(getNavigation(user))
+  }, [user])
+  
+  const date = new Date().toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })
 
   return (
     <header className="header-wrapper">
       <div className="logo-container-header">
         <span className="logo-header">
-         <LogoLink href="/home" className="logo-link">{<img alt="logo" className="logo-img-header" src="/logo.png"/>}</LogoLink>
+          <LogoLink href="/home" className="logo-link">{<img alt="logo" className="logo-img-header" src="/logo.png" />}</LogoLink>
         </span>
         <div className="text-header">
           <span className="read-aloud">&gt;&gt;&gt; read aloud &lt;&lt;&lt;</span>

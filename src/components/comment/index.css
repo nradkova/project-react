@@ -1,6 +1,7 @@
 .comment-container{
-    box-shadow: inset 0px 0px 3px 3px lightgrey;
-    border-radius: 12px;
+    /* box-shadow: inset 0px 0px 3px 3px lightgrey; */
+    /* border-radius: 12px; */
+    background-color: cornsilk;
     padding: 10px;
     text-align: left;
     margin-bottom: 20px;

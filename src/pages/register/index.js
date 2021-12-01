@@ -1,14 +1,18 @@
-import { useState } from "react";
-import Input from "../../components/input";
-import PageLayout from "../../components/pageLayout";
-import SubmitButton from "../../components/submitButton";
-import Title from "../../components/title";
-import authServices from "../../services/user";
+import { useNavigate } from "react-router-dom";
+
 import './index.css'
+import Title from "../../components/title";
+import authServices from "../../services/auth";
+import PageLayout from "../../components/pageLayout";
+import { useContext } from "react";
+import AuthContext from "../../context/authContext";
+// import Input from "../../components/input";
+// import SubmitButton from "../../components/submitButton";
 
 
-const Register = ({history}) => {
-  console.log(history);
+const Register = () => {
+  const{login}=useContext(AuthContext);
+ const navigate=useNavigate();
 
   const onRegisterSubmitHandler = (e) => {
     e.preventDefault();
@@ -17,10 +21,9 @@ const Register = ({history}) => {
     const password = e.target.password.value;
 
     authServices.register({username, password})
-        .then(userCredential => {
-            console.log('Register');
-
-            history.push('/home');
+        .then(authData => {
+            login(authData)
+            navigate('/home');
         });
       }
 

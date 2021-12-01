@@ -1,33 +1,34 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import AuthContext from './context/authContext';
-import authServices from './services/user';
 
-export const AuthContextProvider = ({ children }) => {
-  const [isLogged, setIsLogged] = useState(false);
-  const [userInfo, setUserInfo] = useState({});
-
-  const checkIfLoggedHandler = () => {
-      const user = authServices.getUserData();
-
-      if (user) {
-          setIsLogged(true)
-          setUserInfo(user);
-      } else {
-          setIsLogged(false);
-          setUserInfo({});
-      }
-  }
-
-  return (
-      <AuthContext.Provider
-          value={{
-              isLogged,
-              userInfo,
-              checkIfLogged: checkIfLoggedHandler,
-          }}
-      >
-          {children}
-      </AuthContext.Provider>
-  );
+const initialUserState = {
+    userId: '',
+    username: '',
+    sessionToken: ''
 };
 
+const AuthContextProvider = (props) => {
+    const [user, setUser] = useState(props.user ? props.user : initialUserState);
+
+    const login = (authData) => {
+        setUser(authData);
+    }
+
+    const logout = () => {
+        setUser(initialUserState);
+    };
+
+    return (
+        <AuthContext.Provider
+            value={{
+                user,
+                login,
+                logout
+            }}
+        >
+            {props.children}
+        </AuthContext.Provider>
+    );
+};
+
+export default AuthContextProvider

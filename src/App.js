@@ -1,28 +1,33 @@
-import { Route, Switch } from 'react-router-dom';
+import { useContext } from 'react';
+import { Route, Routes } from 'react-router-dom';
 
 import './App.css';
+import AuthContext from './context/authContext';
 import BookDetails from './pages/book-details';
 import Books from './pages/books';
 import Events from './pages/events';
 import Home from './pages/home';
 import Landing from './pages/landing';
 import Login from './pages/login';
+import Logout from './pages/logout';
 import Register from './pages/register';
 
 
-const App = (props) => {
+const App = () => {
+  const{user}=useContext(AuthContext)
   return (
-    <Switch>
-      <Route path="/" exact component={Landing} />
-      <Route path="/home" component={Home} />
-      <Route path="/books" exact component={Books} />
-      <Route path="/books/:id" component={BookDetails} />
-      <Route path="/events" exact component={Events} />
+    <Routes>
+      <Route path="/" element={<Landing/>} />
+      <Route path="/home" element={<Home/>} />
+      <Route path="/books" element={<Books/>} />
+      <Route path="/books/:bookId" element={<BookDetails/>} />
+      <Route path="/events" element={<Events/>} />
 
-      <Route path="/register" component={Register} />
-      <Route path="/login" component={Login} />
+      <Route path="/register" element={<Register/>} />
+      <Route path="/login" element={<Login/>} />
+      <Route path="/logout" element={<Logout/>} />
        {/* <Route path="/register"> {loggedIn ? (<Redirect to="/home" />) : (<Register/>)} </Route>  */}
-    </Switch>
+    </Routes>
   );
 }
 

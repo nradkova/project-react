@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 import CustomComment from "../../components/comment";
 import PageLayout from "../../components/pageLayout";
 import Rating from "../../components/rating";
@@ -7,11 +7,11 @@ import { getBookById } from "../../services/books";
 
 import './index.css';
 
-const BookDetails = ({ match, history }) => {
+const BookDetails = () => {
 
-	// const bookId = match.params.id
-	const bookId = 'y4CdzwrB1e'
-
+	const {bookId} = useParams()
+	// const bookId = 'iQFlWJ9qh4'
+console.log(bookId);
 	const [book, setBook] = useState({
 		id: "",
 		title: "",
@@ -40,7 +40,10 @@ const BookDetails = ({ match, history }) => {
 	const comments = [
 		{ id: 1, creator: "Peter", text: "Very nice book......" },
 		{ id: 2, creator: "Maria", text: "Very nice book. aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa....." },
-		{ id: 3, creator: "David", text: "Very nice book...xxxxxxxxxxxx xxxxxx  x    x ... ddddddddd dd ddddddddddd ddddddd Very nice book...xxxxxxxxxxxx xxxxxx  x    x ... ddddddddd dd ddddddddddd ddddddd" }
+		{ id: 3, creator: "David", text: "Very nice book...xxxxxxxxxxxx xxxxxx  x    x ... ddddddddd dd ddddddddddd ddddddd Very nice book...xxxxxxxxxxxx xxxxxx  x    x ... ddddddddd dd ddddddddddd ddddddd" },
+		{ id: 4, creator: "Peter", text: "Very nice book......" },
+		{ id: 5, creator: "Maria", text: "Very nice book. aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa....." },
+		{ id: 6, creator: "David", text: "Very nice book...xxxxxxxxxxxx xxxxxx  x    x ... ddddddddd dd ddddddddddd ddddddd Very nice book...xxxxxxxxxxxx xxxxxx  x    x ... ddddddddd dd ddddddddddd ddddddd" }
 	]
 
 
@@ -64,7 +67,7 @@ const BookDetails = ({ match, history }) => {
 					<div className="book-comments">
 						{comments.length > 0
 							? comments.map(x => <CustomComment key={x.id} text={x.text} creator={x.creator} />)
-							: <p>No comments yet... Be the first to comment!</p>}
+							: <p>No comments yet... Be the first one to comment!</p>}
 					</div>
 					<div className="book-actions">
 						<Link className="edit-link" to={`/books/${book.id}/edit`}>EDIT</Link>
