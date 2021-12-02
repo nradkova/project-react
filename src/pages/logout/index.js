@@ -10,7 +10,7 @@ import PageLayout from "../../components/pageLayout";
 
 const Logout = () => {
   const { logout } = useContext(AuthContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const onLogoutSubmitHandler = (e) => {
     // e.preventDefault();

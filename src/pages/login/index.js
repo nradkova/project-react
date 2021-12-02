@@ -10,8 +10,10 @@ import PageLayout from "../../components/pageLayout";
 // import SubmitButton from "../../components/submitButton";
 
 const Login = () => {
+  
   const { login } = useContext(AuthContext);
   const navigate = useNavigate()
+
   const onLoginSubmitHandler = (e) => {
     e.preventDefault();
 

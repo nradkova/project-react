@@ -93,18 +93,19 @@ const getMostLikedBooks = async function () {
   }
 }
 
-const createBook = async () => {
-  const myNewObject = new Parse.Object('MyCustomClassName');
-  myNewObject.set('myCustomKey1Name', 'myCustomKey1Value');
-  myNewObject.set('myCustomKey2Name', 'myCustomKey2Value');
+const createBook = async (data) => {
+  const book = new Parse.Object('Post');
+  book.set('title', data.title);
+  book.set('author', data.author);
+  book.set('description', data.description);
+  book.set('creator', Parse.User.current());
+  book.set('category', data.category);
+  // book.set('imageUrl', 'A string');
   try {
-    const result = await myNewObject.save();
-    // Access the Parse Object attributes using the .GET method
-    console.log('object myCustomKey1Name: ', result.get('myCustomKey1Name'));
-    console.log('object myCustomKey2Name: ', result.get('myCustomKey2Name'));
-    console.log('ParseObject created', result);
+    const result = await book.save();
+    console.log('Post created', result);
   } catch (error) {
-    console.error('Error while creating ParseObject: ', error);
+    console.error('Error while creating Post: ', error);
   }
 }
 

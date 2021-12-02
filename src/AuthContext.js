@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import AuthContext from './context/authContext';
+import useLocalStorage from './hooks/useLocalStorage';
 
 const initialUserState = {
     userId: '',
@@ -8,8 +8,9 @@ const initialUserState = {
 };
 
 const AuthContextProvider = (props) => {
-    const [user, setUser] = useState(props.user ? props.user : initialUserState);
 
+    const [user, setUser] = useLocalStorage('user', initialUserState);
+    
     const login = (authData) => {
         setUser(authData);
     }
