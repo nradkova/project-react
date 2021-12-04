@@ -9,7 +9,7 @@
   text-align: center;
   display: flex;
   color: white;
-  box-shadow: 3px 10px 20px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 3px 10px 20px 0px rgba(0, 0, 0, 0.5);
 }
 
 .signup-section-wrapper:before {
@@ -29,7 +29,7 @@
   width: 45%;
   background: rgba(48, 46, 46, 0.8);
   padding: 30px 0;
-  border-right: 5px solid rgba(30, 30, 30, 0.8);
+  border-right: 3px solid rgba(30, 30, 30, 0.8);
 }
 
 .signup-section-info h2 {

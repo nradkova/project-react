@@ -1,0 +1,13 @@
+.my-page-navigation{
+  text-align: start;
+}
+
+.create-book-link,
+.create-event-link{
+  text-decoration: none;
+  padding: 10px 20px;
+}
+
+.fa-plus{
+  margin-right: 8px;
+}

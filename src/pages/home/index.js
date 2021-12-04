@@ -50,6 +50,9 @@ const Home = () => {
       </div>
       <div className="inner-container-books-events">
         <section className="inner-container-books">
+        <div className="books-container">
+          {books.map(x => <BookCardBrief key={x.id} id={x.id} imageUrl={x.imageUrl} title={x.title} author={x.author} rating={x.rating} />)}
+        </div>
         {books.length > 0
           ? <div className="label-container">
             <p className={`label ${labelLatestBooks}`} onClick={latestBooksHandler}>LATEST BOOKS</p>
@@ -57,11 +60,11 @@ const Home = () => {
           </div>
           : <h3>No books yet...</h3>
         }
-        <div className="books-container">
-          {books.map(x => <BookCardBrief key={x.id} id={x.id} imageUrl={x.imageUrl} title={x.title} author={x.author} rating={x.rating} />)}
-        </div>
         </section>
         <section className="inner-container-events">
+        <div className="events-container">
+          {books.map(x => <BookCardBrief key={x.id} imageUrl={x.imageUrl} title={x.title} author={x.author} rating={x.rating} />)}
+        </div>
         {books.length > 0
           ? <div className="label-container">
             <p className={`label ${labelUpcomingEvents}`}>UPCOMING EVENTS</p>
@@ -69,9 +72,6 @@ const Home = () => {
           </div>
           : <h3>No events yet...</h3>
         }
-        <div className="events-container">
-          {books.map(x => <BookCardBrief key={x.id} imageUrl={x.imageUrl} title={x.title} author={x.author} rating={x.rating} />)}
-        </div>
         </section>
       </div>
     </PageLayout>

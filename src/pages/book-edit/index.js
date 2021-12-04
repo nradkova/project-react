@@ -1,15 +1,42 @@
 import { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import Category from "../../components/category";
 import PageLayout from "../../components/pageLayout";
 import AuthContext from "../../context/authContext";
-import { createBook } from "../../services/books";
+import { createBook, getBookById } from "../../services/books";
 
 import './index.css';
 
-const BookCreate = () => {
+const BookEdit = () => {
 	const navigate = useNavigate();
 	const { user } = useContext(AuthContext);
+	const { bookId } = useParams()
+	const [book, setBook] = useState({
+		id: "",
+		title: "",
+		author: "",
+		description: "",
+		imageUrl: "",
+		rating: "",
+		createdAt: ""
+	})
+
+	useEffect(() => {
+		async function fetchData() {
+			const res = await getBookById(bookId);
+			setBook(res)
+			// setBook({
+			// 	title: "VDFSGVFSD SDFSDFSF",
+			// 	author: " ASDAD FD  ERERE",
+			// 	description: "FGFSDGFS SFGFSDGSG SFGSG ",
+			// 	imageUrl: "https://res.cloudinary.com/dah8nslpd/image/upload/v1638182308/books/a-book-gd09600698_640_nv8vzp.png",
+			// 	rating: 5,
+			// 	createdAt: "November 24,2021",
+			// 	creator:"David"
+			// })
+		}
+		fetchData()
+	}, [bookId])
 	// const [categories, setCategories] = useState([]);
 	const categories=[];
 
@@ -69,20 +96,20 @@ const BookCreate = () => {
 		<PageLayout>
 			<div className="book-form-container">
 				<div className="book-form-title">
-					<h3><i className="fa fa-arrow-right"></i>New book</h3>
+					<h3><i className="fa fa-arrow-right"></i>Edit book</h3>
 				</div>
 				<form className="book-form-body" onSubmit={onBookSubmitHandler}>
 					<div className="book-form-body-main">
 						<div className="title">
-							<input className="title-input" type="text" name="title" id="title" />
+							<input className="title-input" type="text" name="title" id="title" value={book.title} />
 							<label htmlFor="title"><i className="fa fa-pen"></i>Title</label>
 						</div>
 						<div className="author">
-							<input className="author-input" type="text" name="author" id="author" />
+							<input className="author-input" type="text" name="author" id="author" value={book.author} />
 							<label htmlFor="title"><i className="fa fa-pen"></i>Author</label>
 						</div>
 						<div className="default-image">
-							<img src="/book.png" alt="" />
+							<img src={book.imageUrl} alt="" />
 						</div>
 						<div className="image">
 							<input className="image-input" type="file" name="image" id="image" />
@@ -92,7 +119,7 @@ const BookCreate = () => {
 					</div>
 					<div className="book-form-body-details">
 						<div className="description">
-							<textarea className="description-input" type="text" name="description" id="description" cols="50" rows="12" />
+							<textarea className="description-input" type="text" name="description" id="description" cols="50" rows="12" value={book.description} />
 							<label htmlFor="description"><i className="fa fa-pen"></i>Description</label>
 						</div>
 						<Category selectedCategories={categories}/>
@@ -119,4 +146,4 @@ const BookCreate = () => {
 	)
 }
 
-export default BookCreate;
+export default BookEdit;

@@ -3,6 +3,7 @@
 }
 
 .header-link{
+    display: contents;
     padding: 2%;
     font-size: 1.2em;
     text-decoration: none;

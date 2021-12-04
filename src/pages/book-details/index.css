@@ -1,6 +1,8 @@
 .book-details-container {
   display: flex;
   justify-content: space-around;
+  background-color: rgb(236, 237, 227);
+  padding: 2% 0%;
 }
 
 .book-main {
@@ -21,6 +23,7 @@
 
 .book-image {
   width: 100%;
+  margin-top: 2%;
 }
 
 .book-image img {
@@ -44,8 +47,8 @@
 .book-comments {
   overflow-y: scroll;
   height: 300px;
-  border: 2px solid lightgray;
-  border-radius: 4px;
+  /* border: 2px solid lightgray; */
+  /* border-radius: 4px; */
   padding: 10px;
 }
 

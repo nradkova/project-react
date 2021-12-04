@@ -10,8 +10,8 @@ const getNavigation = (user) => {
         link: "/events"
       },
       {
-        title: "Profile",
-        link: `/profile/${user && user.userId}`
+        title: "My Page",
+        link: `/my-page/${user && user.userId}`
       },
       {
         title: "Logout",

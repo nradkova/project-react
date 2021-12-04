@@ -31,7 +31,7 @@ const Logout = () => {
             <h2>You are about to unsubscribe  </h2>
             <h3>&gt;&gt;&gt; READ ALOUD &lt;&lt;&lt;</h3>
           </div>
-          <input type="submit" className="join-btn" onClick={onLogoutSubmitHandler} value="Confirm" />
+          <input type="submit" className="logout-btn" onClick={onLogoutSubmitHandler} value="Confirm" />
         </div>
       </div>
     </PageLayout>

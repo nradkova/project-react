@@ -1,17 +1,21 @@
-import { useState, useEffect } from "react";
-import { Link,useParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { Link, useParams,useNavigate } from "react-router-dom";
 import CustomComment from "../../components/comment";
 import PageLayout from "../../components/pageLayout";
 import Rating from "../../components/rating";
-import { getBookById } from "../../services/books";
+import AuthContext from "../../context/authContext";
+import { getBookById,deleteBook } from "../../services/books";
+import authServices from "../../services/auth";
+
 
 import './index.css';
 
 const BookDetails = () => {
-
-	const {bookId} = useParams()
+	const navigate=useNavigate();
+	const {user}=useContext(AuthContext)
+	const { bookId } = useParams()
 	// const bookId = 'iQFlWJ9qh4'
-console.log(bookId);
+
 	const [book, setBook] = useState({
 		id: "",
 		title: "",
@@ -46,6 +50,17 @@ console.log(bookId);
 		{ id: 6, creator: "David", text: "Very nice book...xxxxxxxxxxxx xxxxxx  x    x ... ddddddddd dd ddddddddddd ddddddd Very nice book...xxxxxxxxxxxx xxxxxx  x    x ... ddddddddd dd ddddddddddd ddddddd" }
 	]
 
+	const onClickAddBookHandler = async(e)=>{
+		e.preventDefault();
+		await authServices.updateUserReadingList(user.userId,bookId)
+
+	}
+
+	const onClickDeleteBookHandler = async(e)=>{
+		e.preventDefault();
+		await deleteBook(bookId)
+		navigate('/books')
+	}
 
 	return (
 		<PageLayout>
@@ -71,10 +86,12 @@ console.log(bookId);
 					</div>
 					<div className="book-actions">
 						<Link className="edit-link" to={`/books/${book.id}/edit`}>EDIT</Link>
-						<Link className="delete-link" to={`/books/${book.id}/delete`}>DELETE</Link>
+						<Link className="delete-link" to={`/books/${book.id}/delete`}  onClick={onClickDeleteBookHandler}>DELETE</Link>
+						<Link className="add-to-reading-list-link" to={`/books/${book.id}/add`} onClick={onClickAddBookHandler} >ADD</Link>
+
 					</div>
 					<div>
-						<Rating/>
+						<Rating />
 					</div>
 					<div>
 						<form action="" method="post">

@@ -18,7 +18,7 @@ div.stars{
   input.star:checked ~ label.star:before {
     font-family: "Font Awesome 5 Free";
     content:'\f005';
-    color: #FD4;
+    color:    #d7b407;
     transition: all .25s;
   }
   
@@ -28,10 +28,10 @@ div.stars{
     text-shadow: 0 0 20px #952;
   } */
   
-  input.star-1:checked ~ label.star:before {
+  /* input.star-1:checked ~ label.star:before {
     color: #F62;
   }
-  
+   */
   label.star:hover{
     transform: rotate(-15deg) scale(1.3);
   }

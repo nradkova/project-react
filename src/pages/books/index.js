@@ -5,7 +5,7 @@ const Books=()=>{
     return(
         <PageLayout>
         <Title title="Books" />
-        {/* <Origamis /> */}
+        
       </PageLayout>
     )
 }
