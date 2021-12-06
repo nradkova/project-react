@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import './index.css'
-import authServices from "../../services/auth";
+import userService from "../../services/user";
 import AuthContext from "../../context/authContext";
 import PageLayout from "../../components/pageLayout";
 // import Input from "../../components/input";
@@ -14,7 +14,7 @@ const Logout = () => {
 
   const onLogoutSubmitHandler = (e) => {
     // e.preventDefault();
-    authServices.logout()
+    userService.logout()
       .then(() => {
         logout()
         navigate('/home');

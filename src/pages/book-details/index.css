@@ -1,4 +1,5 @@
 .book-details-container {
+  min-height: 63vh;
   display: flex;
   justify-content: space-around;
   background-color: rgb(236, 237, 227);
@@ -31,12 +32,42 @@
   max-height: 450px;
 }
 
+.book-categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.book-categories span {
+  margin-right: 15px;
+  margin-bottom: 15px;
+  background-color: grey;
+  border-radius: 15px;
+  padding: 0px 10px;
+  color: white;
+}
+
+.fa-circle {
+  color: white;
+  font-size: 0.3em;
+  margin-right: 5px;
+}
+
+.fa-circle:before {
+  background-color: white;
+  border-radius: 50%;
+  content: "\f111";
+  position: relative;
+  top: -3px;
+}
+
 .book-additional {
   max-width: 40%;
 }
 
 .edit-link,
-.delete-link {
+.delete-link,
+.add-to-reading-list-link {
   margin: 15px 30px;
   text-decoration: none;
   font-size: 1.8em;
@@ -46,27 +77,44 @@
 
 .book-comments {
   overflow-y: scroll;
-  height: 300px;
-  /* border: 2px solid lightgray; */
-  /* border-radius: 4px; */
+  max-height: 300px;
   padding: 10px;
+  min-width: 100%;
+}
+
+.book-comments-form form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.comment-input {
+  border-radius: 6px;
+  border: none;
+}
+
+.comment-btn {
+  font-size: 1.6em;
+  color: cadetblue;
+  border: none;
+  display: block;
+  background-color: transparent;
+  margin-top: 10px;
+  cursor: pointer;
 }
 
 ::-webkit-scrollbar {
   width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }

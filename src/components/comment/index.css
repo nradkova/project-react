@@ -1,10 +1,9 @@
 .comment-container{
-    /* box-shadow: inset 0px 0px 3px 3px lightgrey; */
-    /* border-radius: 12px; */
     background-color: rgb(243, 243, 241);
     padding: 10px;
     text-align: left;
     margin-bottom: 20px;
+    min-width: 400px;
 }
 
 .comment-author{
@@ -17,4 +16,9 @@
 
 .comment-text{
     margin-top: 6px;
+}
+
+.comment-date{
+    margin: 0;
+    font-size: 0.6em;
 }

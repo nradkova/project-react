@@ -18,8 +18,7 @@ import Register from './pages/register';
 
 const App = () => {
   const { user } = useContext(AuthContext)
-  const loggedIn = user.username;
-  console.log(user);
+  const loggedIn = user?.username;
   return (
     <Routes>
       <Route path="/" element={<Landing />} />

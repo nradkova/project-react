@@ -5,14 +5,14 @@ const login = async (authData) => {
 	try {
 		const res = await Parse.User.logIn(username, password);
 		console.log('Logged in user');
-
 		return {
 			userId: res.id,
 			username: res.get('username'),
 			sessionToken: res.get('sessionToken')
 		}
 	} catch (error) {
-		console.error('Error while logging in user', error);
+		console.log('Error while logging in user', error);
+		throw error;
 	}
 }
 
@@ -50,7 +50,7 @@ const logout = async () => {
 
 const updateUserReadingList = async (userId, bookId) => {
 
-	const book = new Parse.Object('Post');
+	const book = new Parse.Object('Book');
 	book.id = bookId;
 
 	const User = new Parse.User();
@@ -58,14 +58,16 @@ const updateUserReadingList = async (userId, bookId) => {
 
 	try {
 		const user = await query.get(userId);
-		const relation = user.relation('readingList')
-		relation.add(book)
+
 		try {
-			let response = await user.save();
-			console.log('Updated user', response);
+			const relation = user.relation('readingList')
+			relation.add(book)
+			const response = await user.save();
+			console.log('Updated user');
 		} catch (error) {
 			console.error('Error while updating user', error);
 		}
+
 	} catch (error) {
 		console.error('Error while retrieving user', error);
 	}
@@ -79,8 +81,8 @@ const getUserReadingList = async (userId) => {
 
 	try {
 		const user = await query.get(userId);
-		const relation = user.relation('readingList')
 		try {
+			const relation = user.relation('readingList');
 			const data = await relation.query().find();
 			const results = data.reduce((a, x) => {
 				a.push({

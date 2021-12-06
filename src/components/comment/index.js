@@ -1,13 +1,14 @@
 import './index.css'
 
-const CustomComment = ({ id,creator,text }) => {
+const CustomComment = ({ id, creator, text, createdAt }) => {
 
     return (
         <div className="comment-container">
-            <div className="comment-author"> 
-            <i className="fas fa-user-circle"></i>
-            <span>{creator}</span>
+            <div className="comment-author">
+                <i className="fas fa-user-circle"></i>
+                <span>{creator}</span>
             </div>
+            <p className="comment-date">{createdAt}</p>
             <div className="comment-text">
                 {text}
             </div>

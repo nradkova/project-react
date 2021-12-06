@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import './index.css'
 import Title from "../../components/title";
-import authServices from "../../services/auth";
+import userService from "../../services/user";
 import PageLayout from "../../components/pageLayout";
 import { useContext } from "react";
 import AuthContext from "../../context/authContext";
@@ -21,7 +21,7 @@ const Register = () => {
     const username = e.target.username.value;
     const password = e.target.password.value;
 
-    authServices.register({ username, password })
+    userService.register({ username, password })
       .then(authData => {
         login(authData)
         navigate('/home');

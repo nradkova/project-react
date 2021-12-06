@@ -4,7 +4,7 @@ import BookCardBrief from "../../components/book-card-brief";
 import PageLayout from "../../components/pageLayout";
 import Title from "../../components/title";
 import AuthContext from "../../context/authContext";
-import authServices from "../../services/auth";
+import userService from "../../services/user";
 
 import './index.css';
 
@@ -15,16 +15,16 @@ const MyPage = () => {
 
 	useEffect(()=>{
 		const fetchData=async()=>{
-		 const readingList=	await authServices.getUserReadingList(user.userId)
+		 const readingList=	await userService.getUserReadingList(user.userId)
 		 setReadingList(readingList)
 		}
 		fetchData()
 
-	},[])
+	},[user])
 
 	return (
 		<PageLayout>
-			<Title title='My Page' />
+			<Title title={user.username.toLocaleUpperCase()+ ' \'s page'} />
 			<div className="my-page-navigation">
 				<Link className="create-book-link" to="/books/create"><i className="fas fa-plus"></i>NEW BOOK</Link>
 				<Link className="create-event-link" to="/events/create"><i className="fas fa-plus"></i>NEW EVENT</Link>

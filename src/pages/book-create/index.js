@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Category from "../../components/category";
 import PageLayout from "../../components/pageLayout";
 import AuthContext from "../../context/authContext";
-import { createBook } from "../../services/books";
+import { createBook } from "../../services/book";
 
 import './index.css';
 
@@ -15,7 +15,6 @@ const BookCreate = () => {
 
 	const onBookSubmitHandler = (e) => {
 		e.preventDefault();
-		console.log(categories);
 		const data = new FormData(e.target)
 		const book = {
 			title: data.get('title'),
@@ -82,7 +81,7 @@ const BookCreate = () => {
 							<label htmlFor="title"><i className="fa fa-pen"></i>Author</label>
 						</div>
 						<div className="default-image">
-							<img src="/book.png" alt="" />
+							<img src="/default_book.png" alt="Book_Image" />
 						</div>
 						<div className="image">
 							<input className="image-input" type="file" name="image" id="image" />

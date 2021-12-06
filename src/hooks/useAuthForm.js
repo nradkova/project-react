@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import authServices from '../services/authServices';
+import userService from '../services/user';
 
 function useAuthForm(validate, operation) {
     const initialFormState = {
@@ -39,12 +39,12 @@ function useAuthForm(validate, operation) {
             let response = undefined;
             switch (operation) {
                 case 'login':
-                    response = await authServices.login(formValue);
-                    authServices.saveUserData(response);
+                    response = await userService.login(formValue);
+                    userService.saveUserData(response);
                     break;
 
                 case 'register':
-                    response = await authServices.register(formValue);
+                    response = await userService.register(formValue);
                     break;
 
                 default:

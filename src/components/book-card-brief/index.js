@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom'
 import Star from '../star';
 import './index.css'
 
-const BookCardBrief = ({ id, imageUrl, title, author, rating = '0' }) => {
+const BookCardBrief = ({ id, imageUrl, title, author, rating = '0', }) => {
    
     return (
         <div className="book-card-brief">
             <span className="book-card-brief-img">
-                <img src={imageUrl} alt="Book_cover" />
+                <img src={imageUrl ? imageUrl :"/default_book.png"} alt="Book_cover" />
             </span>
             <div className="book-card-brief-content">
                 <Link className="details-link" to={`/books/${id}`}>VIEW</Link>

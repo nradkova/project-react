@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import './index.css';
 import PageLayout from "../../components/pageLayout";
-import { getLastFourBooks, getMostLikedBooks } from "../../services/books";
+import { getLastFourBooks, getMostLikedBooks } from "../../services/book";
 import BookCardBrief from "../../components/book-card-brief";
 
 
@@ -16,18 +16,19 @@ const Home = () => {
   useEffect(() => {
     latestBooksHandler()
     setLabelLatestBooks('selected')
-  }, [])
+  },[])
 
 
-  const mostLikedBooksHandler=async(e)=>{
+  const mostLikedBooksHandler=async()=>{
     const res = await getMostLikedBooks();
     setBooks(res)
     setLabelLikedBooks('selected')
     setLabelLatestBooks('')
   }
   
-  const latestBooksHandler=async(e)=>{
+  const latestBooksHandler=async()=>{
     const res = await getLastFourBooks();
+    console.log(res);
     setBooks(res)
     // setBooks([])
     setLabelLatestBooks('selected')

@@ -19,12 +19,17 @@ const AuthContextProvider = (props) => {
         setUser(initialUserState);
     };
 
+    const resetUserInitialValue=()=>{
+        setUser(initialUserState)
+    }
+
     return (
         <AuthContext.Provider
             value={{
                 user,
                 login,
-                logout
+                logout,
+                resetUserInitialValue
             }}
         >
             {props.children}

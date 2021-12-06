@@ -1,20 +1,21 @@
 import { useState } from "react";
 
 const useLocalStorage = (key, value) => {
-    
-    const localStorageItem = () => {
+
+    const [state, setState] = useState(()=>{
         try {
-         const item = localStorage.getItem(key);
-            return item
-                ? JSON.parse(item)
-                : value
+            const item = localStorage.getItem(key);
+            console.log(item);
+            if (item) {
+                return JSON.parse(item)
+            }
+            return value;
         } catch (error) {
             console.log(error.message);
-            return value;
+            throw error;
         }
-    }
+    })
 
-    const [state, setState] = useState(localStorageItem());
 
     const setLocalStorageItem = (value) => {
         try {
@@ -25,8 +26,9 @@ const useLocalStorage = (key, value) => {
             console.log(error.message);
         }
     }
+
     return [
-        state, 
+        state,
         setLocalStorageItem
     ]
 };

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import './index.css'
 import Title from "../../components/title";
-import authServices from "../../services/auth";
+import userService from "../../services/user";
 import AuthContext from "../../context/authContext";
 import PageLayout from "../../components/pageLayout";
 // import Input from "../../components/input";
@@ -11,7 +11,7 @@ import PageLayout from "../../components/pageLayout";
 
 const Login = () => {
   
-  const { login } = useContext(AuthContext);
+  const { login,resetUserInitialValue} = useContext(AuthContext);
   const navigate = useNavigate()
 
   const onLoginSubmitHandler = (e) => {
@@ -20,10 +20,14 @@ const Login = () => {
     const username = e.target.username.value;
     const password = e.target.password.value;
 
-    authServices.login({ username, password })
+    userService.login({ username, password })
       .then(authData => {
         login(authData)
         navigate('/home');
+      })
+      .catch(err=>{
+        resetUserInitialValue()
+        navigate('/login');
       });
   }
 

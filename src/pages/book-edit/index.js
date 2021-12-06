@@ -3,7 +3,7 @@ import { useNavigate,useParams } from "react-router-dom";
 import Category from "../../components/category";
 import PageLayout from "../../components/pageLayout";
 import AuthContext from "../../context/authContext";
-import { createBook, getBookById } from "../../services/books";
+import { createBook, getBookById } from "../../services/book";
 
 import './index.css';
 
