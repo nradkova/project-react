@@ -86,7 +86,16 @@ const getUserReadingList = async (userId) => {
 		try {
 			const relation = user.relation('readingList');
 			const data = await relation.query().find();
+
+
 			
+
+			//TODO: INNER QUERY
+
+
+
+
+
 			const results = data.reduce((a, x) => {
 				a.push({
 					id: x.id,

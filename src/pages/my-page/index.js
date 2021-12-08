@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useState, useEffect, useContext } from "react";
 
 import './index.css';
@@ -12,17 +13,18 @@ import BookCardBrief from "../../components/book-card-brief";
 
 
 const MyPage = () => {
+	const{userId}=useParams();
 	const { user } = useContext(AuthContext);
 	const [readingList,setReadingList]=useState([])
 
 	useEffect(()=>{
 		const fetchData=async()=>{
-		 const readingList=	await userService.getUserReadingList(user.userId)
+		 const readingList=	await userService.getUserReadingList(userId)
 		 setReadingList(readingList)
 		}
 		fetchData()
 
-	},[user.userId])
+	},[userId])
 
 	return (
 		<PageLayout>

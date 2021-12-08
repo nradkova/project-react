@@ -3,8 +3,6 @@ import Parse from "../config/server";
 import uploadImage from "./image";
 import { createBookRating, getRatingByBookId } from "./rating";
 
-// const Book = Parse.Object.extend('Book');
-
 const getAllBooks = async function () {
 	const Book = Parse.Object.extend('Book');
 
@@ -69,6 +67,15 @@ const getMostLikedBooks = async function () {
 	query.include('creator');
 	query.include('bookRating');
 	query.descending('star').limit(4);
+
+
+
+	//TODO: CORRECT ORDERING
+
+
+
+
+
 
 	try {
 		const data = await query.find();
