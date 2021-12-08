@@ -3,6 +3,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import CustomComment from "../../components/comment";
 import PageLayout from "../../components/pageLayout";
 import Rating from "../../components/rating";
+import Star from "../../components/star";
 import AuthContext from "../../context/authContext";
 import { getBookById, deleteBook } from "../../services/book";
 import { createBookComment, getAllCommentsByBookId } from "../../services/comment";
@@ -19,6 +20,7 @@ const BookDetails = () => {
 	const [isGuest, setIsGuest] = useState(true);
 	const [isUser, setIsUser] = useState(false);
 	const [isCreator, setIsCreator] = useState(false);
+	const [canVote, setCanVote] = useState(false);
 
 	const [book, setBook] = useState({
 		id: "",
@@ -26,17 +28,23 @@ const BookDetails = () => {
 		author: "",
 		description: "",
 		imageUrl: "",
-		rating: "",
+		rating: 0,
+		voted: [],
 		createdAt: "",
 		creator: "",
 		category: []
 	});
+
 
 	const [comments, setComments] = useState([]);
 
 	useEffect(() => {
 		async function fetchData() {
 			const book = await getBookById(bookId);
+			console.log(book);
+			console.log(book.rating);
+			console.log(book.voted);
+
 			console.log(user.username);
 			setBook(book)
 			if (user.username === book.creator) {
@@ -52,6 +60,10 @@ const BookDetails = () => {
 				setIsUser(false);
 				setIsCreator(false)
 			}
+			if (Boolean(user.username) && user.username !== book.creator && !book.voted.includes(user.userId)) {
+				setCanVote(true)
+			}
+
 			const comments = await getAllCommentsByBookId(bookId);
 			console.log(comments);
 			setComments(comments)
@@ -70,9 +82,9 @@ const BookDetails = () => {
 		e.preventDefault();
 		console.log(e.target.comment.value);
 		await createBookComment(bookId, e.target.comment.value);
-		const updated=await getAllCommentsByBookId(bookId);
+		const updated = await getAllCommentsByBookId(bookId);
 		setComments(updated);
-		e.target.comment.value='';
+		e.target.comment.value = '';
 	}
 
 	// const onClickDeleteBookHandler = async(e)=>{
@@ -90,8 +102,12 @@ const BookDetails = () => {
 					<div className="book-details">
 						<span><i className="far fa-clock"></i>{book.createdAt}</span>
 						<span><i className="far fa-user"></i>{book.creator}</span>
-						<span><i className="far fa-comment-alt"></i>{book.rating}</span>
+						<span><i className="far fa-comment-alt"></i>{comments.length}</span>
 					</div>
+					{!canVote 
+						? <Star rating={book.rating} />
+						:null
+					}
 					<div className="book-image">
 						<img src={book.imageUrl ? book.imageUrl : "/default_book.png"} alt="Book_cover" />
 					</div>
@@ -108,7 +124,7 @@ const BookDetails = () => {
 					</div>
 					<div className="book-actions">
 						{isCreator
-							? <Link className="edit-link" to={`/books/${book.id}/edit`}>EDIT</Link>
+							? <Link className="edit-link" to={`/books/${book.id}/edit`}>EDIT BOOK</Link>
 							: null
 						}
 						{/* <Link className="delete-link" to={`/books/${book.id}/delete`}  onClick={onClickDeleteBookHandler}>DELETE</Link> */}
@@ -117,10 +133,13 @@ const BookDetails = () => {
 							: null
 						}
 					</div>
-					<div>
-						<Rating />
+					<div className="book-rating">
+						{canVote
+							? <Rating userId={user.userId} bookId={bookId} />
+							: null
+						}
 					</div>
-					{isUser
+					{isUser || isCreator
 						? <div className="book-comments-form">
 							<form action="" method="post" onSubmit={onSubmitCommentHandler}>
 								<h4>You can write your comment here:</h4>

@@ -1,5 +1,7 @@
+import { storageKeys } from "../keys";
+
 const uploadImage=async(data)=>{
-    const apiUrl="https://api.cloudinary.com/v1_1/dah8nslpd/image/upload";
+    const apiUrl=storageKeys.API_URL;
     const file=new FormData();
     file.append('file',data);
     file.append("upload_preset","ReadAloud");

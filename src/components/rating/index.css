@@ -2,7 +2,13 @@ div.stars{
     /* width: 270px; */
     display: inline-block;
   }
-  
+
+  .rating-form{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+
   input.star{
     display: none;
   }
@@ -26,12 +32,12 @@ div.stars{
   /* input.star-5:checked ~ label.star:before {
     color:#FE7;
     text-shadow: 0 0 20px #952;
+  } 
+  
+  input.star-1:checked ~ label.star:before {
+    color: #F62;
   } */
   
-  /* input.star-1:checked ~ label.star:before {
-    color: #F62;
-  }
-   */
   label.star:hover{
     transform: rotate(-15deg) scale(1.3);
   }
@@ -41,6 +47,22 @@ div.stars{
     content:'\f005';
   }
 
-  .rating p{
+  .rating-btn{
     margin-top: 0px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    color:black;
+    font-weight: bold;
+    background-color: transparent;
+  }
+
+  .rating-btn:disabled{
+    margin-top: 0px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    color:lightgrey;
+    font-weight: bold;
+    background-color: transparent;
   }

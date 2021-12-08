@@ -1,19 +1,22 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { DEFAULT_BOOK_URL } from "../../common";
 import Category from "../../components/category";
 import PageLayout from "../../components/pageLayout";
 import AuthContext from "../../context/authContext";
 import { createBook } from "../../services/book";
+import uploadImage from "../../services/image";
+import { bookDataValidation } from "../../utils/validation";
 
 import './index.css';
 
 const BookCreate = () => {
 	const navigate = useNavigate();
 	const { user } = useContext(AuthContext);
-	// const [categories, setCategories] = useState([]);
-	const categories=[];
+	const [imagePreview, setImagePreview] = useState(DEFAULT_BOOK_URL);
+	const categories = [];
 
-	const onBookSubmitHandler = (e) => {
+	const onSubmitBookHandler = (e) => {
 		e.preventDefault();
 		const data = new FormData(e.target)
 		const book = {
@@ -21,16 +24,26 @@ const BookCreate = () => {
 			author: data.get('author'),
 			description: data.get('description'),
 			category: categories,
-			image:data.get('image')
+			image: data.get('image')
 		}
 		createBook(book)
 			.then(res => {
 				console.log(book);
 				navigate('/home')
 			})
-			.catch(err=>console.log(err))
+			.catch(err => console.log(err))
 	}
 
+	const onBlurInputHandler = (e) => {
+		e.preventDefault();
+		const value = e.target.value;
+		const type = e.target.name;
+		const error = bookDataValidation(type, value);
+		console.log(error);
+		if (error) {
+			return <p>{error}</p>
+		}
+	}
 
 	// const onCategoryBlurHandler = (e) => {
 	// 	e.preventDefault();
@@ -52,17 +65,24 @@ const BookCreate = () => {
 	// 	setCategories(updated)
 	// }
 
-	// const onImageChangeHandler=async(e)=>{
-	// 	const apiUrl="https://api.cloudinary.com/v1_1/dah8nslpd/image/upload";
-	// 	const files=e.target.files;
-	// 	const data=new FormData();
-	// 	data.append('file',files[0]);
-	// 	data.append("upload_preset","ReadAloud");
-
-	// 	const res=await fetch(apiUrl,{method:"POST",body:data})
-	// 	const result=await res.json();
-	// 	console.log(result.url);
-	// }
+	const onChangeImageHandler = (e) => {
+		const value = e.target.files[0];
+		const error = bookDataValidation('image', (value || ''));
+		if (error) {
+			console.log(error);
+			return;
+		}
+		console.log(value);
+		!value
+			? setImagePreview(DEFAULT_BOOK_URL)
+			: uploadImage(value)
+				.then(url => {
+					setImagePreview(url)
+				})
+				.catch(err => {
+					console.log(err);
+				})
+	}
 
 	return (
 		<PageLayout>
@@ -70,38 +90,31 @@ const BookCreate = () => {
 				<div className="book-form-title">
 					<h3><i className="fa fa-arrow-right"></i>New book</h3>
 				</div>
-				<form className="book-form-body" onSubmit={onBookSubmitHandler}>
+				<form className="book-form-body" onSubmit={onSubmitBookHandler}>
 					<div className="book-form-body-main">
 						<div className="title">
-							<input className="title-input" type="text" name="title" id="title" />
+							<input className="title-input" type="text" name="title" id="title" onBlur={onBlurInputHandler} />
 							<label htmlFor="title"><i className="fa fa-pen"></i>Title</label>
 						</div>
 						<div className="author">
-							<input className="author-input" type="text" name="author" id="author" />
+							<input className="author-input" type="text" name="author" id="author" onBlur={onBlurInputHandler} />
 							<label htmlFor="title"><i className="fa fa-pen"></i>Author</label>
 						</div>
 						<div className="default-image">
-							<img src="/default_book.png" alt="Book_Image" />
+							<img src={imagePreview} alt="Book_Image" />
 						</div>
 						<div className="image">
-							<input className="image-input" type="file" name="image" id="image" />
+							<input className="image-input" type="file" accept="image/*" lang="en" name="image" id="image" onChange={onChangeImageHandler} />
 							{/* <input type="file" name="image" id="image" onChange={onImageChangeHandler} /> */}
 							<label htmlFor="image"><i className="fas fa-image"></i>Image</label>
 						</div>
 					</div>
 					<div className="book-form-body-details">
 						<div className="description">
-							<textarea className="description-input" type="text" name="description" id="description" cols="50" rows="12" />
+							<textarea className="description-input" type="text" name="description" id="description" cols="50" rows="12" onBlur={onBlurInputHandler} />
 							<label htmlFor="description"><i className="fa fa-pen"></i>Description</label>
 						</div>
-						<Category selectedCategories={categories}/>
-						{/* <div className="category">
-							<input className="category-input" type="text" name="category" id="category" onBlur={onCategoryBlurHandler} />
-							<span className="add-category"><i className="fa fa-pen"></i> Add category</span>
-						</div>
-						<div className="categories-list">
-							{categories.map(x => <span key={x} className="category-list-item" onClick={onCategoryClickHandler} ><i className="fas fa-times"></i>{x}</span>)}
-						</div> */}
+						<Category selectedCategories={categories} />
 					</div>
 					<div className="book-form-footer">
 						<div className="recommend">
@@ -119,3 +132,11 @@ const BookCreate = () => {
 }
 
 export default BookCreate;
+
+{/* <div className="category">
+	<input className="category-input" type="text" name="category" id="category" onBlur={onCategoryBlurHandler} />
+	<span className="add-category"><i className="fa fa-pen"></i> Add category</span>
+</div>
+<div className="categories-list">
+	{categories.map(x => <span key={x} className="category-list-item" onClick={onCategoryClickHandler} ><i className="fas fa-times"></i>{x}</span>)}
+</div> */}

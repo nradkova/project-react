@@ -21,6 +21,7 @@ const Home = () => {
 
   const mostLikedBooksHandler=async()=>{
     const res = await getMostLikedBooks();
+    console.log(res);
     setBooks(res)
     setLabelLikedBooks('selected')
     setLabelLatestBooks('')
@@ -28,7 +29,7 @@ const Home = () => {
   
   const latestBooksHandler=async()=>{
     const res = await getLastFourBooks();
-    console.log(res);
+    // console.log(res);
     setBooks(res)
     // setBooks([])
     setLabelLatestBooks('selected')

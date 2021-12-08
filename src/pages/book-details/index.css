@@ -14,6 +14,10 @@
   margin-top: 0%;
 }
 
+.book-details {
+  margin-bottom: 10px;
+}
+
 .book-details span {
   margin-left: 15px;
 }
@@ -43,7 +47,7 @@
   margin-bottom: 15px;
   background-color: grey;
   border-radius: 15px;
-  padding: 0px 10px;
+  padding: 0px 10px 2px 10px;
   color: white;
 }
 
@@ -63,6 +67,9 @@
 
 .book-additional {
   max-width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .edit-link,
@@ -80,6 +87,10 @@
   max-height: 300px;
   padding: 10px;
   min-width: 100%;
+}
+
+.book-rating{
+  margin-top: 20px;
 }
 
 .book-comments-form form {

@@ -1,11 +1,13 @@
 import Parse from "../config/server";
 import uploadImage from "./image";
+import { createBookRating, getRatingByBookId } from "./rating";
 
 const Book = Parse.Object.extend('Book');
 
 const getAllBooks = async function () {
 	const query = new Parse.Query(Book);
 	query.include('creator');
+	query.include('bookRating');
 
 	try {
 		const data = await query.find();
@@ -19,23 +21,42 @@ const getAllBooks = async function () {
 	}
 }
 
-const getBookById = async function (id) {
+const getBookById = async function (bookId) {
 	const query = new Parse.Query(Book);
-	query.include('creator');
-	query.equalTo('objectId', id);
+	query.include('bookRating');
+	query.equalTo('objectId', bookId);
 
 	try {
 		const data = await query.first();
 		const result = viewModel(data);
+		const rating= await getRatingByBookId(bookId)
+		result.rating=rating.star;
 		return result;
 	} catch (error) {
 		console.error('Error while fetching Book', error);
 	}
 }
 
+// const getBookById = async function (bookId) {
+// 	const query = new Parse.Query(Book);
+// 	query.include('creator');
+// 	query.equalTo('objectId', bookId);
+
+// 	try {
+// 		const data = await query.first();
+// 		const result = viewModel(data);
+// 		const rating= await getRatingByBookId(bookId)
+// 		result.rating=rating.star;
+// 		return result;
+// 	} catch (error) {
+// 		console.error('Error while fetching Book', error);
+// 	}
+// }
+
 const getLastFourBooks = async function () {
 	const query = new Parse.Query(Book);
 	query.include('creator');
+	query.include('bookRating');
 	query.descending('createdAt').limit(4);
 
 	try {
@@ -53,7 +74,8 @@ const getLastFourBooks = async function () {
 const getMostLikedBooks = async function () {
 	const query = new Parse.Query(Book);
 	query.include('creator');
-	query.descending('rating').limit(4);
+	query.include('bookRating');
+	query.descending('star').limit(4);
 
 	try {
 		const data = await query.find();
@@ -82,7 +104,12 @@ const createBook = async (data) => {
 		book.set('category', data.category);
 		book.set('imageUrl', imageUrl);
 
-		await book.save();
+		const bookResult=await book.save();
+		const ratingResult=await createBookRating(bookResult.id);
+
+		bookResult.set('bookRating',ratingResult);
+		await bookResult.save();
+
 	} catch (error) {
 		console.error('Error while creating Book: ', error);
 	}
@@ -106,6 +133,9 @@ const deleteBook = async (bookId) => {
 const viewModel = (record) => {
 	const date = new Date(record.createdAt).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })
 	const creator = record.get('creator').get('username');
+	const rating=record.get('bookRating').get('star');
+	const voted=record.get('bookRating').get('voted');
+
 	return {
 		id: record.id,
 		createdAt: date,
@@ -113,9 +143,10 @@ const viewModel = (record) => {
 		author: record.get('author'),
 		description: record.get('description'),
 		imageUrl: record.get('imageUrl'),
-		rating: record.get('rating'),
+		category: record.get('category'),
+		voted,
+		rating,
 		creator,
-		category: record.get('category')
 	}
 }
 

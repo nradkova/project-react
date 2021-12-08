@@ -1,7 +1,8 @@
 const storageKeys = {
     CLOUD_NAME: 'dah8nslpd',
     API_KEY: '168873961773654',
-    API_SECRET: 'lig8cRrBNm2dC9neNGIbVlaQmlM'
+    API_SECRET: 'lig8cRrBNm2dC9neNGIbVlaQmlM',
+    API_URL:"https://api.cloudinary.com/v1_1/dah8nslpd/image/upload"
 }
 
 const serverKeys = {
