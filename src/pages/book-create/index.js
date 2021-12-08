@@ -1,18 +1,22 @@
-import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { DEFAULT_BOOK_URL } from "../../common";
-import Category from "../../components/category";
-import PageLayout from "../../components/pageLayout";
-import AuthContext from "../../context/authContext";
-import { createBook } from "../../services/book";
-import uploadImage from "../../services/image";
-import { bookDataValidation } from "../../utils/validation";
+import { useState, useContext } from "react";
 
 import './index.css';
+import { DEFAULT_BOOK_URL } from "../../common";
+
+import uploadImage from "../../services/image";
+import { createBook } from "../../services/book";
+import AuthContext from "../../context/authContext";
+import { bookDataValidation } from "../../utils/validation";
+
+import Category from "../../components/category";
+import PageLayout from "../../components/pageLayout";
+
 
 const BookCreate = () => {
 	const navigate = useNavigate();
 	const { user } = useContext(AuthContext);
+
 	const [imagePreview, setImagePreview] = useState(DEFAULT_BOOK_URL);
 	const categories = [];
 
@@ -44,26 +48,6 @@ const BookCreate = () => {
 			return <p>{error}</p>
 		}
 	}
-
-	// const onCategoryBlurHandler = (e) => {
-	// 	e.preventDefault();
-	// 	const updated = categories.slice();
-	// 	const value = e.target.value;
-	// 	if (value && !updated.includes(value)) {
-	// 		updated.push(value);
-	// 	}
-	// 	setCategories(updated);
-	// 	e.target.value = '';
-	// }
-
-	// const onCategoryClickHandler = (e) => {
-	// 	const value = e.target.value;
-
-	// 	const updated = categories.slice();
-
-	// 	updated.splice(updated.indexOf(value), 1)
-	// 	setCategories(updated)
-	// }
 
 	const onChangeImageHandler = (e) => {
 		const value = e.target.files[0];
@@ -132,11 +116,3 @@ const BookCreate = () => {
 }
 
 export default BookCreate;
-
-{/* <div className="category">
-	<input className="category-input" type="text" name="category" id="category" onBlur={onCategoryBlurHandler} />
-	<span className="add-category"><i className="fa fa-pen"></i> Add category</span>
-</div>
-<div className="categories-list">
-	{categories.map(x => <span key={x} className="category-list-item" onClick={onCategoryClickHandler} ><i className="fas fa-times"></i>{x}</span>)}
-</div> */}

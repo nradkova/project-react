@@ -1,15 +1,17 @@
+import { Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from "react";
-import { Link } from 'react-router-dom'
-import BookCardBrief from "../../components/book-card-brief";
-import PageLayout from "../../components/pageLayout";
-import Title from "../../components/title";
-import AuthContext from "../../context/authContext";
-import userService from "../../services/user";
 
 import './index.css';
 
-const MyPage = () => {
+import userService from "../../services/user";
+import AuthContext from "../../context/authContext";
 
+import Title from "../../components/title";
+import PageLayout from "../../components/pageLayout";
+import BookCardBrief from "../../components/book-card-brief";
+
+
+const MyPage = () => {
 	const { user } = useContext(AuthContext);
 	const [readingList,setReadingList]=useState([])
 
@@ -20,7 +22,7 @@ const MyPage = () => {
 		}
 		fetchData()
 
-	},[user])
+	},[user.userId])
 
 	return (
 		<PageLayout>

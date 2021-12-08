@@ -1,7 +1,6 @@
+import { Link } from 'react-router-dom'
+
 import './index.css'
-import {
-  Link
-} from 'react-router-dom'
 
 const NavLink = ({ title, href, type }) => {
   return (
@@ -13,4 +12,4 @@ const NavLink = ({ title, href, type }) => {
   )
 }
 
-export default NavLink
+export default NavLink;

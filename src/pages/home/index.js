@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
+
 import './index.css';
-import PageLayout from "../../components/pageLayout";
+
 import { getLastFourBooks, getMostLikedBooks } from "../../services/book";
+
+import PageLayout from "../../components/pageLayout";
 import BookCardBrief from "../../components/book-card-brief";
 
 

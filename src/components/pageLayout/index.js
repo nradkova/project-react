@@ -1,7 +1,7 @@
-import React from 'react'
+import './index.css'
+
 import Header from '../header'
 import Footer from '../footer'
-import './index.css'
 import Scroller from '../scroller'
 
 const PageLayout = (props) => {
@@ -17,4 +17,4 @@ const PageLayout = (props) => {
   )
 }
 
-export default PageLayout
+export default PageLayout;

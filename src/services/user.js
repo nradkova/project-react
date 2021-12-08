@@ -2,6 +2,7 @@ import Parse from "../config/server";
 
 const login = async (authData) => {
 	const { username, password } = authData;
+
 	try {
 		const res = await Parse.User.logIn(username, password);
 		console.log('Logged in user');
@@ -18,6 +19,7 @@ const login = async (authData) => {
 
 const register = async (authData) => {
 	const { username, password } = authData;
+
 	const user = new Parse.User();
 	user.set('username', username);
 	user.set('password', password);
@@ -37,6 +39,7 @@ const register = async (authData) => {
 }
 
 const logout = async () => {
+
 	try {
 		await Parse.User.logOut();
 		const currentUser = await Parse.User.current();
@@ -49,7 +52,6 @@ const logout = async () => {
 }
 
 const updateUserReadingList = async (userId, bookId) => {
-
 	const book = new Parse.Object('Book');
 	book.id = bookId;
 
@@ -84,6 +86,7 @@ const getUserReadingList = async (userId) => {
 		try {
 			const relation = user.relation('readingList');
 			const data = await relation.query().find();
+			
 			const results = data.reduce((a, x) => {
 				a.push({
 					id: x.id,

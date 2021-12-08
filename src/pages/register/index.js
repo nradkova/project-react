@@ -1,13 +1,13 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import './index.css'
-import Title from "../../components/title";
+
 import userService from "../../services/user";
-import PageLayout from "../../components/pageLayout";
-import { useContext } from "react";
 import AuthContext from "../../context/authContext";
-// import Input from "../../components/input";
-// import SubmitButton from "../../components/submitButton";
+
+import Title from "../../components/title";
+import PageLayout from "../../components/pageLayout";
 
 
 const Register = () => {

@@ -1,68 +1,46 @@
-div.stars{
-    /* width: 270px; */
-    display: inline-block;
-  }
+div.stars {
+  /* width: 270px; */
+  display: inline-block;
+  unicode-bidi: bidi-override;
+}
 
-  .rating-form{
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-  }
+.rating-form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
 
-  input.star{
-    display: none;
-  }
-  
-  label.star {
-    float: right;
-    padding: 10px;
-    font-size: 26px;
-    color: rgb(190, 188, 188);
-    transition: all .2s;
-  }
-  
-  input.star:checked ~ label.star:before {
-    font-family: "Font Awesome 5 Free";
-    content:'\f005';
-    color:    #d7b407;
-    transition: all .25s;
-  }
-  
-  
-  /* input.star-5:checked ~ label.star:before {
-    color:#FE7;
-    text-shadow: 0 0 20px #952;
-  } 
-  
-  input.star-1:checked ~ label.star:before {
-    color: #F62;
-  } */
-  
-  label.star:hover{
-    transform: rotate(-15deg) scale(1.3);
-  }
-  
-  label.star:before{
-    font-family: "Font Awesome 5 Free";
-    content:'\f005';
-  }
+input.star {
+  display: none;
+}
 
-  .rating-btn{
-    margin-top: 0px;
-    border: none;
-    cursor: pointer;
-    font-family: inherit;
-    color:black;
-    font-weight: bold;
-    background-color: transparent;
-  }
+label.star {
+  float: right;
+  padding: 10px;
+  font-size: 33px;
+  color: rgb(190, 188, 188);
+}
 
-  .rating-btn:disabled{
-    margin-top: 0px;
-    border: none;
-    cursor: pointer;
-    font-family: inherit;
-    color:lightgrey;
-    font-weight: bold;
-    background-color: transparent;
-  }
+input.star:checked ~ label.star{
+	color: #d7b407;
+}
+
+.rating-btn {
+  margin-top: 0px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  color: black;
+  font-weight: bold;
+  background-color: transparent;
+}
+
+.rating-btn:disabled {
+  margin-top: 0px;
+  border: none;
+  cursor: not-allowed;
+  font-family: inherit;
+  color: lightgrey;
+  font-weight: bold;
+  background-color: transparent;
+}

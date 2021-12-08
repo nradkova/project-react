@@ -2,17 +2,18 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import './index.css'
+
 import userService from "../../services/user";
 import AuthContext from "../../context/authContext";
+
 import PageLayout from "../../components/pageLayout";
-// import Input from "../../components/input";
-// import SubmitButton from "../../components/submitButton";
+
 
 const Logout = () => {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const onLogoutSubmitHandler = (e) => {
+  const onSubmitLogoutHandler = (e) => {
     // e.preventDefault();
     userService.logout()
       .then(() => {
@@ -31,7 +32,7 @@ const Logout = () => {
             <h2>You are about to unsubscribe  </h2>
             <h3>&gt;&gt;&gt; READ ALOUD &lt;&lt;&lt;</h3>
           </div>
-          <input type="submit" className="logout-btn" onClick={onLogoutSubmitHandler} value="Confirm" />
+          <input type="submit" className="logout-btn" onClick={onSubmitLogoutHandler} value="Confirm" />
         </div>
       </div>
     </PageLayout>

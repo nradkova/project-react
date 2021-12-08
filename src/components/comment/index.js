@@ -16,4 +16,4 @@ const CustomComment = ({ id, creator, text, createdAt }) => {
     )
 }
 
-export default CustomComment
+export default CustomComment;

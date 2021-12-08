@@ -1,13 +1,14 @@
 import Parse from "../config/server";
 
-const rating = new Parse.Object('BookRating');
 
 const getRatingByBookId = async (bookId) => {
     const book = new Parse.Object('Book');
     book.id = bookId;
-
+    
+    const rating = new Parse.Object('BookRating');
     const query = new Parse.Query(rating);
     query.equalTo('book', book);
+
     try {
         const results = await query.find();
         for (const object of results) {
@@ -29,9 +30,11 @@ const createBookRating = async (bookId) => {
     const book = new Parse.Object("Book");
     book.id = bookId;
 
+ const rating = new Parse.Object('BookRating');
     rating.set('book', book);
     rating.set('voted', []);
     rating.set('star', 0);
+    
     try {
         const result = await rating.save();
         console.log('BookRating created', result);
@@ -45,7 +48,6 @@ const createBookRating = async (bookId) => {
 const rateBook = async (userId, bookId, value) => {
     try {
         const existing = await getRatingByBookId(bookId);
-        console.log(existing.id);
 
         const updatedVoted = existing.voted.slice();
         updatedVoted.push(userId);

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import Star from '../star';
 import './index.css'
 
-const BookCardBrief = ({ id, imageUrl, title, author, rating = '0', }) => {
+const BookCardBrief = ({ id, imageUrl, title, author, rating = '0' }) => {
    
     return (
         <div className="book-card-brief">
@@ -23,4 +23,4 @@ const BookCardBrief = ({ id, imageUrl, title, author, rating = '0', }) => {
     )
 }
 
-export default BookCardBrief
+export default BookCardBrief;

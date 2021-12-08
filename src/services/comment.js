@@ -30,7 +30,7 @@ const createBookComment = async (bookId, text) => {
 	bookComment.set('text', text);
 	bookComment.set('creator', Parse.User.current());
 	bookComment.set('book', book);
-	
+
 	try {
 		await bookComment.save();
 	} catch (error) {
@@ -40,8 +40,10 @@ const createBookComment = async (bookId, text) => {
 
 
 const viewModel = (record) => {
-	const date = new Date(record.createdAt).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', })
 	const creator = record.get('creator').get('username');
+	const date = new Date(record.createdAt)
+		.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', })
+
 	return {
 		id: record.id,
 		createdAt: date,

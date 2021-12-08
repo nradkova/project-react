@@ -4,7 +4,6 @@ import Link from '../navLink'
 import LogoLink from '../logoLink';
 import getNavigation from '../../utils/navigation'
 import AuthContext from '../../context/authContext';
-// import UserContext from '../../Context'
 
 
 const Header = () => {
@@ -45,4 +44,4 @@ const Header = () => {
     </header>
   )
 }
-export default Header
+export default Header;

@@ -11,4 +11,4 @@ const Scroller = () => {
   )
 }
 
-export default Scroller
+export default Scroller;
