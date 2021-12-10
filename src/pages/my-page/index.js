@@ -11,21 +11,26 @@ import Title from "../../components/title";
 import PageLayout from "../../components/pageLayout";
 import BookCardLite from '../../components/book-card-lite';
 
+let pagesCounter = 1;
 
 const MyPage = () => {
 	const { userId } = useParams();
 	const { user } = useContext(AuthContext);
-	const [readingList, setReadingList] = useState([])
-	const [viewReadingList, setViewReadingList] = useState([])
-	const [bookSliderCounter, setBookSliderCounter] = useState(0);
-	const[isDisabledIncreaseButton,setIsDisabledIncreaseButton]=useState(false);
-	const[isDisabledDecreaseButton,setIsDisabledDecreaseButton]=useState(true);
+	const [readingList, setReadingList] = useState([]);
+	const [viewReadingList, setViewReadingList] = useState([]);
+	const [totalPages, setTotalPages] = useState(0);
+	const [isDisabledIncreaseButton, setIsDisabledIncreaseButton] = useState(true);
+	const [isDisabledDecreaseButton, setIsDisabledDecreaseButton] = useState(true);
 
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const fetchedReadingListData = await userService.getUserReadingList(userId);
-			console.log(fetchedReadingListData);
+			const pages = Math.ceil(fetchedReadingListData.length / 3);
+			setTotalPages(pages);
+			if (pages > 1) {
+				setIsDisabledIncreaseButton(false);
+			}
 			setReadingList(fetchedReadingListData);
 			setViewReadingList(fetchedReadingListData.slice(0, 3))
 		}
@@ -33,27 +38,21 @@ const MyPage = () => {
 
 	}, [userId])
 
-	const increaseCounter = (e) => {
-		setBookSliderCounter(bookSliderCounter => bookSliderCounter + 3);
-		setViewReadingList(x=>readingList.slice(bookSliderCounter, bookSliderCounter + 3));
-		console.log(bookSliderCounter);
-		const next = (bookSliderCounter + 3);
-		if (next >= readingList.length) {
+	const increaseCounter = () => {
+		pagesCounter++;
+		if (pagesCounter >= totalPages) {
 			setIsDisabledIncreaseButton(true);
-			// return;
 		}
+		setViewReadingList(x => readingList.slice((pagesCounter * 3) - 3, pagesCounter * 3));
 		setIsDisabledDecreaseButton(false);
 	}
 
-	const decreaseCounter = (e) => {
-		setBookSliderCounter(bookSliderCounter => bookSliderCounter - 3);
-		setViewReadingList(x=>readingList.slice(bookSliderCounter-3, bookSliderCounter));
-		console.log(bookSliderCounter);
-		const next = (bookSliderCounter - 3);
-		if (next <= 2) {
+	const decreaseCounter = () => {
+		pagesCounter--;
+		if (pagesCounter === 1) {
 			setIsDisabledDecreaseButton(true);
-			// return;
 		}
+		setViewReadingList(x => readingList.slice((pagesCounter * 3) - 3, pagesCounter * 3));
 		setIsDisabledIncreaseButton(false);
 	}
 
@@ -72,14 +71,17 @@ const MyPage = () => {
 				<div className="my-page-reading-list">
 					<h3 className="my-page-reading-list-title">MY READING LIST</h3>
 					{readingList.length > 0
-						? <div className="my-page-reading-list-items-container">
-							<button className="prev" disabled={isDisabledDecreaseButton} onClick={decreaseCounter}>&#10094;</button>
-							<div className="my-page-reading-list-items">
-								{viewReadingList.map(x => <BookCardLite key={x.id} userId={userId} bookId={x.id} imageUrl={x.imageUrl} title={x.title} author={x.author} rating={x.rating} />)}
+						? <>
+							<div className="my-page-reading-list-items-container">
+								<button className="prev" disabled={isDisabledDecreaseButton} onClick={decreaseCounter}>&#10094;</button>
+								<div className="my-page-reading-list-items">
+									{viewReadingList.map(x => <BookCardLite key={x.id} userId={userId} bookId={x.id} imageUrl={x.imageUrl} title={x.title} author={x.author} rating={x.rating} />)}
+								</div>
+								<button className="next" disabled={isDisabledIncreaseButton} onClick={increaseCounter}>&#10095;</button>
 							</div>
-							<button className="next" disabled={isDisabledIncreaseButton} onClick={increaseCounter}>&#10095;</button>
-						</div>
-						: <p>You have not added anything to your reading list.</p>
+							<p>{pagesCounter}/{totalPages}</p>
+						</>
+						: <p className="empty-reading-list">You have not added anything to your reading list.</p>
 					}
 				</div>
 			</div>
