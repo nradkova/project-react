@@ -1,4 +1,4 @@
-.book-card-brief {
+.book-card-medium {
   display: flex;
   width: 330px;
   height: 200px;
@@ -8,12 +8,12 @@
   background-color: white;
 }
 
-.book-card-brief-img {
+.book-card-medium-img {
   width: 120px;
  padding: 10px;
   border-right: 4px solid lightgrey;
 }
-.book-card-brief-img img {
+.book-card-medium-img img {
   width: 90px;
   height: 80%;
   object-fit: cover;
@@ -22,7 +22,7 @@
   border-top-left-radius: 6px; */
 }
 
-.book-card-brief-content {
+.book-card-medium-content {
   font-size: 0.8em;
   width: 180px;
   padding-left: 15px;
@@ -30,11 +30,11 @@
   word-break: break-all;
 }
 
-.book-card-brief-content-heading {
+.book-card-medium-content-heading {
   color: grey;
 }
 
-.details-link {
+.details-link{
   float: right;
   text-decoration: none;
   color: steelblue;

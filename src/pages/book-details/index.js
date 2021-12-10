@@ -1,6 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
+import './index.css';
+
 import userService from "../../services/user";
 import { getBookById } from "../../services/book";
 import AuthContext from "../../context/authContext";
@@ -12,7 +14,6 @@ import CustomComment from "../../components/comment";
 import PageLayout from "../../components/pageLayout";
 
 
-import './index.css';
 
 const BookDetails = () => {
 	const navigate = useNavigate();
@@ -43,11 +44,6 @@ const BookDetails = () => {
 	useEffect(() => {
 		async function fetchData() {
 			const book = await getBookById(bookId);
-			console.log(book);
-			console.log(book.rating);
-			console.log(book.voted);
-
-			console.log(user.username);
 			setBook(book)
 			if (user.username === book.creator) {
 				setIsCreator(true);
@@ -67,7 +63,6 @@ const BookDetails = () => {
 			}
 
 			const comments = await getAllCommentsByBookId(bookId);
-			console.log(comments);
 			setComments(comments)
 		}
 		fetchData()

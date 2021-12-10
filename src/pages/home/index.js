@@ -5,7 +5,7 @@ import './index.css';
 import { getLastFourBooks, getMostLikedBooks } from "../../services/book";
 
 import PageLayout from "../../components/pageLayout";
-import BookCardBrief from "../../components/book-card-brief";
+import BookCardMedium from "../../components/book-card-medium";
 
 
 const Home = () => {
@@ -56,7 +56,7 @@ const Home = () => {
       <div className="inner-container-books-events">
         <section className="inner-container-books">
         <div className="books-container">
-          {books.map(x => <BookCardBrief key={x.id} id={x.id} imageUrl={x.imageUrl} title={x.title} author={x.author} rating={x.rating} />)}
+          {books.map(x => <BookCardMedium key={x.id} id={x.id} imageUrl={x.imageUrl} title={x.title} author={x.author} rating={x.rating} />)}
         </div>
         {books.length > 0
           ? <div className="label-container">
@@ -68,7 +68,7 @@ const Home = () => {
         </section>
         <section className="inner-container-events">
         <div className="events-container">
-          {books.map(x => <BookCardBrief key={x.id} imageUrl={x.imageUrl} title={x.title} author={x.author} rating={x.rating} />)}
+          {books.map(x => <BookCardMedium key={x.id} imageUrl={x.imageUrl} title={x.title} author={x.author} rating={x.rating} />)}
         </div>
         {books.length > 0
           ? <div className="label-container">

@@ -12,10 +12,7 @@ const getAllBooks = async function () {
 
 	try {
 		const data = await query.find();
-		const results = data.reduce((a, x) => {
-			a.push(viewModel(x))
-			return a
-		}, [])
+		const results = data.map(viewModel);
 		return results;
 	} catch (error) {
 		console.error('Error while fetching Book', error);
@@ -50,10 +47,7 @@ const getLastFourBooks = async function () {
 
 	try {
 		const data = await query.find();
-		const results = data.reduce((a, x) => {
-			a.push(viewModel(x))
-			return a
-		}, [])
+		const results = data.map(viewModel)
 		return results;
 	} catch (error) {
 		console.error('Error while fetching Book', error);
@@ -61,28 +55,20 @@ const getLastFourBooks = async function () {
 }
 
 const getMostLikedBooks = async function () {
+	const BookRating=Parse.Object.extend('BookRating');
+	const innerQuery = new Parse.Query(BookRating);
+	innerQuery.equalTo('star',5).limit(4)
+	
 	const Book = Parse.Object.extend('Book');
-
 	const query = new Parse.Query(Book);
+	
+	query.matchesQuery('bookRating', innerQuery);
 	query.include('creator');
 	query.include('bookRating');
-	query.descending('star').limit(4);
-
-
-
-	//TODO: CORRECT ORDERING
-
-
-
-
-
-
+	
 	try {
 		const data = await query.find();
-		const results = data.reduce((a, x) => {
-			a.push(viewModel(x))
-			return a
-		}, [])
+		const results = data.map(viewModel)
 		return results;
 	} catch (error) {
 		console.error('Error while fetching Book', error);
