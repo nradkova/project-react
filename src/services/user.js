@@ -60,11 +60,10 @@ const updateUserReadingList = async (userId, bookId) => {
 
 	try {
 		const user = await query.get(userId);
-
 		try {
 			const relation = user.relation('readingList')
 			relation.add(book)
-			const response = await user.save();
+			await user.save();
 			console.log('Updated user');
 		} catch (error) {
 			console.error('Error while updating user', error);
@@ -77,7 +76,6 @@ const updateUserReadingList = async (userId, bookId) => {
 }
 
 const getUserReadingList = async (userId) => {
-
 	const User = new Parse.User();
 	const query = new Parse.Query(User);
 
@@ -86,28 +84,15 @@ const getUserReadingList = async (userId) => {
 		try {
 			const relation = user.relation('readingList');
 			const data = await relation.query().find();
-
-
-			
-
 			//TODO: INNER QUERY
-
-
-
-
-
-			const results = data.reduce((a, x) => {
-				a.push({
+			const results = data.map(x => {
+				return {
 					id: x.id,
 					title: x.get('title'),
 					author: x.get('author'),
-					description: x.get('description'),
-					imageUrl: x.get('imageUrl'),
-					rating: x.get('rating'),
-					createdAt: x.createdAt
-				})
-				return a
-			}, [])
+					imageUrl: x.get('imageUrl')
+				}
+			})
 			return results;
 		} catch (error) {
 			console.error('Error while updating user', error);
@@ -115,7 +100,28 @@ const getUserReadingList = async (userId) => {
 	} catch (error) {
 		console.error('Error while retrieving user', error);
 	}
+}
 
+const checkBookInUserReadingList = async (userId,bookId) => {
+	const User = new Parse.User();
+	const query = new Parse.Query(User);
+	try {
+		const user = await query.get(userId);
+		try {
+			const relation = user.relation('readingList');
+			const data = await relation.query().find();
+			const results = data.map(x => x.id);
+			console.log(results);
+			if(results.includes(bookId)){
+				return false;
+			}
+			return true;
+		} catch (error) {
+			console.error('Error while updating user', error);
+		}
+	} catch (error) {
+		console.error('Error while retrieving user', error);
+	}
 }
 
 
@@ -124,7 +130,8 @@ const authServices = {
 	register,
 	logout,
 	updateUserReadingList,
-	getUserReadingList
+	getUserReadingList,
+	checkBookInUserReadingList
 }
 
 export default authServices;

@@ -1,13 +1,16 @@
 .book-details-container {
   min-height: 63vh;
   display: flex;
-  justify-content: space-around;
-  background-color: rgb(236, 237, 227);
-  padding: 2% 0%;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(239, 231, 229);
+  /* background-color: rgb(236, 237, 227); */
+
+  padding: 2% 2%;
 }
 
 .book-main {
-  width: 40%;
+  width: 35%;
 }
 
 .book-author {
@@ -66,27 +69,18 @@
 }
 
 .book-additional {
-  max-width: 40%;
-  display: flex;
+  width: 35%;
+  /* display: flex;
   flex-direction: column;
-  justify-content: space-around;
-}
-
-.edit-link,
-.delete-link,
-.add-to-reading-list-link {
-  margin: 15px 30px;
-  text-decoration: none;
-  font-size: 1.8em;
-  color: cadetblue;
-  font-weight: bold;
+  justify-content: space-around; */
 }
 
 .book-comments {
   overflow-y: scroll;
-  max-height: 300px;
-  padding: 10px;
+  height: 400px;
+  /* padding: 10px; */
   min-width: 100%;
+  border: 1px solid white;
 }
 
 .book-rating{
@@ -106,7 +100,7 @@
 
 .comment-btn {
   font-size: 1.6em;
-  color: cadetblue;
+  color: rgb(162, 186, 187);
   border: none;
   display: block;
   background-color: transparent;
@@ -128,4 +122,32 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.book-actions{
+  width: 15%;
+  align-self: flex-start;
+}
+
+.book-actions-icon{
+  width: 100%;
+}
+
+.fa-calendar-check{
+  font-size: 65px;
+  color: rgb(135, 165, 167);
+}
+
+.edit-link,
+.join-link,
+.delete-link,
+.add-to-reading-list-link {
+  margin: 15px 30px;
+  text-decoration: none;
+  color: rgb(135, 165, 167);
+  font-weight: bold;
+}
+
+.added-to-reading-list{
+  color: rgb(135, 165, 167);
 }

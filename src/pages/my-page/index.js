@@ -75,7 +75,7 @@ const MyPage = () => {
 							<div className="my-page-reading-list-items-container">
 								<button className="prev" disabled={isDisabledDecreaseButton} onClick={decreaseCounter}>&#10094;</button>
 								<div className="my-page-reading-list-items">
-									{viewReadingList.map(x => <BookCardLite key={x.id} userId={userId} bookId={x.id} imageUrl={x.imageUrl} title={x.title} author={x.author} rating={x.rating} />)}
+									{viewReadingList.map(x => <BookCardLite key={x.id} userId={userId} bookId={x.id} imageUrl={x.imageUrl} title={x.title} author={x.author}/>)}
 								</div>
 								<button className="next" disabled={isDisabledIncreaseButton} onClick={increaseCounter}>&#10095;</button>
 							</div>

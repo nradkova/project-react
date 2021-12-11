@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import Star from '../star';
 import './index.css'
 
-const BookCardLite = ({ userId,bookId, imageUrl, title, author, rating = '0' }) => {
+const BookCardLite = ({ userId,bookId, imageUrl, title, author}) => {
 
     return (
         <div className="book-card-lite">

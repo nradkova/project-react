@@ -1,5 +1,105 @@
-.books-inner-container{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+.all-books-search {
+  text-align: left;
+  border-bottom: 1px solid black;
+}
+
+.books-inner-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.popup-author,
+.popup-category,
+.popup-postedBy,
+.popup-title {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  appearance: none;
+  margin: 0px;
+}
+
+.popuptext-author,
+.popuptext-category,
+.popuptext-postedBy,
+.popuptext-title {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+.popuptext-author::after,
+.popuptext-title::after,
+.popuptext-category::after,
+.popuptext-postedBy::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.popup-category:hover ~ .popuptext-category {
+  visibility: visible;
+  animation: fadeIn 1s;
+}
+
+.popup-postedBy:hover ~ .popuptext-postedBy {
+  visibility: visible;
+  animation: fadeIn 1s;
+}
+
+.popup-author:hover ~ .popuptext-author {
+  visibility: visible;
+  animation: fadeIn 1s;
+}
+
+.popup-title:hover ~ .popuptext-title {
+  visibility: visible;
+  animation: fadeIn 1s;
+}
+
+.search-options-label.checked{
+  border: 3px solid red;
+  padding: 3px;
+}
+
+.search-btn {
+  border: none;
+  background-color: transparent;
+  font-size: 1.3em;
+  cursor: pointer;
+}
+
+.main-input {
+  border: none;
+  font-size: 1.3em;
+  width: 90%;
+}
+
+.search-container {
+  display: inline-block;
+  padding: 6px 30px;
+  border: 1px solid black;
+  border-radius: 40px;
+  width: 50%;
+}
+
+.search-options-label {
+  color: grey;
+  font-size: 1.1em;
+  margin-left: 25px;
 }

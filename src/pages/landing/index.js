@@ -14,7 +14,7 @@ const Landing = () => {
             </div>
             <div className="line-third">
                 <p> Join them.</p>
-                <Link to='/home' ><i className="fas fa-book-open"></i></Link>
+                <Link to='/home' ><i className="fas fa-book-reader"></i></Link>
             </div>
         </div>
     )

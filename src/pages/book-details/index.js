@@ -24,6 +24,8 @@ const BookDetails = () => {
 	const [isUser, setIsUser] = useState(false);
 	const [isCreator, setIsCreator] = useState(false);
 	const [canVote, setCanVote] = useState(false);
+	const [canAdd, setCanAdd] = useState(false);
+
 
 	const [book, setBook] = useState({
 		id: "",
@@ -59,11 +61,18 @@ const BookDetails = () => {
 				setIsCreator(false)
 			}
 			if (Boolean(user.username) && user.username !== book.creator && !book.voted.includes(user.userId)) {
-				setCanVote(true)
+				setCanVote(true);
+			}
+			if (Boolean(user.username) && user.username !== book.creator) {
+				console.log(book);
+				const canAdd = await userService.checkBookInUserReadingList(user.userId, bookId);
+				console.log(canAdd);
+				setCanAdd(canAdd);
 			}
 
 			const comments = await getAllCommentsByBookId(bookId);
-			setComments(comments)
+			setComments(comments);
+
 		}
 		fetchData()
 	}, [bookId, user])
@@ -71,8 +80,9 @@ const BookDetails = () => {
 
 	const onClickAddBookHandler = async (e) => {
 		e.preventDefault();
-		await userService.updateUserReadingList(user.userId, bookId)
-		navigate(`/my-page/${user.userId}`)
+		await userService.updateUserReadingList(user.userId, bookId);
+		setCanAdd(false);
+		// navigate(`/my-page/${user.userId}`)
 	}
 
 	const onSubmitCommentHandler = async (e) => {
@@ -90,6 +100,20 @@ const BookDetails = () => {
 	// 	navigate('/books')
 	// }
 
+	const actionsAllowed=()=>{
+		if(isGuest){
+			return <Link className="join-link" to={'/register'}>JOIN US</Link>;
+		}
+		if(isCreator){
+			return <Link className="edit-link" to={`/books/${book.id}/edit`}>EDIT BOOK</Link>;
+		}
+		if(canAdd){
+			return <Link className="add-to-reading-list-link" to={`/books/${book.id}/add`} onClick={onClickAddBookHandler} >ADD TO YOUR LIST</Link>;
+		}else{
+			return <p className="added-to-reading-list">ADDED TO YOUR LIST</p>;
+		}
+	}
+
 	return (
 		<PageLayout>
 			<div className="book-details-container">
@@ -101,9 +125,9 @@ const BookDetails = () => {
 						<span><i className="far fa-user"></i>{book.creator}</span>
 						<span><i className="far fa-comment-alt"></i>{comments.length}</span>
 					</div>
-					{!canVote 
+					{!canVote
 						? <Star rating={book.rating} />
-						:null
+						: null
 					}
 					<div className="book-image">
 						<img src={book.imageUrl ? book.imageUrl : "/default_book.png"} alt="Book_cover" />
@@ -118,17 +142,6 @@ const BookDetails = () => {
 						{comments.length > 0
 							? comments.map(x => <CustomComment key={x.id} createdAt={x.createdAt} text={x.text} creator={x.creator} />)
 							: <p>No comments yet... Be the first one to comment!</p>}
-					</div>
-					<div className="book-actions">
-						{isCreator
-							? <Link className="edit-link" to={`/books/${book.id}/edit`}>EDIT BOOK</Link>
-							: null
-						}
-						{/* <Link className="delete-link" to={`/books/${book.id}/delete`}  onClick={onClickDeleteBookHandler}>DELETE</Link> */}
-						{isUser
-							? <Link className="add-to-reading-list-link" to={`/books/${book.id}/add`} onClick={onClickAddBookHandler} >ADD TO READING LIST</Link>
-							: null
-						}
 					</div>
 					<div className="book-rating">
 						{canVote
@@ -146,6 +159,21 @@ const BookDetails = () => {
 						</div>
 						: null
 					}
+				</div>
+				<div className="book-actions">
+					<div className="book-actions-icon">
+						<i className="far fa-calendar-check"></i>
+					</div>
+					{actionsAllowed()}
+					{/* {isCreator
+						? <Link className="edit-link" to={`/books/${book.id}/edit`}>EDIT BOOK</Link>
+						: null
+					}
+					<Link className="delete-link" to={`/books/${book.id}/delete`}  onClick={onClickDeleteBookHandler}>DELETE</Link>
+					{isUser && canAdd && !isCreator
+						? <Link className="add-to-reading-list-link" to={`/books/${book.id}/add`} onClick={onClickAddBookHandler} >ADD TO YOUR LIST</Link>
+						: <p className="added-to-reading-list">ADDED TO YOUR LIST</p>
+					} */}
 				</div>
 			</div>
 		</PageLayout>
