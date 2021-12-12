@@ -9,15 +9,25 @@ import { createBook } from "../../services/book";
 import AuthContext from "../../context/authContext";
 import { bookDataValidation } from "../../utils/validation";
 
+import Loader from "../../components/loader";
 import Category from "../../components/category";
 import PageLayout from "../../components/pageLayout";
+import ValidationError from "../../components/validationError";
 
+const initialValidationError={
+	title:null,
+	author:null,
+	image:null,
+	description:null,
+};
 
 const BookCreate = () => {
 	const navigate = useNavigate();
 	const { user } = useContext(AuthContext);
-
+	const [isLoading, setIsloading] = useState(false);
+	const [validationError, setValidationError] = useState(initialValidationError);
 	const [imagePreview, setImagePreview] = useState(DEFAULT_BOOK_URL);
+
 	const categories = [];
 
 	const onSubmitBookHandler = (e) => {
@@ -30,42 +40,56 @@ const BookCreate = () => {
 			category: categories,
 			image: data.get('image')
 		}
+		console.log(validationError);
+		if (validationError.title||validationError.description||validationError.image||validationError.author) {
+			return;
+		}
 		createBook(book)
 			.then(res => {
 				console.log(book);
 				navigate('/home')
 			})
 			.catch(err => console.log(err))
+
+		e.target.reset();
 	}
 
-	const onBlurInputHandler = (e) => {
+	const onBlurInputHandler = async (e) => {
 		e.preventDefault();
+		console.log(e.target);
 		const value = e.target.value;
 		const type = e.target.name;
+		console.log(value)
+		console.log(type)
+
 		const error = bookDataValidation(type, value);
+		setValidationError(prev=>({...prev,[type]:error}))
 		console.log(error);
 		if (error) {
-			return <p>{error}</p>
+			return;
 		}
 	}
 
 	const onChangeImageHandler = (e) => {
 		const value = e.target.files[0];
 		const error = bookDataValidation('image', (value || ''));
+		setValidationError(prev=>({...prev,'image':error}))
 		if (error) {
-			console.log(error);
 			return;
 		}
-		console.log(value);
-		!value
-			? setImagePreview(DEFAULT_BOOK_URL)
-			: uploadImage(value)
+		if (!value) {
+			setImagePreview(DEFAULT_BOOK_URL);
+		} else {
+			setIsloading(true);
+			uploadImage(value)
 				.then(url => {
-					setImagePreview(url)
+					setIsloading(false);
+					setImagePreview(url);
 				})
 				.catch(err => {
 					console.log(err);
 				})
+		}
 	}
 
 	return (
@@ -79,24 +103,40 @@ const BookCreate = () => {
 						<div className="title">
 							<input className="title-input" type="text" name="title" id="title" onBlur={onBlurInputHandler} />
 							<label htmlFor="title"><i className="fa fa-pen"></i>Title</label>
+							{validationError.title
+								? <ValidationError message={validationError.title} />
+								: null
+							}
 						</div>
 						<div className="author">
 							<input className="author-input" type="text" name="author" id="author" onBlur={onBlurInputHandler} />
 							<label htmlFor="title"><i className="fa fa-pen"></i>Author</label>
+							{validationError.author
+								? <ValidationError message={validationError.author} />
+								: null
+							}
 						</div>
 						<div className="default-image">
+							{isLoading ? <Loader /> : null}
 							<img src={imagePreview} alt="Book_Image" />
 						</div>
 						<div className="image">
 							<input className="image-input" type="file" accept="image/*" lang="en" name="image" id="image" onChange={onChangeImageHandler} />
-							{/* <input type="file" name="image" id="image" onChange={onImageChangeHandler} /> */}
 							<label htmlFor="image"><i className="fas fa-image"></i>Image</label>
+							{validationError.image
+								? <ValidationError message={validationError.image} />
+								: null
+							}
 						</div>
 					</div>
 					<div className="book-form-body-details">
 						<div className="description">
 							<textarea className="description-input" type="text" name="description" id="description" cols="50" rows="12" onBlur={onBlurInputHandler} />
 							<label htmlFor="description"><i className="fa fa-pen"></i>Description</label>
+							{validationError.description
+								? <ValidationError message={validationError.description} />
+								: null
+							}
 						</div>
 						<Category selectedCategories={categories} />
 					</div>
