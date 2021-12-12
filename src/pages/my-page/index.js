@@ -10,12 +10,14 @@ import AuthContext from "../../context/authContext";
 import Title from "../../components/title";
 import PageLayout from "../../components/pageLayout";
 import BookCardLite from '../../components/book-card-lite';
+import Loader from '../../components/loader';
 
 let pagesCounter = 1;
 
 const MyPage = () => {
 	const { userId } = useParams();
 	const { user } = useContext(AuthContext);
+	const [isLoading, setIsloading] = useState(false);
 	const [readingList, setReadingList] = useState([]);
 	const [viewReadingList, setViewReadingList] = useState([]);
 	const [totalPages, setTotalPages] = useState(0);
@@ -25,7 +27,9 @@ const MyPage = () => {
 
 	useEffect(() => {
 		const fetchData = async () => {
+			setIsloading(true);
 			const fetchedReadingListData = await userService.getUserReadingList(userId);
+			setIsloading(false);
 			const pages = Math.ceil(fetchedReadingListData.length / 3);
 			setTotalPages(pages);
 			if (pages > 1) {
@@ -70,6 +74,7 @@ const MyPage = () => {
 				</div>
 				<div className="my-page-reading-list">
 					<h3 className="my-page-reading-list-title">MY READING LIST</h3>
+					{isLoading ? <Loader /> : null}
 					{readingList.length > 0
 						? <>
 							<div className="my-page-reading-list-items-container">

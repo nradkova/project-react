@@ -1,16 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 
 import './index.css';
 
-import { getAllBooks } from "../../services/book";
+import AuthContext from "../../context/authContext";
+import { searchDataValidation } from "../../utils/validation";
+import { getAllBooks, getBooksByAuthor, getBooksByCategory, getBooksByCreator, getBooksByTitle } from "../../services/book";
 
 import Title from "../../components/title";
 import PageLayout from "../../components/pageLayout";
 import BookCardMedium from "../../components/book-card-medium";
-import { Link } from "react-router-dom";
+import ValidationError from "../../components/validationError";
+import Loader from "../../components/loader";
 
 const Books = () => {
-  const [books, setBooks] = useState([])
+  const { user } = useContext(AuthContext);
+  const [books, setBooks] = useState([]);
+  const [isLoading, setIsloading] = useState(false);
+  const [validationError, setValidationError] = useState(null);
+  const [searchMessage, setSearchMessage] = useState(null);
+
 
   useEffect(() => {
     getAllBooksHandler()
@@ -18,75 +27,117 @@ const Books = () => {
 
 
   const getAllBooksHandler = async () => {
-    const res = await getAllBooks();
-    console.log(res);
-    setBooks(res)
+    // const res = await getAllBooks();
+    // console.log(res);
+    // setBooks(res)
+    setBooks([])
+
   }
 
-  const onSubmitSearchHandler=(e)=>{
+  const onSubmitSearchHandler = async (e) => {
     e.preventDefault();
-    const data =new FormData(e.target);
-    const [value,category]=Array.from( data.values());
-    console.log(value);
-    console.log(category);
+    const formData = new FormData(e.target);
+    const search = formData.get('search');
+    const criteria = formData.get('criteria');
+	setBooks([]);
+	const error=searchDataValidation(criteria, search)
+    setValidationError(error);
+    if (error) {
+      return;
+    }
+
+    setIsloading(true);
+
+    if (criteria === 'postedBy') {
+      const data = await getBooksByCreator(search);
+      setIsloading(false);
+      setBooks(data);
+      setSearchMessage({ criteria: 'users', search });
+    }
+    if (criteria === 'category') {
+      const data = await getBooksByCategory(search);
+      setIsloading(false);
+      setBooks(data);
+      setSearchMessage({ criteria: 'books categories', search });
+    }
+    if (criteria === 'author') {
+      const data = await getBooksByAuthor(search);
+      setIsloading(false);
+      setBooks(data);
+      setSearchMessage({ criteria: 'books authors', search });
+    }
+    if (criteria === 'title') {
+      const data = await getBooksByTitle(search);
+      setIsloading(false);
+      setBooks(data);
+      setSearchMessage({ criteria: 'books titles', search });
+    }
     e.target.reset();
   }
 
-  const onClickInputHandler=(e)=>{
-    const inputClass=e.target.parentNode.getAttribute('class');
-    console.log(e.target.parentNode.getAttribute('class'));
-   if(inputClass.includes('checked')){
-     e.target.parentNode.classList.remove('checked');
-   }else{
-    e.target.parentNode.classList.add('checked');
-   }
-    console.log(e.target.parentNode);
+  const onClickMyPostsHandler = async () => {
+    setIsloading(true);
+    const data = await getBooksByCreator(user.username);
+    setIsloading(false);
+    setBooks(data);
   }
+
+  const searchMyPosts = (
+    <div className="search-my-posts">
+      <div className="search-my-posts-icon">
+        <i className="far fa-calendar-check"></i>
+        <span className="search-my-posts-action" onClick={onClickMyPostsHandler} >MY POSTS</span>
+      </div>
+    </div>
+  )
 
   return (
     <PageLayout>
       <Title title="Books" />
+      {user.username && searchMyPosts}
       <div className="all-books-container">
         <div className="search-container">
           <form action="" onSubmit={onSubmitSearchHandler}>
-            <input className="main-input" type="text" placeholder="Search by key and criteria..." name="search" /><button className="search-btn" type="submit"> <i className="fa fa-search"></i></button>
+            <input className="main-input" type="text" placeholder="Search by key and criteria..." name="search" />
             <div className="search-options-list">
-              <div className="search-option popup-postedBy">
-                <label className="search-options-label">
-                  <input type="radio" className="popup-postedBy" name="search" defaultValue="postedBy" onClick={onClickInputHandler}/>
-                  <i className="far fa-id-badge"></i>
-                  <span className="popuptext-postedBy">POSTED BY</span>
-                </label>
-              </div>
               <div className="search-option popup-title">
-                <label className="search-options-label">
-                  <input type="radio" className="popup-title" name="search" defaultValue="title"  onClick={onClickInputHandler}/>
+                <label className="search-options-label-title">
+                  <input type="radio" className="popup-title" name="criteria" defaultValue="title" />
                   <i className="far fa-bookmark"></i>
-                  <span className="popuptext-title">TITLE</span>
+                  <span className="popuptext-title">BY TITLE</span>
                 </label>
               </div>
               <div className="search-option popup-author">
-                <label className="search-options-label">
-                  <input type="radio" className="popup-author" name="search" defaultValue="author"  onClick={onClickInputHandler}/>
+                <label className="search-options-label-author">
+                  <input type="radio" className="popup-author" name="criteria" defaultValue="author" />
                   <i className="far fa-edit"></i>
                   <span className="popuptext-author">BY AUTHOR</span>
                 </label>
               </div>
               <div className="search-option popup-category">
-                <label className="search-options-label">
-                  <input type="radio" className="popup-category" name="search" defaultValue="category" onClick={onClickInputHandler} />
+                <label className="search-options-label-category">
+                  <input type="radio" className="popup-category" name="criteria" defaultValue="category" />
                   <i className="fas fa-list-ul"></i>
                   <span className="popuptext-category">BY CATEGORY</span>
                 </label>
               </div>
+              <div className="search-option popup-postedBy">
+                <label className="search-options-label-postedBy">
+                  <input type="radio" className="popup-postedBy" name="criteria" defaultValue="postedBy" />
+                  <i className="far fa-id-badge"></i>
+                  <span className="popuptext-postedBy">POSTED BY</span>
+                </label>
+              </div>
             </div>
+            <button className="search-btn" type="submit"> <i className="fa fa-search"></i></button>
           </form>
+          {validationError && <ValidationError message={validationError} />}
         </div>
-        {/* <div className="all-books-seach">
-          <button className="search-my-books-posts" ><i className="fas fa-check"></i>POSTED BY ME</button>
-          <button className="search-by-date" ><i className="fas fa-check"></i>BY DATE</button>
-          <button className="search-by-date" to="/events/create"><i className="fas fa-check"></i>POST NEW EVENT</button>
-        </div> */}
+        {isLoading ? <Loader /> : null}
+        {searchMessage
+          ? <p className="search-message">Found &nbsp; <strong>{books.length}</strong>	&nbsp; search results for	&nbsp; <strong>{searchMessage.search}</strong>	&nbsp; in 	&nbsp;<strong>{searchMessage.criteria}</strong>	&nbsp;</p>
+          : null
+        }
         <div className="books-inner-container">
           {books.map(x => <BookCardMedium key={x.id} id={x.id} imageUrl={x.imageUrl} title={x.title} author={x.author} rating={x.rating} />)}
         </div>

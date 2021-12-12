@@ -1,96 +1,54 @@
-import { useState, useEffect, useContext } from "react";
-import { useNavigate,useParams } from "react-router-dom";
-import Category from "../../components/category";
-import PageLayout from "../../components/pageLayout";
-import AuthContext from "../../context/authContext";
-import { createBook, getBookById } from "../../services/book";
+import { useEffect, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import './index.css';
+
+import useBookForm from "../../hooks/useBookForm";
+import AuthContext from "../../context/authContext";
+
+import Category from "../../components/category";
+import Loader from "../../components/loader";
+import PageLayout from "../../components/pageLayout";
+import ValidationError from "../../components/validationError";
+
 
 const BookEdit = () => {
 	const navigate = useNavigate();
 	const { user } = useContext(AuthContext);
-	const { bookId } = useParams()
-	const [book, setBook] = useState({
-		id: "",
-		title: "",
-		author: "",
-		description: "",
-		imageUrl: "",
-		rating: "",
-		createdAt: ""
-	})
+	const { bookId } = useParams();
+
+	const categories=[];
+	
+	const {
+		bookValue: book,
+		isLoading,
+		isImageLoading,
+		isSuccess,
+		validationError,
+		imagePreview,
+		onChangeImageHandler,
+		onChangeInputHandler,
+		onSubmitBookEditHandler,
+		setInitialBookEditValue,
+	} = useBookForm(categories);
 
 	useEffect(() => {
-		async function fetchData() {
-			const res = await getBookById(bookId);
-			setBook(res)
-			// setBook({
-			// 	title: "VDFSGVFSD SDFSDFSF",
-			// 	author: " ASDAD FD  ERERE",
-			// 	description: "FGFSDGFS SFGFSDGSG SFGSG ",
-			// 	imageUrl: "https://res.cloudinary.com/dah8nslpd/image/upload/v1638182308/books/a-book-gd09600698_640_nv8vzp.png",
-			// 	rating: 5,
-			// 	createdAt: "November 24,2021",
-			// 	creator:"David"
-			// })
+		if (isSuccess) {
+			navigate('/home');
 		}
-		fetchData()
-	}, [bookId])
-	// const [categories, setCategories] = useState([]);
-	const categories=[];
+	}, [isSuccess, navigate])
 
-	const onBookSubmitHandler = (e) => {
-		e.preventDefault();
-		console.log(categories);
-		const data = new FormData(e.target)
-		const book = {
-			title: data.get('title'),
-			author: data.get('author'),
-			description: data.get('description'),
-			category: categories,
-			image:data.get('image')
-		}
-		createBook(book)
-			.then(res => {
-				console.log(book);
-				navigate('/home')
-			})
-			.catch(err=>console.log(err))
+	useEffect(() => {
+		setInitialBookEditValue(bookId)
+	}, [bookId, setInitialBookEditValue])
+	
+	if (isLoading) {
+		return (
+			<PageLayout>
+				<Loader />
+			</PageLayout>
+		)
 	}
-
-
-	// const onCategoryBlurHandler = (e) => {
-	// 	e.preventDefault();
-	// 	const updated = categories.slice();
-	// 	const value = e.target.value;
-	// 	if (value && !updated.includes(value)) {
-	// 		updated.push(value);
-	// 	}
-	// 	setCategories(updated);
-	// 	e.target.value = '';
-	// }
-
-	// const onCategoryClickHandler = (e) => {
-	// 	const value = e.target.value;
-
-	// 	const updated = categories.slice();
-
-	// 	updated.splice(updated.indexOf(value), 1)
-	// 	setCategories(updated)
-	// }
-
-	// const onImageChangeHandler=async(e)=>{
-	// 	const apiUrl="https://api.cloudinary.com/v1_1/dah8nslpd/image/upload";
-	// 	const files=e.target.files;
-	// 	const data=new FormData();
-	// 	data.append('file',files[0]);
-	// 	data.append("upload_preset","ReadAloud");
-
-	// 	const res=await fetch(apiUrl,{method:"POST",body:data})
-	// 	const result=await res.json();
-	// 	console.log(result.url);
-	// }
 
 	return (
 		<PageLayout>
@@ -98,31 +56,34 @@ const BookEdit = () => {
 				<div className="book-form-title">
 					<h3><i className="fa fa-arrow-right"></i>Edit book</h3>
 				</div>
-				<form className="book-form-body" onSubmit={onBookSubmitHandler}>
+				<form className="book-form-body" onSubmit={onSubmitBookEditHandler}>
 					<div className="book-form-body-main">
 						<div className="title">
-							<input className="title-input" type="text" name="title" id="title" value={book.title} />
+							<input className="title-input" type="text" name="title" id="title" defaultValue={book.title} onChange={onChangeInputHandler} />
 							<label htmlFor="title"><i className="fa fa-pen"></i>Title</label>
+							{validationError.title && <ValidationError message={validationError.title} />}
 						</div>
 						<div className="author">
-							<input className="author-input" type="text" name="author" id="author" value={book.author} />
+							<input className="author-input" type="text" name="author" id="author" defaultValue={book.author} onChange={onChangeInputHandler} />
 							<label htmlFor="title"><i className="fa fa-pen"></i>Author</label>
+							{validationError.author && <ValidationError message={validationError.author} />}
 						</div>
 						<div className="default-image">
-							<img src={book.imageUrl} alt="" />
+							{isImageLoading ? <Loader /> : <img src={imagePreview} alt="Book_Image" />}
 						</div>
 						<div className="image">
-							<input className="image-input" type="file" name="image" id="image" />
-							{/* <input type="file" name="image" id="image" onChange={onImageChangeHandler} /> */}
+							<input className="image-input" type="file" accept="image/*" lang="en" name="imageUrl" id="imageUrl"  onChange={onChangeImageHandler} />
 							<label htmlFor="image"><i className="fas fa-image"></i>Image</label>
+							{validationError.image && <ValidationError message={validationError.image} />}
 						</div>
 					</div>
 					<div className="book-form-body-details">
 						<div className="description">
-							<textarea className="description-input" type="text" name="description" id="description" cols="50" rows="12" value={book.description} />
+							<textarea className="description-input" type="text" name="description" id="description" cols="50" rows="12" defaultValue={book.description} onChange={onChangeInputHandler} />
 							<label htmlFor="description"><i className="fa fa-pen"></i>Description</label>
+							{validationError.description && <ValidationError message={validationError.description} />}
 						</div>
-						<Category selectedCategories={categories}/>
+						<Category selectedCategories={categories} />
 						{/* <div className="category">
 							<input className="category-input" type="text" name="category" id="category" onBlur={onCategoryBlurHandler} />
 							<span className="add-category"><i className="fa fa-pen"></i> Add category</span>
@@ -137,7 +98,7 @@ const BookEdit = () => {
 							<h3>{user.username}</h3>
 						</div>
 						<div className="action">
-							<button className="action-btn" type="submit">Add to books</button>
+							<button className="action-btn" type="submit">Edit book</button>
 						</div>
 					</div>
 				</form>

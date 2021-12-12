@@ -9,6 +9,7 @@ import AuthContext from "../../context/authContext";
 import { createBookComment, getAllCommentsByBookId } from "../../services/comment";
 
 import Star from "../../components/star";
+import Loader from "../../components/loader";
 import Rating from "../../components/rating";
 import CustomComment from "../../components/comment";
 import PageLayout from "../../components/pageLayout";
@@ -19,6 +20,8 @@ const BookDetails = () => {
 	const navigate = useNavigate();
 	const { user } = useContext(AuthContext);
 	const { bookId } = useParams();
+
+	const [isLoading, setIsloading] = useState(false);
 
 	const [isGuest, setIsGuest] = useState(true);
 	const [isUser, setIsUser] = useState(false);
@@ -45,8 +48,10 @@ const BookDetails = () => {
 
 	useEffect(() => {
 		async function fetchData() {
+			setIsloading(true);
 			const book = await getBookById(bookId);
-			setBook(book)
+			setIsloading(false);
+			setBook(book);
 			if (user.username === book.creator) {
 				setIsCreator(true);
 				setIsUser(false);
@@ -64,12 +69,9 @@ const BookDetails = () => {
 				setCanVote(true);
 			}
 			if (Boolean(user.username) && user.username !== book.creator) {
-				console.log(book);
 				const canAdd = await userService.checkBookInUserReadingList(user.userId, bookId);
-				console.log(canAdd);
 				setCanAdd(canAdd);
 			}
-
 			const comments = await getAllCommentsByBookId(bookId);
 			setComments(comments);
 
@@ -100,18 +102,26 @@ const BookDetails = () => {
 	// 	navigate('/books')
 	// }
 
-	const actionsAllowed=()=>{
-		if(isGuest){
+	const actionsAllowed = () => {
+		if (isGuest) {
 			return <Link className="join-link" to={'/register'}>JOIN US</Link>;
 		}
-		if(isCreator){
+		if (isCreator) {
 			return <Link className="edit-link" to={`/books/${book.id}/edit`}>EDIT BOOK</Link>;
 		}
-		if(canAdd){
+		if (canAdd) {
 			return <Link className="add-to-reading-list-link" to={`/books/${book.id}/add`} onClick={onClickAddBookHandler} >ADD TO YOUR LIST</Link>;
-		}else{
+		} else {
 			return <p className="added-to-reading-list">ADDED TO YOUR LIST</p>;
 		}
+	}
+
+	if(isLoading){
+		return (
+			<PageLayout>
+				<Loader/>
+			</PageLayout>
+		)
 	}
 
 	return (

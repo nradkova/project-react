@@ -7,6 +7,49 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  padding: 15px 30px;
+  justify-content: space-evenly;
+  margin-top: 2%;
+}
+
+.search-container {
+  display: inline-block;
+  padding: 6px 30px;
+  border: 1px solid black;
+  border-radius: 40px;
+  width: 50%;
+}
+
+.main-input {
+  border: none;
+  font-size: 1.3em;
+  width: 70%;
+}
+
+.search-options-list{
+  display: inline;
+}
+
+.search-btn {
+  border: none;
+  background-color: transparent;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: darkgrey;
+  margin-left: 22px;
+}
+
+.search-btn:hover {
+  color: red;
+}
+
+.search-options-label-title,
+.search-options-label-category,
+.search-options-label-author,
+.search-options-label-postedBy {
+  color: grey;
+  font-size: 1.1em;
+  margin-left: 25px;
 }
 
 .popup-author,
@@ -52,54 +95,44 @@
   border-color: #555 transparent transparent transparent;
 }
 
-.popup-category:hover ~ .popuptext-category {
+.popup-category:hover ~ .popuptext-category,
+.popup-postedBy:hover ~ .popuptext-postedBy,
+.popup-author:hover ~ .popuptext-author,
+.popup-title:hover ~ .popuptext-title{
   visibility: visible;
   animation: fadeIn 1s;
 }
 
-.popup-postedBy:hover ~ .popuptext-postedBy {
-  visibility: visible;
-  animation: fadeIn 1s;
+input.popup-title:checked ~ i.fa-bookmark,
+input.popup-postedBy:checked ~ i.fa-id-badge,
+input.popup-category:checked ~ i.fa-list-ul,
+input.popup-author:checked ~ i.fa-edit{
+  color: red;
+  background-color: lightgrey;
 }
 
-.popup-author:hover ~ .popuptext-author {
-  visibility: visible;
-  animation: fadeIn 1s;
-}
-
-.popup-title:hover ~ .popuptext-title {
-  visibility: visible;
-  animation: fadeIn 1s;
-}
-
-.search-options-label.checked{
-  border: 3px solid red;
-  padding: 3px;
-}
-
-.search-btn {
-  border: none;
-  background-color: transparent;
+.search-message{
+  text-align: left;
   font-size: 1.3em;
-  cursor: pointer;
-}
-
-.main-input {
-  border: none;
-  font-size: 1.3em;
-  width: 90%;
-}
-
-.search-container {
-  display: inline-block;
-  padding: 6px 30px;
-  border: 1px solid black;
-  border-radius: 40px;
-  width: 50%;
-}
-
-.search-options-label {
+  padding-left: 50px;
   color: grey;
-  font-size: 1.1em;
-  margin-left: 25px;
+}
+
+.search-message strong{
+  color: cadetblue;
+  font-size: 1.4em;
+}
+
+.search-my-posts{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 0px 50px;
+}
+
+.search-my-posts-action{
+ display: block;
+ cursor: pointer;
+ color: rgb(135, 165, 167);
+ font-weight: bold;
 }

@@ -3,8 +3,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(239, 231, 229);
-  /* background-color: rgb(236, 237, 227); */
+  /* background-color: rgb(239, 231, 229); */
+  background-color: rgb(236, 237, 227);
 
   padding: 2% 2%;
 }
