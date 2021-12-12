@@ -1,22 +1,23 @@
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from "react";
 
 import './index.css';
 
-import userService from "../../services/user";
+import authServices from '../../services/user';
 import AuthContext from "../../context/authContext";
 
 import Title from "../../components/title";
+import Loader from '../../components/loader';
 import PageLayout from "../../components/pageLayout";
 import BookCardLite from '../../components/book-card-lite';
-import Loader from '../../components/loader';
 
 let pagesCounter = 1;
 
 const MyPage = () => {
 	const { userId } = useParams();
 	const { user } = useContext(AuthContext);
+	const [update, setUpdate] = useState(false);
 	const [isLoading, setIsloading] = useState(false);
 	const [readingList, setReadingList] = useState([]);
 	const [viewReadingList, setViewReadingList] = useState([]);
@@ -27,20 +28,27 @@ const MyPage = () => {
 
 	useEffect(() => {
 		const fetchData = async () => {
+
 			setIsloading(true);
-			const fetchedReadingListData = await userService.getUserReadingList(userId);
+			const fetchedReadingListData = await authServices.getUserReadingList(userId);
 			setIsloading(false);
+			console.log(fetchedReadingListData);
 			const pages = Math.ceil(fetchedReadingListData.length / 3);
 			setTotalPages(pages);
+			console.log(pages);
 			if (pages > 1) {
 				setIsDisabledIncreaseButton(false);
+			}else{
+				setIsDisabledIncreaseButton(true);
+				setIsDisabledDecreaseButton(true);
+				pagesCounter=1;
 			}
 			setReadingList(fetchedReadingListData);
 			setViewReadingList(fetchedReadingListData.slice(0, 3))
 		}
 		fetchData()
 
-	}, [userId])
+	}, [userId,update])
 
 	const increaseCounter = () => {
 		pagesCounter++;
@@ -60,6 +68,19 @@ const MyPage = () => {
 		setIsDisabledIncreaseButton(false);
 	}
 
+	const onClickRemoveBook = async (e, bookId) => {
+		e.preventDefault();
+		const isRemoved = await authServices.removeBookFromUserReadingList(userId, bookId);
+		setUpdate(isRemoved);
+	}
+
+	if (isLoading) {
+		return (
+			<PageLayout>
+				<Loader />
+			</PageLayout>
+		)
+	}
 	return (
 		<PageLayout>
 			<Title title={user.username.toLocaleUpperCase() + ' \'s page'} />
@@ -74,13 +95,12 @@ const MyPage = () => {
 				</div>
 				<div className="my-page-reading-list">
 					<h3 className="my-page-reading-list-title">MY READING LIST</h3>
-					{isLoading ? <Loader /> : null}
 					{readingList.length > 0
 						? <>
 							<div className="my-page-reading-list-items-container">
 								<button className="prev" disabled={isDisabledDecreaseButton} onClick={decreaseCounter}>&#10094;</button>
 								<div className="my-page-reading-list-items">
-									{viewReadingList.map(x => <BookCardLite key={x.id} userId={userId} bookId={x.id} imageUrl={x.imageUrl} title={x.title} author={x.author}/>)}
+									{viewReadingList.map(x => <BookCardLite onClickRemoveBook={(e) => onClickRemoveBook(e, x.id)} key={x.id} userId={userId} bookId={x.id} imageUrl={x.imageUrl} title={x.title} author={x.author} />)}
 								</div>
 								<button className="next" disabled={isDisabledIncreaseButton} onClick={increaseCounter}>&#10095;</button>
 							</div>

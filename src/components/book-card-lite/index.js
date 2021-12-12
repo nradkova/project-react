@@ -1,9 +1,14 @@
 import { Link } from 'react-router-dom'
+import authServices from '../../services/user';
 import Star from '../star';
 import './index.css'
 
-const BookCardLite = ({ userId,bookId, imageUrl, title, author}) => {
+const BookCardLite = ({onClickRemoveBook, userId,bookId, imageUrl, title, author}) => {
 
+    // const onClickRemoveBook=async(e)=>{
+    //     const removed=await authServices.removeBookFromUserReadingList(userId,bookId);
+    //     console.log(removed);
+    // }
     return (
         <div className="book-card-lite">
             <span className="book-card-lite-img">
@@ -20,7 +25,8 @@ const BookCardLite = ({ userId,bookId, imageUrl, title, author}) => {
                 <div className="book-card-lite-content-actions">
                 <Link className="details-link-lite" to={`/books/${bookId}`}>VIEW</Link>
                 <span className='slash-span'>&#47;</span>
-                <Link className="delete-link-lite" to={`/my-page/${userId}/book-remove/${bookId}`}>REMOVE</Link>
+                {/* <Link className="delete-link-lite" to={`/my-page/${userId}/book-remove/${bookId}`}>REMOVE</Link> */}
+                <Link className="delete-link-lite" to={`/my-page/${userId}/book-remove/${bookId}`} onClick={onClickRemoveBook}>REMOVE</Link>
                 </div>
             </div>
         </div>

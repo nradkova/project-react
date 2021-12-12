@@ -124,6 +124,31 @@ const checkBookInUserReadingList = async (userId,bookId) => {
 	}
 }
 
+const removeBookFromUserReadingList = async (userId,bookId) => {
+	const book = new Parse.Object('Book');
+	book.id = bookId;
+
+	const User = new Parse.User();
+	const query = new Parse.Query(User);
+
+	try {
+		const user = await query.get(userId);
+		try {
+			const relation = user.relation('readingList')
+			relation.remove(book);
+			await user.save();
+			console.log('Updated user');
+			return true; 
+		} catch (error) {
+			console.error('Error while updating user', error);
+		}
+
+	} catch (error) {
+		console.error('Error while retrieving user', error);
+	}
+}
+
+
 
 const authServices = {
 	login,
@@ -131,7 +156,8 @@ const authServices = {
 	logout,
 	updateUserReadingList,
 	getUserReadingList,
-	checkBookInUserReadingList
+	checkBookInUserReadingList,
+	removeBookFromUserReadingList
 }
 
 export default authServices;

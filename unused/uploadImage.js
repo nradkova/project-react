@@ -1,4 +1,4 @@
-import cloudinary from "../config/cloudinary";
+import cloudinary from "../src/config/cloudinary";
 
 function uploadToCloudinary(image) {
     return new Promise((resolve, reject) => {

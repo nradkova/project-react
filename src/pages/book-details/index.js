@@ -27,7 +27,7 @@ const BookDetails = () => {
 	const [isUser, setIsUser] = useState(false);
 	const [isCreator, setIsCreator] = useState(false);
 	const [canVote, setCanVote] = useState(false);
-	const [canAdd, setCanAdd] = useState(false);
+	const [canAdd, setCanAdd] = useState(true);
 
 
 	const [book, setBook] = useState({

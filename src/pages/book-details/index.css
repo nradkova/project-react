@@ -149,5 +149,6 @@
 }
 
 .added-to-reading-list{
-  color: rgb(135, 165, 167);
+  /* color: rgb(135, 165, 167); */
+  color: darkslateblue;
 }
