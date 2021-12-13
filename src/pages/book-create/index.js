@@ -30,7 +30,7 @@ const BookCreate = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
-			navigate('/home');
+			navigate('/books');
 		}
 	}, [isSuccess, navigate])
 

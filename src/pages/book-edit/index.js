@@ -34,7 +34,7 @@ const BookEdit = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
-			navigate('/home');
+			navigate('/books');
 		}
 	}, [isSuccess, navigate])
 

@@ -1,24 +1,28 @@
-const userDataValidation = (input) => {
-    let errors = {};
-
-    if (input.username.trim().length < 6 || input.username.trim().length > 15) {
-        errors.username = "Username must be between 6 and 15 characters long.";
-    }
-    if (input.password.trim().length < 6 || input.password.trim().length > 12) {
-        errors.password = "Password must be between 6 and 12 characters long.";
+const userDataValidation = (type,value,check) => {
+    if(type==="username"){
+        if (value.trim().length < 5 || value.trim().length > 15) {
+           return "Username must be between 5 and 15 characters long.";
+        }
     }
 
-    if (input.password !== input.rePassword) {
-        errors.noMatch = "Passwords don't match.";
+    if(type==="password"){
+        if (value.trim().length < 6 || value.trim().length > 12) {
+            return "Password must be between 6 and 12 characters long.";
+        }
+    }
+    
+    if(type==="rePass"){
+        if (value !== check) {
+            return "Passwords don't match.";
+        }
     }
 
-    return Object.keys(errors).length === 0 ? null : errors;
+    return null;
 }
 
 const bookDataValidation = (type, value) => {
 
     if (type === "title") {
-        console.log(type);
         if (value.trim().length < 2) {
             console.log(value);
             return " Book title must be at least 2 characters."

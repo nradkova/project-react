@@ -12,7 +12,7 @@ const useLocalStorage = (key, value) => {
             return value;
         } catch (error) {
             console.log(error.message);
-            throw error;
+            return value;
         }
     })
 

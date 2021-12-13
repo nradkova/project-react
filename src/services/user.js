@@ -4,16 +4,19 @@ const login = async (authData) => {
 	const { username, password } = authData;
 
 	try {
-		const res = await Parse.User.logIn(username, password);
+		const res = await Parse.User.logIn(username.toLocaleLowerCase(), password);
 		console.log('Logged in user');
+		console.log(res);
 		return {
 			userId: res.id,
 			username: res.get('username'),
 			sessionToken: res.get('sessionToken')
 		}
 	} catch (error) {
+		if(error.message==='Invalid username/password.'){
+			throw error;
+		}
 		console.log('Error while logging in user', error);
-		throw error;
 	}
 }
 
@@ -21,7 +24,7 @@ const register = async (authData) => {
 	const { username, password } = authData;
 
 	const user = new Parse.User();
-	user.set('username', username);
+	user.set('username', username.toLocaleLowerCase());
 	user.set('password', password);
 
 	try {
@@ -51,6 +54,20 @@ const logout = async () => {
 	}
 }
 
+const checkUserExists = async (username) => {
+	const User = new Parse.User();
+	const query = new Parse.Query(User);
+	query.equalTo('username', username.toLocaleLowerCase());
+
+	try {
+		const res = await query.first();
+		console.log(res);
+		return res;
+	} catch (error) {
+		console.error('Error while retrieving user', error);
+	}
+}
+
 const updateUserReadingList = async (userId, bookId) => {
 	const book = new Parse.Object('Book');
 	book.id = bookId;
@@ -72,7 +89,6 @@ const updateUserReadingList = async (userId, bookId) => {
 	} catch (error) {
 		console.error('Error while retrieving user', error);
 	}
-
 }
 
 const getUserReadingList = async (userId) => {
@@ -84,7 +100,6 @@ const getUserReadingList = async (userId) => {
 		try {
 			const relation = user.relation('readingList');
 			const data = await relation.query().find();
-			//TODO: INNER QUERY
 			const results = data.map(x => {
 				return {
 					id: x.id,
@@ -102,7 +117,7 @@ const getUserReadingList = async (userId) => {
 	}
 }
 
-const checkBookInUserReadingList = async (userId,bookId) => {
+const checkBookInUserReadingList = async (userId, bookId) => {
 	const User = new Parse.User();
 	const query = new Parse.Query(User);
 	try {
@@ -112,7 +127,7 @@ const checkBookInUserReadingList = async (userId,bookId) => {
 			const data = await relation.query().find();
 			const results = data.map(x => x.id);
 			console.log(results);
-			if(results.includes(bookId)){
+			if (results.includes(bookId)) {
 				return false;
 			}
 			return true;
@@ -124,7 +139,7 @@ const checkBookInUserReadingList = async (userId,bookId) => {
 	}
 }
 
-const removeBookFromUserReadingList = async (userId,bookId) => {
+const removeBookFromUserReadingList = async (userId, bookId) => {
 	const book = new Parse.Object('Book');
 	book.id = bookId;
 
@@ -138,7 +153,7 @@ const removeBookFromUserReadingList = async (userId,bookId) => {
 			relation.remove(book);
 			await user.save();
 			console.log('Updated user');
-			return true; 
+			return true;
 		} catch (error) {
 			console.error('Error while updating user', error);
 		}
@@ -154,6 +169,7 @@ const authServices = {
 	login,
 	register,
 	logout,
+	checkUserExists,
 	updateUserReadingList,
 	getUserReadingList,
 	checkBookInUserReadingList,

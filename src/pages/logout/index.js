@@ -14,7 +14,6 @@ const Logout = () => {
   const navigate = useNavigate();
 
   const onSubmitLogoutHandler = (e) => {
-    // e.preventDefault();
     userService.logout()
       .then(() => {
         logout()

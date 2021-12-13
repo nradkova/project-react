@@ -81,6 +81,7 @@ const MyPage = () => {
 			</PageLayout>
 		)
 	}
+	
 	return (
 		<PageLayout>
 			<Title title={user.username.toLocaleUpperCase() + ' \'s page'} />

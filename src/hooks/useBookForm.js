@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-import { DEFAULT_BOOK_URL } from '../common';
+import { DEFAULT_BOOK_URL, INITIAL_BOOK_VALIDATION_ERROR, INITIAL_BOOK_VALUE } from '../common';
 
 import uploadImage from '../services/image';
 import { bookDataValidation } from '../utils/validation';
@@ -8,29 +8,12 @@ import { createBook, editBook, getBookById } from '../services/book';
 
 const useBookForm = (categories) => {
 
-    const initialBookValue = {
-        id: "",
-        title: "",
-        author: "",
-        description: "",
-        imageUrl: "",
-        rating: "",
-        createdAt: "",
-        categories:[]
-    }
-
-    const initialValidationError = {
-        title: null,
-        author: null,
-        image: null,
-        description: null,
-    };
 
     const [isLoading, setIsloading] = useState(false);
     const [isImageLoading, setIsImageloading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
-    const [bookValue, setBookValue] = useState(initialBookValue);
-    const [validationError, setValidationError] = useState(initialValidationError);
+    const [bookValue, setBookValue] = useState(INITIAL_BOOK_VALUE);
+    const [validationError, setValidationError] = useState(INITIAL_BOOK_VALIDATION_ERROR);
     const [imagePreview, setImagePreview] = useState(DEFAULT_BOOK_URL);
 
 
@@ -51,8 +34,8 @@ const useBookForm = (categories) => {
         createBook(book)
             .then(res => {
                 setIsloading(true);
+                setBookValue(prev=>({...prev,res}));
                 setIsSuccess(true);
-                setBookValue(pre=>({...pre,res}))
             })
             .catch(err => console.log(err))
 
@@ -76,8 +59,8 @@ const useBookForm = (categories) => {
         editBook(bookValue.id,book)
             .then(res => {
                 setIsloading(true);
+                setBookValue(prev=>({...prev,res}));
                 setIsSuccess(true);
-                setBookValue(pre=>({...pre,res}))
             })
             .catch(err => console.log(err))
 
@@ -85,7 +68,6 @@ const useBookForm = (categories) => {
     }
 
     const onBlurInputHandler = (e) => {
-        e.preventDefault();
         const value = e.target.value;
         const type = e.target.name;
 
@@ -97,7 +79,6 @@ const useBookForm = (categories) => {
     }
 
     const onChangeInputHandler = (e) => {
-        e.preventDefault();
         const value = e.target.value;
         const type = e.target.name;
 
@@ -143,10 +124,10 @@ const useBookForm = (categories) => {
     }, [])
 
     const bookFormReset = () => {
-        setValidationError(initialValidationError);
+        setValidationError(INITIAL_BOOK_VALIDATION_ERROR);
         setIsloading(false);
         setIsSuccess(false);
-        setBookValue(initialBookValue);
+        setBookValue(INITIAL_BOOK_VALUE);
         setImagePreview(DEFAULT_BOOK_URL);
     }
 

@@ -1,6 +1,5 @@
 import Parse from "../config/server";
 
-import uploadImage from "./image";
 import { createBookRating, getRatingByBookId } from "./rating";
 
 const getAllBooks = async function () {
@@ -72,7 +71,7 @@ const getBooksByCategory = async function (value) {
 
 const getBooksByCreator = async function (value) {
 	const innerQuery = new Parse.Query('User');
-	innerQuery.equalTo('username', value);
+	innerQuery.equalTo('username', value.toLocaleLowerCase());
 
 	const query = new Parse.Query('Book');
 	query.include('creator');
