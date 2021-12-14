@@ -108,18 +108,19 @@ input.popup-postedBy:checked ~ i.fa-id-badge,
 input.popup-category:checked ~ i.fa-list-ul,
 input.popup-author:checked ~ i.fa-edit{
   color: red;
-  background-color: lightgrey;
+  /* background-color: lightgrey; */
 }
 
 .search-message{
   text-align: left;
   font-size: 1.3em;
   padding-left: 50px;
-  color: grey;
+  color: black;
+  background-color: rgb(135, 165, 167);
 }
 
 .search-message strong{
-  color: cadetblue;
+  color: white;
   font-size: 1.4em;
 }
 
@@ -135,4 +136,8 @@ input.popup-author:checked ~ i.fa-edit{
  cursor: pointer;
  color: rgb(135, 165, 167);
  font-weight: bold;
+}
+
+.search-container p{
+  font-size: 0.8em;
 }

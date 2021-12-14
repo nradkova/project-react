@@ -24,7 +24,6 @@ const bookDataValidation = (type, value) => {
 
     if (type === "title") {
         if (value.trim().length < 2) {
-            console.log(value);
             return " Book title must be at least 2 characters."
         }
     }
@@ -36,8 +35,11 @@ const bookDataValidation = (type, value) => {
     }
 
     if (type === "description") {
-        if (value.trim() > 350) {
-            return "Book description can be up to 350 characters."
+        if (value.trim().length ===0) {
+            return "Book description is required."
+        }
+        if (value.trim().length > 500) {
+            return "Book description can be up to 500 characters."
         }
     }
 
@@ -52,7 +54,7 @@ const bookDataValidation = (type, value) => {
 
 const searchDataValidation = (criteria, value) => {
     if (!criteria ||!value ||criteria.trim() === "" || value.trim() === "") {
-        return "Both search keys and criteria are required."
+        return "Both search keys and criteria are required. E.g. 'The lord of the rings' and 'by 'title'"
     }
     return null;
 }

@@ -27,10 +27,10 @@ const Books = () => {
 
 
   const getAllBooksHandler = async () => {
-    // const res = await getAllBooks();
-    // console.log(res);
-    // setBooks(res)
-    setBooks([])
+    const res = await getAllBooks();
+    console.log(res);
+    setBooks(res)
+    // setBooks([])
 
   }
 
@@ -39,8 +39,8 @@ const Books = () => {
     const formData = new FormData(e.target);
     const search = formData.get('search');
     const criteria = formData.get('criteria');
-	setBooks([]);
-	const error=searchDataValidation(criteria, search)
+	  setBooks([]);
+	  const error=searchDataValidation(criteria, search)
     setValidationError(error);
     if (error) {
       return;
@@ -80,13 +80,14 @@ const Books = () => {
     const data = await getBooksByCreator(user.username);
     setIsloading(false);
     setBooks(data);
+    setSearchMessage({ criteria: user.username +' profile', search:'books' });
   }
 
   const searchMyPosts = (
     <div className="search-my-posts">
       <div className="search-my-posts-icon">
         <i className="far fa-calendar-check"></i>
-        <span className="search-my-posts-action" onClick={onClickMyPostsHandler} >MY POSTS</span>
+        <span className="search-my-posts-action" onClick={onClickMyPostsHandler} >MY BOOKS</span>
       </div>
     </div>
   )

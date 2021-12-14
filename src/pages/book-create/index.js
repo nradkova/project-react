@@ -86,6 +86,7 @@ const BookCreate = () => {
 						<div className="action">
 							<button className="action-btn" type="submit">Add to books</button>
 						</div>
+						{validationError.required && <ValidationError message={validationError.required} />}
 					</div>
 				</form>
 			</div>

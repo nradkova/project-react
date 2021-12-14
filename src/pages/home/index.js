@@ -29,6 +29,7 @@ const Home = () => {
   const mostLikedBooksHandler = async () => {
     setIsloading(true);
     const res = await getMostLikedBooks();
+    console.log(res);
     setIsloading(false);
     setBooks(res)
     setLabelLikedBooks('selected')
@@ -39,7 +40,7 @@ const Home = () => {
     setIsloading(true);
     const res = await getLastFourBooks();
     setIsloading(false);
-    // console.log(res);
+    console.log(res);
     setBooks(res)
     // setBooks([])
     setLabelLatestBooks('selected')

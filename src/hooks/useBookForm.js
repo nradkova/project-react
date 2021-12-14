@@ -19,6 +19,11 @@ const useBookForm = (categories) => {
 
     const onSubmitBookCreateHandler = (e) => {
         e.preventDefault();
+
+        if (validationError.required) {
+            setValidationError(prev => ({ ...prev, "required": null }))
+        }
+
         const data = new FormData(e.target)
         const book = {
             title: data.get('title'),
@@ -27,10 +32,16 @@ const useBookForm = (categories) => {
             category: categories,
             image: imagePreview
         }
+
         if (validationError.title || validationError.description 
             || validationError.image || validationError.author) {
             return;
         }
+        if (book.title==='' || book.description ==='' || book.author==='') {
+            setValidationError(prev=>({...prev,'required':'*Title, author and description are required.'}))
+            return;
+        }
+
         createBook(book)
             .then(res => {
                 setIsloading(true);
@@ -44,6 +55,11 @@ const useBookForm = (categories) => {
 
     const onSubmitBookEditHandler = (e) => {
         e.preventDefault();
+
+        if (validationError.required) {
+            setValidationError(prev => ({ ...prev, "required": null }))
+        }
+
         const data = new FormData(e.target)
         const book = {
             title: data.get('title'),
@@ -52,10 +68,16 @@ const useBookForm = (categories) => {
             category: categories,
             image: imagePreview
         }
+
         if (validationError.title || validationError.description 
             || validationError.image || validationError.author) {
             return;
         }
+        if (book.title==='' || book.description ==='' || book.author==='') {
+            setValidationError(prev=>({...prev,'required':'*Title, author and description are required.'}))
+            return;
+        }
+
         editBook(bookValue.id,book)
             .then(res => {
                 setIsloading(true);
@@ -70,6 +92,10 @@ const useBookForm = (categories) => {
     const onBlurInputHandler = (e) => {
         const value = e.target.value;
         const type = e.target.name;
+        
+        if (validationError.required) {
+            setValidationError(prev => ({ ...prev, "required": null }))
+        }
 
         const error = bookDataValidation(type, value);
         setValidationError(prev => ({ ...prev, [type]: error }))
@@ -81,6 +107,10 @@ const useBookForm = (categories) => {
     const onChangeInputHandler = (e) => {
         const value = e.target.value;
         const type = e.target.name;
+        
+        if (validationError.required) {
+            setValidationError(prev => ({ ...prev, "required": null }))
+        }
 
         const error = bookDataValidation(type, value);
         setValidationError(prev => ({ ...prev, [type]: error }))

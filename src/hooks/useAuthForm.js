@@ -19,7 +19,7 @@ function useAuthForm() {
         e.preventDefault();
         const value = e.target.value;
         const type = e.target.name;
-        if (validationError.exists !== '') {
+        if (validationError.exists) {
             setValidationError(prev => ({ ...prev, "exists": null }))
         }
         const error = userDataValidation(type, value, formValue.password);

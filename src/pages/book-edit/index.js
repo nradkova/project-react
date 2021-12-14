@@ -100,6 +100,7 @@ const BookEdit = () => {
 						<div className="action">
 							<button className="action-btn" type="submit">Edit book</button>
 						</div>
+						{validationError.required && <ValidationError message={validationError.required} />}
 					</div>
 				</form>
 			</div>

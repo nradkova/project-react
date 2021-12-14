@@ -46,4 +46,5 @@ export const INITIAL_BOOK_VALIDATION_ERROR = {
     author: null,
     image: null,
     description: null,
+    required:null
 };
