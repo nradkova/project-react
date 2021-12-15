@@ -3,10 +3,9 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 import AuthContext from './context/authContext';
 
-const GuardedRoute = ({path}) => {
+const AuthRoute = () => {
     const { isAuthenticated } = useContext(AuthContext);
-
-    return isAuthenticated ? <Outlet /> : <Navigate to={path} />
+    return isAuthenticated ? <Outlet /> : <Navigate to="/home" />
 }
 
-export default GuardedRoute;
+export default AuthRoute;

@@ -17,7 +17,7 @@ const Logout = () => {
     userService.logout()
       .then(() => {
         logout()
-        navigate('/home');
+        navigate("/home", { replace: true });
       });
   }
 

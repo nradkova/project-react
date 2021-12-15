@@ -1,6 +1,6 @@
 import './index.css'
 
-const CustomComment = ({ id, creator, text, createdAt }) => {
+const CustomComment = ({creator, text, createdAt }) => {
 
     return (
         <div className="comment-container">

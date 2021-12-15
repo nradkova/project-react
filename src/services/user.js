@@ -5,18 +5,16 @@ const login = async (authData) => {
 
 	try {
 		const res = await Parse.User.logIn(username.toLocaleLowerCase(), password);
-		console.log('Logged in user');
-		console.log(res);
 		return {
 			userId: res.id,
 			username: res.get('username'),
 			sessionToken: res.get('sessionToken')
 		}
 	} catch (error) {
+		console.log('Error while logging in user', error);
 		if(error.message==='Invalid username/password.'){
 			throw error;
 		}
-		console.log('Error while logging in user', error);
 	}
 }
 
@@ -29,8 +27,6 @@ const register = async (authData) => {
 
 	try {
 		const res = await user.signUp();
-		console.log('User signed up');
-
 		return {
 			userId: res.id,
 			username: res.get('username'),
@@ -42,13 +38,9 @@ const register = async (authData) => {
 }
 
 const logout = async () => {
-
 	try {
 		await Parse.User.logOut();
-		const currentUser = await Parse.User.current();
-		if (currentUser === null) {
-			console.log('Success! No user is logged in anymore!');
-		}
+		// await Parse.User.current();
 	} catch (error) {
 		console.error('Error!', error);
 	}
@@ -61,7 +53,6 @@ const checkUserExists = async (username) => {
 
 	try {
 		const res = await query.first();
-		console.log(res);
 		return res;
 	} catch (error) {
 		console.error('Error while retrieving user', error);
@@ -81,7 +72,6 @@ const updateUserReadingList = async (userId, bookId) => {
 			const relation = user.relation('readingList')
 			relation.add(book)
 			await user.save();
-			console.log('Updated user');
 		} catch (error) {
 			console.error('Error while updating user', error);
 		}
@@ -126,7 +116,6 @@ const checkBookInUserReadingList = async (userId, bookId) => {
 			const relation = user.relation('readingList');
 			const data = await relation.query().find();
 			const results = data.map(x => x.id);
-			console.log(results);
 			if (results.includes(bookId)) {
 				return false;
 			}
@@ -152,7 +141,6 @@ const removeBookFromUserReadingList = async (userId, bookId) => {
 			const relation = user.relation('readingList')
 			relation.remove(book);
 			await user.save();
-			console.log('Updated user');
 			return true;
 		} catch (error) {
 			console.error('Error while updating user', error);

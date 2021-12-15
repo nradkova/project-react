@@ -1,8 +1,8 @@
-import { DEFAULT_BOOK_CATEGORIES } from '../../common'
-import './index.css'
+import './index.css';
+
+import { DEFAULT_BOOK_CATEGORIES } from '../../common';
 
 const Category = ({ selectedCategories }) => {
-
     const categories = DEFAULT_BOOK_CATEGORIES;
 
     const onChangeSelectedHandler = (e) => {
@@ -13,6 +13,7 @@ const Category = ({ selectedCategories }) => {
             selectedCategories.splice(index,1);
         }
     }
+    
     return (
         <div className="category-container">
             {categories.map((x, i) => (

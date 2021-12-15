@@ -15,7 +15,7 @@ import ValidationError from "../../components/validationError";
 const Register = () => {
 
 	const navigate = useNavigate();
-	const { login } = useContext(AuthContext);
+	const {login } = useContext(AuthContext);
 
 	const {
 		formValue,
@@ -28,11 +28,9 @@ const Register = () => {
 	} = useAuthForm();
 
 	useEffect(() => {
-		console.log(isSuccess);
-		console.log(authValue);
 		if (isSuccess) {
 			login(authValue);
-			navigate('/home');
+			navigate("/home", { replace: true });
 		}
 	},[isSuccess])
 

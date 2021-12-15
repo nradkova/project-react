@@ -24,7 +24,6 @@ function useAuthForm() {
         }
         const error = userDataValidation(type, value, formValue.password);
         setValidationError(prev => ({ ...prev, [type]: error }));
-        console.log(error);
         if (error) {
             return;
         }
@@ -84,7 +83,6 @@ function useAuthForm() {
         userService.login(user)
             .then(user => {
                 setIsloading(true);
-                console.log(user);
                 setAuthValue(user);
                 setIsloading(false);
                 setIsSuccess(true);

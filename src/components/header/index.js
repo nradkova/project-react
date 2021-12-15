@@ -15,7 +15,7 @@ const Header = () => {
 
   useEffect(() => {
     setLinks(getNavigation(isAuthenticated, user))
-  }, [isAuthenticated])
+  }, [user])
   
   const date = new Date().toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })
 

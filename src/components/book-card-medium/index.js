@@ -1,6 +1,8 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+
+import './index.css';
+
 import Star from '../star';
-import './index.css'
 
 const BookCardMedium = ({ id, imageUrl, title, author, rating = '0' }) => {
    

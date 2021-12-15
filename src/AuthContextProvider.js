@@ -1,4 +1,4 @@
-import { INITIAL_AUTH_STATE, INITIAL_AUTH_VALUE } from './common';
+import { INITIAL_AUTH_STATE } from './common';
 
 import AuthContext from './context/authContext';
 import useLocalStorage from './hooks/useLocalStorage';

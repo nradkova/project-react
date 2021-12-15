@@ -15,7 +15,7 @@ import ValidationError from "../../components/validationError";
 const Login = () => {
 
 	const navigate = useNavigate();
-	const { login} = useContext(AuthContext);
+	const {login} = useContext(AuthContext);
 
 	const {
         authValue,
@@ -27,11 +27,9 @@ const Login = () => {
 	} = useAuthForm();
 
 	useEffect(() => {
-		console.log(isSuccess);
-		console.log(authValue);
 		if (isSuccess) {
 			login(authValue);
-			navigate('/home');
+			navigate("/home", { replace: true });
 		}
 	},[isSuccess])
 
