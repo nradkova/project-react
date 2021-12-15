@@ -10,6 +10,32 @@
   padding: 15px 30px;
   justify-content: space-evenly;
   margin-top: 2%;
+  max-width: 70%;
+}
+
+.search-posts{
+  text-align: end;
+  margin-top: -2%;
+}
+.search-my-posts,
+.search-all-posts {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+ padding-right: 50px;
+}
+
+.search-my-posts-action,
+.search-all-posts-action {
+  display: block;
+  cursor: pointer;
+  color: rgb(135, 165, 167);
+  font-weight: bold;
+}
+
+.search-my-posts-icon,
+.search-all-posts-icon {
+ text-align: center;
 }
 
 .search-container {
@@ -26,7 +52,7 @@
   width: 70%;
 }
 
-.search-options-list{
+.search-options-list {
   display: inline;
 }
 
@@ -98,7 +124,7 @@
 .popup-category:hover ~ .popuptext-category,
 .popup-postedBy:hover ~ .popuptext-postedBy,
 .popup-author:hover ~ .popuptext-author,
-.popup-title:hover ~ .popuptext-title{
+.popup-title:hover ~ .popuptext-title {
   visibility: visible;
   animation: fadeIn 1s;
 }
@@ -106,38 +132,63 @@
 input.popup-title:checked ~ i.fa-bookmark,
 input.popup-postedBy:checked ~ i.fa-id-badge,
 input.popup-category:checked ~ i.fa-list-ul,
-input.popup-author:checked ~ i.fa-edit{
+input.popup-author:checked ~ i.fa-edit {
   color: red;
   /* background-color: lightgrey; */
 }
 
-.search-message{
+.search-message,
+.search-pages {
   text-align: left;
   font-size: 1.3em;
-  padding-left: 50px;
+  padding:8px 50px;
   color: black;
   background-color: rgb(135, 165, 167);
 }
+.search-pages {
+  text-align: center;
+}
 
-.search-message strong{
+.search-message strong {
   color: white;
-  font-size: 1.4em;
 }
 
-.search-my-posts{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  padding: 0px 50px;
+.books-container.search {
+  align-items: center;
+  min-height: 40vh;
 }
 
-.search-my-posts-action{
- display: block;
- cursor: pointer;
- color: rgb(135, 165, 167);
- font-weight: bold;
-}
-
-.search-container p{
+.search-container p {
   font-size: 0.8em;
 }
+
+.prev-books,
+.next-books {
+  cursor: pointer;
+  width: auto;
+  height: fit-content;
+  padding: 16px;
+  color: darkolivegreen;
+  font-weight: bold;
+  font-size: 21px;
+  transition: 0.6s ease;
+  user-select: none;
+  border-radius: 3px 0 0 3px;
+  border: 1px solid darkolivegreen;
+}
+
+.prev-books:hover,
+.next-books:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+}
+
+.prev-books:disabled,
+.next-books:disabled {
+  color: lightgrey;
+  background-color: lightgrey;
+  border: none;
+  visibility: hidden;
+}
+
+

@@ -3,26 +3,26 @@ import { INITIAL_AUTH_STATE, INITIAL_AUTH_VALUE } from './common';
 import AuthContext from './context/authContext';
 import useLocalStorage from './hooks/useLocalStorage';
 
-const initialUserState = {
-    userId: '',
-    username: '',
-    sessionToken: ''
-};
+// const initialUserState = {
+//     userId: '',
+//     username: '',
+//     sessionToken: ''
+// };
 
 const AuthContextProvider = (props) => {
 
-    const [user, setUser] = useLocalStorage('user', initialUserState);
+    const [user, setUser] = useLocalStorage('user', INITIAL_AUTH_STATE);
     
     const login = (authData) => {
         setUser(authData);
     }
 
     const logout = () => {
-        setUser(initialUserState);
+        setUser(INITIAL_AUTH_STATE);
     };
 
     const resetUserInitialValue=()=>{
-        setUser(initialUserState)
+        setUser(INITIAL_AUTH_STATE)
     }
 
     return (

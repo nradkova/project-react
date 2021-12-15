@@ -107,7 +107,7 @@ const MyPage = () => {
 							</div>
 							<p>{pagesCounter}/{totalPages}</p>
 						</>
-						: <p className="empty-reading-list">You have not added anything to your reading list.</p>
+						: <p className="empty-reading-list">You have not added anything to your reading list yet.</p>
 					}
 				</div>
 			</div>
