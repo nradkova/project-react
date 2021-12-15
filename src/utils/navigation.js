@@ -1,4 +1,4 @@
-const getNavigation = (user) => {
+const getNavigation = (isAuthenticated,user) => {
 
     const authLinks = [
       {
@@ -11,7 +11,7 @@ const getNavigation = (user) => {
       },
       {
         title: "My Page",
-        link: `/my-page/${user && user.userId}`
+        link: `/my-page/${isAuthenticated && user.userId}`
       },
       {
         title: "Logout",
@@ -37,8 +37,7 @@ const getNavigation = (user) => {
         link: "/login"
       }
     ]
-    const loggedIn = user && user.username
-    return loggedIn ? authLinks : guestLinks
+    return isAuthenticated ? authLinks : guestLinks
   }
   
   export default getNavigation

@@ -35,7 +35,7 @@ let searchMessage={
 const useBookSearch = (username) => {
     const [query, setQuery] = useState(queryParams);
     const [books, setBooks] = useState([]);
-    const [pagination, setPagination] = useState({ counter: 1, perPage: 6, totalPages: 0, count: 0 });
+    const [pagination, setPagination] = useState({ counter: 1, perPage: 2, totalPages: 0, count: 0 });
     const [isLoading, setIsloading] = useState(false);
     const [validationError, setValidationError] = useState(null);
 

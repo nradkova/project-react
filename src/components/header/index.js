@@ -1,18 +1,21 @@
 import { useContext, useEffect, useState } from 'react';
+
 import './index.css'
-import Link from '../navLink'
-import LogoLink from '../logoLink';
+
 import getNavigation from '../../utils/navigation'
 import AuthContext from '../../context/authContext';
 
+import Link from '../navLink'
+import LogoLink from '../logoLink';
+
 
 const Header = () => {
-  const { user } = useContext(AuthContext);
+  const { user,isAuthenticated } = useContext(AuthContext);
   const [links, setLinks] = useState([])
 
   useEffect(() => {
-    setLinks(getNavigation(user))
-  }, [user])
+    setLinks(getNavigation(isAuthenticated, user))
+  }, [isAuthenticated])
   
   const date = new Date().toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })
 

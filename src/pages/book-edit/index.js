@@ -84,6 +84,7 @@ const BookEdit = () => {
 							{validationError.description && <ValidationError message={validationError.description} />}
 						</div>
 						<Category selectedCategories={categories} />
+						<p className="book-form-body-details-remark">*The categories you choose will replace previous.</p>
 						{/* <div className="category">
 							<input className="category-input" type="text" name="category" id="category" onBlur={onCategoryBlurHandler} />
 							<span className="add-category"><i className="fa fa-pen"></i> Add category</span>

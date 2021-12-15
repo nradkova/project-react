@@ -106,6 +106,12 @@ label {
   cursor: pointer;
 }
 
+.book-form-body-details-remark{
+  margin: 0;
+  color: darkolivegreen;
+  font-size: 0.8em;
+}
+
 .fa-times {
   margin-right: 8px;
   color: white;

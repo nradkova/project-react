@@ -8,7 +8,8 @@ const AuthContext = React.createContext({
     },
     login:()=>{},
     logout:()=>{},
-    resetUserInitialValue:()=>{}
+    resetUserInitialValue:()=>{},
+    isAuthenticated:false
 });
 
 export default AuthContext;

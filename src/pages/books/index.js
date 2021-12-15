@@ -12,7 +12,7 @@ import BookCardMedium from "../../components/book-card-medium";
 import ValidationError from "../../components/validationError";
 
 const Books = () => {
-	const { user } = useContext(AuthContext);
+	const { user,isAuthenticated } = useContext(AuthContext);
 	const {
 		query,
 		books,
@@ -81,7 +81,7 @@ const Books = () => {
 			<Title title="Books" />
 			<div className="search-posts">
 			{searchAllPosts}
-			{user.username && searchMyPosts}
+			{isAuthenticated && searchMyPosts}
 			</div>
 			<div className="all-books-container">
 				<div className="search-container">

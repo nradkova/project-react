@@ -8,6 +8,7 @@ import useLocalStorage from './hooks/useLocalStorage';
 //     username: '',
 //     sessionToken: ''
 // };
+let isAuthenticated=false;
 
 const AuthContextProvider = (props) => {
 
@@ -15,14 +16,17 @@ const AuthContextProvider = (props) => {
     
     const login = (authData) => {
         setUser(authData);
+        isAuthenticated=true;
     }
 
     const logout = () => {
         setUser(INITIAL_AUTH_STATE);
+        isAuthenticated=false;
     };
 
     const resetUserInitialValue=()=>{
-        setUser(INITIAL_AUTH_STATE)
+        setUser(INITIAL_AUTH_STATE);
+        isAuthenticated=false;
     }
 
     return (
@@ -31,7 +35,8 @@ const AuthContextProvider = (props) => {
                 user,
                 login,
                 logout,
-                resetUserInitialValue
+                resetUserInitialValue,
+                isAuthenticated
             }}
         >
             {props.children}
