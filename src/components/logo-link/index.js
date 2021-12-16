@@ -4,7 +4,7 @@ import './index.css'
 
 const LogoLink = (props) => {
   return (
-    <Link to="/home" >
+    <Link to="/home"  >
       {props.children}
     </Link>
   )

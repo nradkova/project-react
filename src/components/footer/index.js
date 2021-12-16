@@ -1,6 +1,6 @@
 import './index.css';
 
-import LogoLink from '../logoLink';
+import LogoLink from '../logo-link';
 
 
 const Footer = () => {

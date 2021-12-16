@@ -4,6 +4,8 @@ export const DEFAULT_BOOK_CATEGORIES=["classic", "fantasy", "science fiction", "
 
 export const DEFAULT_BOOK_URL="/default_book.png";
 
+export const DEFAULT_EVENT_URL="/default_event.png";
+
 export const INITIAL_AUTH_VALUE = {
     userId: "",
     username: "",
@@ -48,3 +50,25 @@ export const INITIAL_BOOK_VALIDATION_ERROR = {
     description: null,
     required:null
 };
+
+export const INITIAL_EVENT_VALUE = {
+    id: "",
+    name: "",
+    date: "",
+    location: "",
+    description: "",
+    imageUrl: "",
+    status: "",
+    createdAt:"",
+    creator:""
+}
+
+export const INITIAL_EVENT_VALIDATION_ERROR = {
+    name:null,
+    date: null,
+    location: null,
+    description: null,
+    image: null,
+    required:null
+}
+

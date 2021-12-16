@@ -7,9 +7,9 @@ import useBookSearch from "../../hooks/useBookSearch";
 
 import Title from "../../components/title";
 import Loader from "../../components/loader";
-import PageLayout from "../../components/pageLayout";
+import PageLayout from "../../components/page-layout";
 import BookCardMedium from "../../components/book-card-medium";
-import ValidationError from "../../components/validationError";
+import ValidationError from "../../components/validation-error";
 
 const Books = () => {
 	const { user,isAuthenticated } = useContext(AuthContext);

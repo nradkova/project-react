@@ -10,7 +10,7 @@ import Star from "../../components/star";
 import Loader from "../../components/loader";
 import Rating from "../../components/rating";
 import CustomComment from "../../components/comment";
-import PageLayout from "../../components/pageLayout";
+import PageLayout from "../../components/page-layout";
 
 const BookDetails = () => {
 	const {isAuthenticated, user } = useContext(AuthContext);

@@ -3,15 +3,15 @@ import { useEffect, useContext } from "react";
 
 import './index.css';
 
-import useBookForm from "../../hooks/useBookForm";
 import AuthContext from "../../context/authContext";
+import useEventForm from "../../hooks/useEventForm";
 
 import Loader from "../../components/loader";
 import Category from "../../components/category";
 import PageLayout from "../../components/page-layout";
 import ValidationError from "../../components/validation-error";
 
-const BookCreate = () => {
+const EventCreate = () => {
 	const navigate = useNavigate();
 	const { user } = useContext(AuthContext);
 
@@ -24,13 +24,13 @@ const BookCreate = () => {
 		imagePreview,
 		onChangeImageHandler,
 		onBlurInputHandler,
-		onSubmitBookCreateHandler
-	} = useBookForm(categories);
+		onSubmitEventCreateHandler
+	} = useEventForm(categories);
 
 
 	useEffect(() => {
 		if (isSuccess) {
-			navigate('/books');
+			navigate('/events');
 		}
 	}, [isSuccess, navigate])
 
@@ -44,12 +44,12 @@ const BookCreate = () => {
 
 	return (
 		<PageLayout>
-			<div className="book-form-container">
-				<div className="book-form-title">
-					<h3><i className="fa fa-arrow-right"></i>New book</h3>
+			<div className="event-form-container">
+				<div className="event-form-title">
+					<h3><i className="fa fa-arrow-right"></i>New event</h3>
 				</div>
-				<form className="book-form-body" onSubmit={onSubmitBookCreateHandler}>
-					<div className="book-form-body-main">
+				<form className="event-form-body" onSubmit={onSubmitEventCreateHandler}>
+					<div className="event-form-body-main">
 						<div className="title">
 							<input className="title-input" type="text" name="title" id="title" onBlur={onBlurInputHandler} />
 							<label htmlFor="title"><i className="fa fa-pen"></i>Title</label>
@@ -61,7 +61,7 @@ const BookCreate = () => {
 							{validationError.author &&  <ValidationError message={validationError.author} />}
 						</div>
 						<div className="default-image">
-							{isImageLoading ? <Loader /> : <img src={imagePreview} alt="Book_Image" />}
+							{isImageLoading ? <Loader /> : <img src={imagePreview} alt="event_Image" />}
 							
 						</div>
 						<div className="image">
@@ -70,7 +70,7 @@ const BookCreate = () => {
 							{validationError.image && <ValidationError message={validationError.image} />}
 						</div>
 					</div>
-					<div className="book-form-body-details">
+					<div className="event-form-body-details">
 						<div className="description">
 							<textarea className="description-input" type="text" name="description" id="description" cols="50" rows="12" onBlur={onBlurInputHandler} />
 							<label htmlFor="description"><i className="fa fa-pen"></i>Description</label>
@@ -78,13 +78,13 @@ const BookCreate = () => {
 						</div>
 						<Category selectedCategories={categories} />
 					</div>
-					<div className="book-form-footer">
+					<div className="event-form-footer">
 						<div className="recommend">
 							<p>Recommended by</p>
 							<h3>{user.username}</h3>
 						</div>
 						<div className="action">
-							<button className="action-btn" type="submit">Add to books</button>
+							<button className="action-btn" type="submit">Add to events</button>
 						</div>
 						{validationError.required && <ValidationError message={validationError.required} />}
 					</div>
@@ -94,4 +94,4 @@ const BookCreate = () => {
 	)
 }
 
-export default BookCreate;
+export default EventCreate;

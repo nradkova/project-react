@@ -5,8 +5,8 @@ import './index.css'
 import getNavigation from '../../utils/navigation'
 import AuthContext from '../../context/authContext';
 
-import Link from '../navLink'
-import LogoLink from '../logoLink';
+import Link from '../nav-link'
+import LogoLink from '../logo-link';
 
 
 const Header = () => {

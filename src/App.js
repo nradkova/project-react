@@ -15,6 +15,7 @@ import NoMatch from './pages/no-match';
 import Register from './pages/register';
 import BookEdit from './pages/book-edit';
 import BookCreate from './pages/book-create';
+import EventCreate from './pages/event-create';
 import BookDetails from './pages/book-details';
 
 
@@ -31,6 +32,7 @@ const App = () => {
       </Route>
 
       <Route path="/events" element={<Events />} />
+      <Route path="/events/create" element={<EventCreate />} />
 
       <Route path="/my-page/:userId" element={<MyPage />} />
 

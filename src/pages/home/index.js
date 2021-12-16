@@ -5,7 +5,7 @@ import './index.css';
 import { getLastFourBooks, getMostLikedBooks } from "../../services/book";
 
 import Loader from "../../components/loader";
-import PageLayout from "../../components/pageLayout";
+import PageLayout from "../../components/page-layout";
 import BookCardMedium from "../../components/book-card-medium";
 
 

@@ -6,7 +6,7 @@ import './index.css'
 import userService from "../../services/user";
 import AuthContext from "../../context/authContext";
 
-import PageLayout from "../../components/pageLayout";
+import PageLayout from "../../components/page-layout";
 
 
 const Logout = () => {

@@ -8,8 +8,8 @@ import AuthContext from "../../context/authContext";
 
 import Title from "../../components/title";
 import Loader from "../../components/loader";
-import PageLayout from "../../components/pageLayout";
-import ValidationError from "../../components/validationError";
+import PageLayout from "../../components/page-layout";
+import ValidationError from "../../components/validation-error";
 
 
 const Login = () => {

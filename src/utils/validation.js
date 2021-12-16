@@ -51,6 +51,42 @@ const bookDataValidation = (type, value) => {
 
     return null;
 }
+const eventDataValidation = (type, value) => {
+
+    if (type === "name") {
+        if (value.trim().length < 2) {
+            return " Event name must be at least 2 characters."
+        }
+    }
+
+    if (type === "date") {
+        const date=Date.parse(`${value.year}-${value.month}-${value.day}T${value.hour}:${value.minute}:00`);
+        if(!date){
+            return "Date is invalid."
+        }
+        const now=new Date();
+        if(now>date){
+            return "You have entered a past date."
+        }
+    }
+
+    if (type === "description") {
+        if (value.trim().length ===0) {
+            return "Event description is required."
+        }
+        if (value.trim().length > 500) {
+            return "Event description can be up to 500 characters."
+        }
+    }
+
+    if (type === "imageUrl") {
+        if (value.size > 0 && !value.type.includes("image")) {
+            return "Choose images to upload (PNG, JPG, JPEG...)"
+        }
+    }
+
+    return null;
+}
 
 const searchDataValidation = (criteria, value) => {
     if (!criteria ||!value ||criteria.trim() === "" || value.trim() === "") {
@@ -70,5 +106,6 @@ export {
     userDataValidation,
     bookDataValidation,
     searchDataValidation,
-    commentDataValidation
+    commentDataValidation,
+    eventDataValidation
 }
