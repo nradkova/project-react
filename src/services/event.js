@@ -1,10 +1,9 @@
 import Parse from "../config/server";
+import { createEventSubscription } from "./subscription";
 
 
 const createEvent = async (data) => {
 	try {
-		// const ratingResult = await createeventRating();
-
 		const event = new Parse.Object('Event');
 		event.set('name', data.title);
 		event.set('date', data.author);
@@ -13,8 +12,12 @@ const createEvent = async (data) => {
 		event.set('location', data.location);
 		event.set('imageUrl', data.image);
 		event.set('status', "active");
+		const response = await event.save();
 
-		const result = await event.save();
+		const subscription = await createEventSubscription(event.id);
+		response.set('subscription', subscription);
+		const result = await response.save();
+
 		return result;
 	} catch (error) {
 		console.error('Error while creating event: ', error);
@@ -52,22 +55,23 @@ const cancelEvent = async (eventId) => {
 	try {
 		const event = await query.get(eventId);
 		try {
-			const response = await event.destroy();
-			console.log('Deleted ParseObject', response);
+			event.set('status', 'cancelled');
+			const result = await event.save();
+			return result;
 		} catch (error) {
-			console.error('Error while deleting ParseObject', error);
+			console.error('Error while updating event', error);
 		}
 	} catch (error) {
-		console.error('Error while retrieving ParseObject', error);
+		console.error('Error while retrieving event', error);
 	}
 }
 
 const getEventById = async function (eventId) {
-	const event = Parse.Object.extend('event');
+	const event = Parse.Object.extend('Event');
 
 	const query = new Parse.Query(event);
 	query.include('creator');
-	query.include('eventRating');
+	query.include('subscription');
 	query.equalTo('objectId', eventId);
 
 	try {
@@ -79,14 +83,14 @@ const getEventById = async function (eventId) {
 	}
 }
 
-const getAllevents = async function (pagination) {
-	const event = Parse.Object.extend('event');
+const getAllEvents = async function (pagination) {
+	const event = Parse.Object.extend('Event');
 
 	const query = new Parse.Query(event);
 	query.include('creator');
-	query.include('eventRating');
+	query.include('subscription');
 	query.descending('createdAt');
-	query.skip((pagination.counter-1)*pagination.perPage).limit(pagination.perPage);
+	query.skip((pagination.counter - 1) * pagination.perPage).limit(pagination.perPage);
 
 	try {
 		const data = await query.find();
@@ -97,8 +101,8 @@ const getAllevents = async function (pagination) {
 	}
 }
 
-const getAlleventsCount = async function () {
-	const event = Parse.Object.extend('event');
+const getAllEventsCount = async function () {
+	const event = Parse.Object.extend('Event');
 
 	const query = new Parse.Query(event);
 	try {
@@ -108,141 +112,141 @@ const getAlleventsCount = async function () {
 	}
 }
 
-const geteventsByAuthor = async function (pagination,search) {
-	const event = Parse.Object.extend('event');
+// const geteventsByAuthor = async function (pagination, search) {
+// 	const event = Parse.Object.extend('event');
+
+// 	const query = new Parse.Query(event);
+// 	query.include('creator');
+// 	query.include('eventRating');
+// 	query.matches('author', search, 'i');
+// 	query.skip((pagination.counter - 1) * pagination.perPage).limit(pagination.perPage);
+
+// 	try {
+// 		const data = await query.find();
+// 		const results = data.map(viewModel);
+// 		return results;
+// 	} catch (error) {
+// 		console.error('Error while fetching event', error);
+// 	}
+// }
+
+// const geteventsByAuthorCount = async function (search) {
+// 	const event = Parse.Object.extend('event');
+
+// 	const query = new Parse.Query(event);
+// 	query.matches('author', search, 'i');
+
+// 	try {
+// 		return await query.count();
+// 	} catch (error) {
+// 		console.error('Error while fetching event', error);
+// 	}
+// }
+
+// const geteventsByTitle = async function (pagination, search) {
+// 	const event = Parse.Object.extend('event');
+
+// 	const query = new Parse.Query(event);
+// 	query.include('creator');
+// 	query.include('eventRating');
+// 	query.matches('title', search, 'i');
+// 	query.skip((pagination.counter - 1) * pagination.perPage).limit(pagination.perPage);
+
+// 	try {
+// 		const data = await query.find();
+// 		const results = data.map(viewModel);
+// 		return results;
+// 	} catch (error) {
+// 		console.error('Error while fetching event', error);
+// 	}
+// }
+
+// const geteventsByTitleCount = async function (search) {
+// 	const event = Parse.Object.extend('event');
+
+// 	const query = new Parse.Query(event);
+// 	query.matches('title', search, 'i');
+
+// 	try {
+// 		return await query.count();
+// 	} catch (error) {
+// 		console.error('Error while fetching event', error);
+// 	}
+// }
+
+
+// const geteventsByCategory = async function (pagination, search) {
+// 	const event = Parse.Object.extend('event');
+
+// 	const query = new Parse.Query(event);
+// 	query.include('creator');
+// 	query.include('eventRating');
+// 	query.equalTo('category', search);
+// 	query.skip((pagination.counter - 1) * pagination.perPage).limit(pagination.perPage);
+
+// 	try {
+// 		const data = await query.find();
+// 		const results = data.map(viewModel);
+// 		return results;
+// 	} catch (error) {
+// 		console.error('Error while fetching event', error);
+// 	}
+// }
+
+// const geteventsByCategoryCount = async function (search) {
+// 	const event = Parse.Object.extend('event');
+
+// 	const query = new Parse.Query(event);
+// 	query.equalTo('category', search);
+
+// 	try {
+// 		return await query.count();
+// 	} catch (error) {
+// 		console.error('Error while fetching event', error);
+// 	}
+// }
+
+// const geteventsByCreator = async function (pagination, search) {
+// 	const innerQuery = new Parse.Query('User');
+// 	innerQuery.equalTo('username', search.toLocaleLowerCase());
+
+// 	const query = new Parse.Query('event');
+// 	query.include('creator');
+// 	query.include('eventRating');
+// 	query.matchesQuery('creator', innerQuery);
+// 	query.skip((pagination.counter - 1) * pagination.perPage).limit(pagination.perPage);
+
+// 	try {
+// 		const data = await query.find();
+// 		const results = data.map(viewModel);
+// 		return results;
+// 	} catch (error) {
+// 		console.error('Error while fetching event', error);
+// 	}
+// }
+
+// const geteventsByCreatorCount = async function (search) {
+// 	const innerQuery = new Parse.Query('User');
+// 	innerQuery.equalTo('username', search.toLocaleLowerCase());
+
+// 	const query = new Parse.Query('event');
+// 	query.include('creator');
+// 	query.matchesQuery('creator', innerQuery);
+
+// 	try {
+// 		return await query.count();
+// 	} catch (error) {
+// 		console.error('Error while fetching event', error);
+// 	}
+// }
+
+
+const getLastFourEvents = async function () {
+	const event = Parse.Object.extend('Event');
 
 	const query = new Parse.Query(event);
 	query.include('creator');
-	query.include('eventRating');
-	query.matches('author', search, 'i');
-	query.skip((pagination.counter-1)*pagination.perPage).limit(pagination.perPage);
-
-	try {
-		const data = await query.find();
-		const results = data.map(viewModel);
-		return results;
-	} catch (error) {
-		console.error('Error while fetching event', error);
-	}
-}
-
-const geteventsByAuthorCount = async function (search) {
-	const event = Parse.Object.extend('event');
-
-	const query = new Parse.Query(event);
-	query.matches('author', search, 'i');
-
-	try {
-		return await query.count();
-	} catch (error) {
-		console.error('Error while fetching event', error);
-	}
-}
-
-const geteventsByTitle = async function (pagination ,search) {
-	const event = Parse.Object.extend('event');
-
-	const query = new Parse.Query(event);
-	query.include('creator');
-	query.include('eventRating');
-	query.matches('title', search, 'i');
-	query.skip((pagination.counter-1)*pagination.perPage).limit(pagination.perPage);
-
-	try {
-		const data = await query.find();
-		const results = data.map(viewModel);
-		return results;
-	} catch (error) {
-		console.error('Error while fetching event', error);
-	}
-}
-
-const geteventsByTitleCount = async function (search) {
-	const event = Parse.Object.extend('event');
-
-	const query = new Parse.Query(event);
-	query.matches('title', search, 'i');
-
-	try {
-		return await query.count();
-	} catch (error) {
-		console.error('Error while fetching event', error);
-	}
-}
-
-
-const geteventsByCategory = async function (pagination,search) {
-	const event = Parse.Object.extend('event');
-
-	const query = new Parse.Query(event);
-	query.include('creator');
-	query.include('eventRating');
-	query.equalTo('category', search);
-	query.skip((pagination.counter-1)*pagination.perPage).limit(pagination.perPage);
-
-	try {
-		const data = await query.find();
-		const results = data.map(viewModel);
-		return results;
-	} catch (error) {
-		console.error('Error while fetching event', error);
-	}
-}
-
-const geteventsByCategoryCount = async function (search) {
-	const event = Parse.Object.extend('event');
-
-	const query = new Parse.Query(event);
-	query.equalTo('category', search);
-
-	try {
-		return await query.count();
-	} catch (error) {
-		console.error('Error while fetching event', error);
-	}
-}
-
-const geteventsByCreator = async function (pagination,search) {
-	const innerQuery = new Parse.Query('User');
-	innerQuery.equalTo('username', search.toLocaleLowerCase());
-
-	const query = new Parse.Query('event');
-	query.include('creator');
-	query.include('eventRating');
-	query.matchesQuery('creator', innerQuery);
-	query.skip((pagination.counter-1)*pagination.perPage).limit(pagination.perPage);
-
-	try {
-		const data = await query.find();
-		const results = data.map(viewModel);
-		return results;
-	} catch (error) {
-		console.error('Error while fetching event', error);
-	}
-}
-
-const geteventsByCreatorCount = async function (search) {
-	const innerQuery = new Parse.Query('User');
-	innerQuery.equalTo('username', search.toLocaleLowerCase());
-
-	const query = new Parse.Query('event');
-	query.include('creator');
-	query.matchesQuery('creator', innerQuery);
-
-	try {
-		return await query.count();
-	} catch (error) {
-		console.error('Error while fetching event', error);
-	}
-}
-
-
-const getLastFourevents = async function () {
-	const event = Parse.Object.extend('event');
-
-	const query = new Parse.Query(event);
-	query.include('creator');
-	query.include('eventRating');
+	query.include('subscription');
 	query.descending('createdAt').limit(4);
 
 	try {
@@ -254,17 +258,13 @@ const getLastFourevents = async function () {
 	}
 }
 
-const getMostLikedevents = async function () {
-	const eventRating = Parse.Object.extend('eventRating');
-	const innerQuery = new Parse.Query(eventRating);
-	innerQuery.equalTo('star', 5);
-
+const getMostRecentEvents = async function () {
 	const event = Parse.Object.extend('event');
 	const query = new Parse.Query(event);
 	query.include('creator');
-	query.include('eventRating');
-	query.matchesQuery('eventRating', innerQuery);
-	query.descending('createdAt');
+	query.include('subscription');
+	query.greaterThan('date',Date.now());
+	query.descending('date');
 	query.limit(4);
 
 	try {
@@ -279,24 +279,24 @@ const getMostLikedevents = async function () {
 
 const viewModel = (record) => {
 	const creator = record.get('creator').get('username');
-	const eventRatingId = record.get('eventRating').id;
-	const rating = record.get('eventRating').get('star');
-	const voted = record.get('eventRating').get('voted');
-	const date = new Date(record.createdAt)
-		.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })
-
+	const subscriptionId = record.get('subscription').id;
+	const subscribed = record.get('subscription').get('subscribed');
+	const createdAt = new Date(record.createdAt)
+		.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+	const date = new Date(record.get('date'))
+		.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
 	return {
 		id: record.id,
-		createdAt: date,
-		title: record.get('title'),
-		author: record.get('author'),
+		createdAt,
+		name: record.get('name'),
 		description: record.get('description'),
 		imageUrl: record.get('imageUrl'),
-		category: record.get('category'),
-		voted,
-		rating,
+		status: record.get('status'),
+		location:record.get('location'),
+		date,
 		creator,
-		eventRatingId
+		subscriptionId,
+		subscribed
 	}
 }
 
@@ -305,4 +305,8 @@ export {
 	editEvent,
 	cancelEvent,
 	getEventById,
+	getAllEvents,
+	getAllEventsCount,
+	getLastFourEvents,
+	getMostRecentEvents
 }

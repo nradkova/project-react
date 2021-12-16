@@ -1,17 +1,17 @@
-const userDataValidation = (type,value,check) => {
-    if(type==="username"){
+const userDataValidation = (type, value, check) => {
+    if (type === "username") {
         if (value.trim().length < 5 || value.trim().length > 15) {
-           return "Username must be between 5 and 15 characters long.";
+            return "Username must be between 5 and 15 characters long.";
         }
     }
 
-    if(type==="password"){
+    if (type === "password") {
         if (value.trim().length < 6 || value.trim().length > 12) {
             return "Password must be between 6 and 12 characters long.";
         }
     }
-    
-    if(type==="rePass"){
+
+    if (type === "rePass") {
         if (value !== check) {
             return "Passwords don't match.";
         }
@@ -35,7 +35,7 @@ const bookDataValidation = (type, value) => {
     }
 
     if (type === "description") {
-        if (value.trim().length ===0) {
+        if (value.trim().length === 0) {
             return "Book description is required."
         }
         if (value.trim().length > 500) {
@@ -60,18 +60,18 @@ const eventDataValidation = (type, value) => {
     }
 
     if (type === "date") {
-        const date=Date.parse(`${value.year}-${value.month}-${value.day}T${value.hour}:${value.minute}:00`);
-        if(!date){
+        const date = Date.parse(`${value.year}-${value.month}-${value.day}T${value.hour}:${value.minute}:00`);
+        if (!date) {
             return "Date is invalid."
         }
-        const now=new Date();
-        if(now>date){
+        const now = Date.now();
+        if (now > date) {
             return "You have entered a past date."
         }
     }
 
     if (type === "description") {
-        if (value.trim().length ===0) {
+        if (value.trim().length === 0) {
             return "Event description is required."
         }
         if (value.trim().length > 500) {
@@ -89,14 +89,14 @@ const eventDataValidation = (type, value) => {
 }
 
 const searchDataValidation = (criteria, value) => {
-    if (!criteria ||!value ||criteria.trim() === "" || value.trim() === "") {
+    if (!criteria || !value || criteria.trim() === "" || value.trim() === "") {
         return "Both search keys and criteria are required. E.g. 'The lord of the rings' and 'by 'title'"
     }
     return null;
 }
 
 const commentDataValidation = (value) => {
-    if(value.trim().length===0 ||value.trim().length>400){
+    if (value.trim().length === 0 || value.trim().length > 400) {
         return "*Your comment can not be more than 400 characters.";
     }
     return null;
