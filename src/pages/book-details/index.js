@@ -1,12 +1,10 @@
-import { useState, useEffect, useContext } from "react";
+import {useContext } from "react";
 import { Link, useParams} from "react-router-dom";
 
 import './index.css';
 
-import userService from "../../services/user";
-import { getBookById } from "../../services/book";
+import useBook from "../../hooks/useBook";
 import AuthContext from "../../context/authContext";
-import { createBookComment, getAllCommentsByBookId } from "../../services/comment";
 
 import Star from "../../components/star";
 import Loader from "../../components/loader";
@@ -14,103 +12,25 @@ import Rating from "../../components/rating";
 import CustomComment from "../../components/comment";
 import PageLayout from "../../components/pageLayout";
 
-
-
 const BookDetails = () => {
-	const { user } = useContext(AuthContext);
+	const {isAuthenticated, user } = useContext(AuthContext);
 	const { bookId } = useParams();
 
-	const [isLoading, setIsloading] = useState(false);
+	const{
+        book,
+        isLoading,
+        isCreator,
+        canVote, 
+        canAdd,
+        comments,
+        validationError,
+        onClickAddBookHandler,
+        onSubmitCommentHandler
+    }=useBook(bookId,isAuthenticated,user)
 
-	const [isGuest, setIsGuest] = useState(true);
-	const [isUser, setIsUser] = useState(false);
-	const [isCreator, setIsCreator] = useState(false);
-	const [canVote, setCanVote] = useState(false);
-	const [canAdd, setCanAdd] = useState(true);
-
-
-	const [book, setBook] = useState({
-		id: "",
-		title: "",
-		author: "",
-		description: "",
-		imageUrl: "",
-		rating: 0,
-		voted: [],
-		createdAt: "",
-		creator: "",
-		category: []
-	});
-
-
-	const [comments, setComments] = useState([]);
-
-	useEffect(() => {
-		async function fetchData() {
-			setIsloading(true);
-			const book = await getBookById(bookId);
-			setIsloading(false);
-			setBook(book);
-			if (user.username === book.creator) {
-				setIsCreator(true);
-				setIsUser(false);
-				setIsGuest(false);
-			} else if (Boolean(user.username)) {
-				setIsUser(true);
-				setIsGuest(false);
-				setIsCreator(false)
-			} else {
-				setIsGuest(true);
-				setIsUser(false);
-				setIsCreator(false)
-			}
-			if (Boolean(user.username) && user.username !== book.creator && !book.voted.includes(user.userId)) {
-				setCanVote(true);
-			}
-			if (Boolean(user.username) && user.username !== book.creator) {
-				const canAdd = await userService.checkBookInUserReadingList(user.userId, bookId);
-				setCanAdd(canAdd);
-			}
-			const comments = await getAllCommentsByBookId(bookId);
-			setComments(comments);
-
-		}
-		fetchData()
-	}, [bookId, user])
-
-
-	const onClickAddBookHandler = async (e) => {
-		e.preventDefault();
-		await userService.updateUserReadingList(user.userId, bookId);
-		setCanAdd(false);
-		// navigate(`/my-page/${user.userId}`)
-	}
-	console.log('render');
-	let errorComment=false;
-	const onSubmitCommentHandler = async (e) => {
-		e.preventDefault();
-		const text=e.target.comment.value;
-		console.log(text);
-		if(text.trim().length===0 ||text.trim().length>400){
-			errorComment=true;
-			console.log('fff');
-			console.log(errorComment)
-			return;
-		}
-		await createBookComment(bookId, text);
-		const updated = await getAllCommentsByBookId(bookId);
-		setComments(updated);
-		e.target.comment.value = '';
-	}
-
-	// const onClickDeleteBookHandler = async(e)=>{
-	// 	e.preventDefault();
-	// 	await deleteBook(bookId)
-	// 	navigate('/books')
-	// }
-
+	console.log('red')
 	const actionsAllowed = () => {
-		if (isGuest) {
+		if (!isAuthenticated) {
 			return <Link className="join-link" to={'/register'}>JOIN US</Link>;
 		}
 		if (isCreator) {
@@ -161,17 +81,14 @@ const BookDetails = () => {
 							: <p>No comments yet... Be the first one to comment!</p>}
 					</div>
 					<div className="book-rating">
-						{canVote
-							? <Rating userId={user.userId} bookId={bookId} />
-							: null
-						}
+						{canVote && <Rating userId={user.userId} bookId={bookId} />}
 					</div>
-					{isUser || isCreator
+					{isAuthenticated
 						? <div className="book-comments-form">
 							<form action="" method="post" onSubmit={onSubmitCommentHandler}>
 								<h4>You can write your comment here:</h4>
 								<textarea className="comment-input" name="comment" id="comment" cols="50" rows="6"></textarea>
-								{errorComment && <p className="comment-error">*Your comment can not be more than 400 characters.</p>}
+								{validationError && <p className="comment-error">{validationError}</p>}
 								<button className="comment-btn" type="submit">POST</button>
 							</form>
 						</div>
@@ -183,15 +100,6 @@ const BookDetails = () => {
 						<i className="far fa-calendar-check"></i>
 					</div>
 					{actionsAllowed()}
-					{/* {isCreator
-						? <Link className="edit-link" to={`/books/${book.id}/edit`}>EDIT BOOK</Link>
-						: null
-					}
-					<Link className="delete-link" to={`/books/${book.id}/delete`}  onClick={onClickDeleteBookHandler}>DELETE</Link>
-					{isUser && canAdd && !isCreator
-						? <Link className="add-to-reading-list-link" to={`/books/${book.id}/add`} onClick={onClickAddBookHandler} >ADD TO YOUR LIST</Link>
-						: <p className="added-to-reading-list">ADDED TO YOUR LIST</p>
-					} */}
 				</div>
 			</div>
 		</PageLayout>
@@ -199,3 +107,9 @@ const BookDetails = () => {
 }
 
 export default BookDetails;
+
+	// const onClickDeleteBookHandler = async(e)=>{
+	// 	e.preventDefault();
+	// 	await deleteBook(bookId)
+	// 	navigate('/books')
+	// }

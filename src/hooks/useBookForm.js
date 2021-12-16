@@ -7,8 +7,6 @@ import { bookDataValidation } from '../utils/validation';
 import { createBook, editBook, getBookById } from '../services/book';
 
 const useBookForm = (categories) => {
-
-
     const [isLoading, setIsloading] = useState(false);
     const [isImageLoading, setIsImageloading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);

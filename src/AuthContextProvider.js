@@ -16,18 +16,16 @@ const AuthContextProvider = (props) => {
     
     const login = (authData) => {
         setUser(authData);
-        isAuthenticated=true;
     }
 
     const logout = () => {
         setUser(INITIAL_AUTH_STATE);
-        isAuthenticated=false;
     };
 
     const resetUserInitialValue=()=>{
         setUser(INITIAL_AUTH_STATE);
-        isAuthenticated=false;
     }
+
 
     return (
         <AuthContext.Provider
@@ -36,7 +34,7 @@ const AuthContextProvider = (props) => {
                 login,
                 logout,
                 resetUserInitialValue,
-                isAuthenticated
+                isAuthenticated: user.username
             }}
         >
             {props.children}

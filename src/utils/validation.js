@@ -59,8 +59,16 @@ const searchDataValidation = (criteria, value) => {
     return null;
 }
 
+const commentDataValidation = (value) => {
+    if(value.trim().length===0 ||value.trim().length>400){
+        return "*Your comment can not be more than 400 characters.";
+    }
+    return null;
+}
+
 export {
     userDataValidation,
     bookDataValidation,
-    searchDataValidation
+    searchDataValidation,
+    commentDataValidation
 }

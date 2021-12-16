@@ -26,6 +26,8 @@ const Login = () => {
 		onSubmitUserLoginHandler
 	} = useAuthForm();
 
+console.log("render");
+
 	useEffect(() => {
 		if (isSuccess) {
 			login(authValue);
