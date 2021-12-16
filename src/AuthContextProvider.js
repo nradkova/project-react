@@ -3,13 +3,6 @@ import { INITIAL_AUTH_STATE } from './common';
 import AuthContext from './context/authContext';
 import useLocalStorage from './hooks/useLocalStorage';
 
-// const initialUserState = {
-//     userId: '',
-//     username: '',
-//     sessionToken: ''
-// };
-let isAuthenticated=false;
-
 const AuthContextProvider = (props) => {
 
     const [user, setUser] = useLocalStorage('user', INITIAL_AUTH_STATE);

@@ -28,7 +28,6 @@ const BookDetails = () => {
         onSubmitCommentHandler
     }=useBook(bookId,isAuthenticated,user)
 
-	console.log('red')
 	const actionsAllowed = () => {
 		if (!isAuthenticated) {
 			return <Link className="join-link" to={'/register'}>JOIN US</Link>;
