@@ -1,5 +1,6 @@
 .spinner-container {
-    padding: 100px 80px;
+    padding: 10% 8%;
+    /* padding: 100px 80px; */
     background-color: white;
     display: flex;
     width: 100%;

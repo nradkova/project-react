@@ -13,7 +13,7 @@
   width: 100%;
   min-height: 66%;
   opacity: 0.1;
-  background-image:  url('../../components/images/background.jpg');
+  background-image:  url('../../../components/images/background.jpg');
   background-size: cover;
   z-index: -10;
   margin-top: 36px;

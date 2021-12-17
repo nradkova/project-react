@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 import './index.css'
 
-import useAuthForm from "../../hooks/useAuthForm";
-import AuthContext from "../../context/authContext";
+import useAuthForm from "../../../hooks/useAuthForm";
+import AuthContext from "../../../context/authContext";
 
-import Title from "../../components/title";
-import Loader from "../../components/loader";
-import PageLayout from "../../components/page-layout";
-import ValidationError from "../../components/validation-error";
+import Title from "../../../components/title";
+import Loader from "../../../components/loader";
+import PageLayout from "../../../components/page-layout";
+import ValidationError from "../../../components/validation-error";
 
 
 const Register = () => {

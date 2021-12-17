@@ -2,21 +2,21 @@ import { Route, Routes } from 'react-router-dom';
 
 import './App.css';
 
-import  AuthRoute from './GuardedRoute';
+import AuthRoute from './GuardedRoute';
 
 import Home from './pages/home';
-import Books from './pages/books';
-import Login from './pages/login';
-import Logout from './pages/logout';
-import Events from './pages/events';
-import MyPage from './pages/my-page';
+import Books from './pages/book/books';
+import Login from './pages/auth/login';
+import Logout from './pages/auth/logout';
+import Events from './pages/event/events';
+import MyPage from './pages/auth/my-page';
 import Landing from './pages/landing';
 import NoMatch from './pages/no-match';
-import Register from './pages/register';
-import BookEdit from './pages/book-edit';
-import BookCreate from './pages/book-create';
-import EventCreate from './pages/event-create';
-import BookDetails from './pages/book-details';
+import Register from './pages/auth/register';
+import BookEdit from './pages/book/book-edit';
+import BookCreate from './pages/book/book-create';
+import EventCreate from './pages/event/event-create';
+import BookDetails from './pages/book/book-details';
 
 
 const App = () => {
@@ -24,7 +24,7 @@ const App = () => {
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/books" element={<Books />} />
+      <Route path="/books" element={<Books/>} />
       <Route path="/books/:bookId" element={<BookDetails />} />
       <Route element={<AuthRoute />}>
         <Route path="/books/:bookId/edit" element={<BookEdit />} />
@@ -32,7 +32,10 @@ const App = () => {
       </Route>
 
       <Route path="/events" element={<Events />} />
-      <Route path="/events/create" element={<EventCreate />} />
+      <Route element={<AuthRoute />}>
+        {/* <Route path="/events/:eventId/edit" element={<BookEdit />} /> */}
+        <Route path="/events/create" element={<EventCreate />} />
+      </Route>
 
       <Route path="/my-page/:userId" element={<MyPage />} />
 
@@ -41,7 +44,7 @@ const App = () => {
       <Route element={<AuthRoute />}>
         <Route path="/logout" element={<Logout />} />
       </Route>
-      
+
       <Route path="*" element={<NoMatch />} />
     </Routes>
   );

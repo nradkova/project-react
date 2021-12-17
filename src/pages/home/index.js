@@ -1,27 +1,32 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 
 import './index.css';
 
 import { getLastFourBooks, getMostLikedBooks } from "../../services/book";
+import { getLastFourEvents, getMostRecentEvents } from "../../services/event";
 
 import Loader from "../../components/loader";
 import PageLayout from "../../components/page-layout";
 import BookCardMedium from "../../components/book-card-medium";
+import EventCardMedium from "../../components/medium-event-card";
 
 
 
 const Home = () => {
   const [books, setBooks] = useState([])
+  const [events, setEvents] = useState([])
   const [isLoading, setIsloading] = useState(false);
   const [labelLatestBooks, setLabelLatestBooks] = useState('selected');
   const [labelLikedBooks, setLabelLikedBooks] = useState('');
-  const [labelUpcomingEvents, setUpcomingEvents] = useState('selected');
-  const [labelPopularEvents, setPopularEvents] = useState('');
+  const [labelUpcomingEvents, setLabelUpcomingEvents] = useState('selected');
+  const [labelNewestEvents, setLabelNewestEvents] = useState('');
 
   useEffect(() => {
     setIsloading(true);
     latestBooksHandler();
     setLabelLatestBooks('selected');
+    newestEventHandler();
+    setLabelUpcomingEvents('selected');
     setIsloading(false);
   }, [])
 
@@ -42,6 +47,24 @@ const Home = () => {
     setBooks(res);
     setLabelLatestBooks('selected');
     setLabelLikedBooks('');
+  }
+
+  const newestEventHandler = async () => {
+    setIsloading(true);
+    const res = await getLastFourEvents();
+    setIsloading(false);
+    setEvents(res);
+    setLabelNewestEvents('selected');
+    setLabelUpcomingEvents('');
+  }
+
+  const upcomingEventsHandler = async () => {
+    setIsloading(true);
+    const res = await getMostRecentEvents();
+    setIsloading(false);
+    setEvents(res);
+    setLabelUpcomingEvents('selected');
+    setLabelNewestEvents('');
   }
 
   const pageIntro = (
@@ -67,6 +90,7 @@ const Home = () => {
       </PageLayout>
     )
   }
+  console.log('render');
 
   return (
     <PageLayout>
@@ -86,12 +110,12 @@ const Home = () => {
         </section>
         <section className="inner-container-events">
           <div className="events-container">
-            {books.map(x => <BookCardMedium key={x.id} imageUrl={x.imageUrl} title={x.title} author={x.author} rating={x.rating} />)}
+            {events.map(x => <EventCardMedium key={x.id} id={x.id} imageUrl={x.imageUrl} name={x.name} date={x.date} status={x.status} />)}
           </div>
-          {books.length > 0
+          {events.length > 0
             ? <div className="label-container">
-              <p className={`label ${labelUpcomingEvents}`}>UPCOMING EVENTS</p>
-              <p className={`label ${labelPopularEvents}`}>POPULAR EVENTS</p>
+              <p className={`label ${labelNewestEvents}`} onClick={newestEventHandler} >NEWEST EVENTS</p>
+              <p className={`label ${labelUpcomingEvents}`} onClick={upcomingEventsHandler}>UPCOMING EVENTS</p>
             </div>
             : <h3>No events yet...</h3>
           }

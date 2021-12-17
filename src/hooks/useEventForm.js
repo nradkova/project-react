@@ -1,21 +1,24 @@
 import { useState, useCallback } from 'react';
 
-import { DEFAULT_EVENT_URL, INITIAL_EVENT_VALUE, INITIAL_EVENT_VALIDATION_ERROR } from '../common';
+import { DEFAULT_EVENT_URL, INITIAL_EVENT_VALUE, INITIAL_EVENT_VALIDATION_ERROR, DEFAULT_LAG_LTD } from '../common';
 
 import uploadImage from '../services/image';
 import { eventDataValidation } from '../utils/validation';
-import { createBook, editBook, getBookById } from '../services/book';
-import { createEvent } from '@testing-library/react';
-import { editEvent, getEventById } from '../services/event';
+import { createEvent, editEvent, getEventById } from '../services/event';
 
-const useEventForm = (date) => {
+
+const useEventForm = () => {
     const [isLoading, setIsloading] = useState(false);
     const [isImageLoading, setIsImageloading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [point, setPoint] = useState(DEFAULT_LAG_LTD);
     const [eventValue, setEventValue] = useState(INITIAL_EVENT_VALUE);
     const [validationError, setValidationError] = useState(INITIAL_EVENT_VALIDATION_ERROR);
     const [imagePreview, setImagePreview] = useState(DEFAULT_EVENT_URL);
 
+    const getGeoPoint = (point) => {
+        setPoint(point);
+    }
 
     const onSubmitEventCreateHandler = (e) => {
         e.preventDefault();
@@ -23,22 +26,34 @@ const useEventForm = (date) => {
         if (validationError.required) {
             setValidationError(prev => ({ ...prev, "required": null }))
         }
+        // if (validationError.name || validationError.description
+        //     || validationError.image || validationError.date 
+        //     || validationError.location ||validationError.required) {
+        //     setValidationError(INITIAL_EVENT_VALIDATION_ERROR);
+        // }
 
-        const data = new FormData(e.target)
-        const event = {
-            name: data.get('name'),
-            location: data.get('location'),
-            description: data.get('description'),
-            image: imagePreview,
-            date: date
-        }
+        const data = new FormData(e.target);
+        const event = dataParser(data);
+        event.image = imagePreview;
+        event.status = 'active';
+        event.location = point;
+
+        const dateError = eventDataValidation('date', event.date);
+        setValidationError(prev => ({ ...prev, 'date': dateError }));
+        console.log(dateError);
+
+        console.log(event);
+        console.log(validationError);
 
         if (validationError.name || validationError.description
-            || validationError.image || validationError.date) {
+            || validationError.image || dateError) {
+            // setValidationError(INITIAL_EVENT_VALIDATION_ERROR);
             return;
         }
-        if (event.name === '' || event.description === '' || event.location === '') {
-            setValidationError(prev => ({ ...prev, 'required': '*Title, description and location are required.' }))
+
+        if (event.name === '' || event.description === ''
+            || JSON.stringify(event.location) === JSON.stringify(DEFAULT_LAG_LTD)){
+            setValidationError(prev => ({ ...prev, 'required': '*Topic, description, date and location are required.' }))
             return;
         }
 
@@ -60,21 +75,28 @@ const useEventForm = (date) => {
             setValidationError(prev => ({ ...prev, "required": null }))
         }
 
-        const data = new FormData(e.target)
-        const event = {
-            name: data.get('name'),
-            location: data.get('location'),
-            description: data.get('description'),
-            image: imagePreview,
-            date: date
-        }
+        const data = new FormData(e.target);
+        const event = dataParser(data);
+        event.image = imagePreview;
+        event.status = 'active';
+        event.location = point;
+
+        const locationError = eventDataValidation('location', event.location);
+        setValidationError(prev => ({ ...prev, 'location': locationError }));
+
+        const dateError = eventDataValidation('date', event.date);
+        setValidationError(prev => ({ ...prev, 'date': dateError }));
 
         if (validationError.name || validationError.description
-            || validationError.image || validationError.date) {
+            || validationError.image || validationError.date || validationError.location) {
+            setValidationError(INITIAL_EVENT_VALIDATION_ERROR);
             return;
         }
-        if (event.name === '' || event.description === '' || event.location === '') {
-            setValidationError(prev => ({ ...prev, 'required': '*Title, description and location are required.' }))
+
+        if (event.name === '' || event.description === ''
+            || JSON.stringify(event.location) === JSON.stringify(DEFAULT_LAG_LTD) 
+            || event.date.toString() === '') {
+            setValidationError(prev => ({ ...prev, 'required': '*Topic, description, date and location are required.' }))
             return;
         }
 
@@ -122,6 +144,7 @@ const useEventForm = (date) => {
     const onChangeImageHandler = (e) => {
         const value = e.target.files[0];
 
+        console.log('b',value);
         const error = eventDataValidation('imageUrl', (value || ''));
         setValidationError(prev => ({ ...prev, 'image': error }))
         if (error) {
@@ -157,6 +180,7 @@ const useEventForm = (date) => {
         setValidationError(INITIAL_EVENT_VALIDATION_ERROR);
         setIsloading(false);
         setIsSuccess(false);
+        setPoint(DEFAULT_LAG_LTD);
         setEventValue(INITIAL_EVENT_VALUE);
         setImagePreview(DEFAULT_EVENT_URL);
     }
@@ -168,6 +192,7 @@ const useEventForm = (date) => {
         isSuccess,
         validationError,
         imagePreview,
+        getGeoPoint,
         onChangeImageHandler,
         onBlurInputHandler,
         onChangeInputHandler,
@@ -178,3 +203,34 @@ const useEventForm = (date) => {
 }
 
 export default useEventForm;
+
+// const dateParser = (data) => {
+//     const year = data.get('year');
+//     const month = ('0' + data.get('month')).slice(-2);
+//     const day = ('0' + data.get('day')).slice(-2);
+//     const hour = ('0' + data.get('hour')).slice(-2);
+//     const minute = ('0' + data.get('minute')).slice(-2);
+//     const dataStr=`${year}-${month}-${day}T${hour}:${minute}:00`;
+//     console.log(dataStr);
+//     const date = Date.parse(dataStr);
+//     const date =new Date(year,month,day,hour,minute,0);
+//     return date;
+// }
+
+const dataParser = (data) => {
+    const year = data.get('year');
+    const month = ('0' + data.get('month')).slice(-2);
+    const day = ('0' + data.get('day')).slice(-2);
+    const hour = ('0' + data.get('hour')).slice(-2);
+    const minute = ('0' + data.get('minute')).slice(-2);
+    const date =new Date(year,month,day,hour,minute,0);
+    console.log(year,month);
+    const event = {
+        name: data.get('name'),
+        location: data.get('location'),
+        description: data.get('description'),
+        date: date,
+        status: data.get('status') || 'active'
+    }
+    return event;
+}

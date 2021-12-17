@@ -7,6 +7,7 @@
     background-color: rgb(162, 186, 187);
     padding: 8px;
     width: 40px;
+    display: none;
 }
 
 .scroller-button:hover {
@@ -17,4 +18,8 @@
     font-weight: bolder;
     font-size: 1.5em;
     color: whitesmoke;
+}
+
+.scroller-button.selected{
+    display: block;
 }

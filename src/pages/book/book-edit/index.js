@@ -3,13 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import './index.css';
 
-import useBookForm from "../../hooks/useBookForm";
-import AuthContext from "../../context/authContext";
+import useBookForm from "../../../hooks/useBookForm";
+import AuthContext from "../../../context/authContext";
 
-import Category from "../../components/category";
-import Loader from "../../components/loader";
-import PageLayout from "../../components/page-layout";
-import ValidationError from "../../components/validation-error";
+import Category from "../../../components/category";
+import Loader from "../../../components/loader";
+import PageLayout from "../../../components/page-layout";
+import ValidationError from "../../../components/validation-error";
 
 
 const BookEdit = () => {

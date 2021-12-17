@@ -4,13 +4,13 @@ import { useState, useEffect, useContext } from "react";
 
 import './index.css';
 
-import authServices from '../../services/user';
-import AuthContext from "../../context/authContext";
+import authServices from '../../../services/user';
+import AuthContext from "../../../context/authContext";
 
-import Title from "../../components/title";
-import Loader from '../../components/loader';
-import PageLayout from "../../components/page-layout";
-import BookCardLite from '../../components/book-card-lite';
+import Title from "../../../components/title";
+import Loader from '../../../components/loader';
+import PageLayout from "../../../components/page-layout";
+import BookCardLite from '../../../components/book-card-lite';
 
 let pagesCounter = 1;
 

@@ -1,6 +1,6 @@
 .book-form-container {
-  background: rgb(236, 237, 227);
-  /* background: rgb(243, 243, 241); */
+  /* background: rgb(236, 237, 227); */
+  background: rgb(243, 243, 241);
   width: 100vw;
   padding-bottom: 0.2%;
   margin-bottom: 2%;
@@ -66,7 +66,7 @@
 }
 
 .default-image {
-  padding: 15px 0px;
+  padding-top: 15px;
   width: 50%;
 }
 
@@ -104,6 +104,12 @@ label {
   padding: 1px 10px;
   margin: 4px 10px 4px 0px;
   cursor: pointer;
+}
+
+.book-form-body-details-remark{
+  margin: 0;
+  color: darkolivegreen;
+  font-size: 0.8em;
 }
 
 .fa-times {

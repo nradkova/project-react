@@ -72,3 +72,8 @@ export const INITIAL_EVENT_VALIDATION_ERROR = {
     required:null
 }
 
+export const DEFAULT_LAG_LTD = [38.6855, -101.0733];
+
+export const DEFAULT_MAP_CENTER = [42.69751, 23.32415];
+
+export const DEFAULT_MAP_CENTER_CITY = "Sofia";

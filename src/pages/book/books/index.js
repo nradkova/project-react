@@ -2,14 +2,14 @@ import { useEffect, useContext } from "react";
 
 import './index.css';
 
-import AuthContext from "../../context/authContext";
-import useBookSearch from "../../hooks/useBookSearch";
+import AuthContext from "../../../context/authContext";
+import useBookSearch from "../../../hooks/useBookSearch";
 
-import Title from "../../components/title";
-import Loader from "../../components/loader";
-import PageLayout from "../../components/page-layout";
-import BookCardMedium from "../../components/book-card-medium";
-import ValidationError from "../../components/validation-error";
+import Title from "../../../components/title";
+import Loader from "../../../components/loader";
+import PageLayout from "../../../components/page-layout";
+import BookCardMedium from "../../../components/book-card-medium";
+import ValidationError from "../../../components/validation-error";
 
 const Books = () => {
 	const { user,isAuthenticated } = useContext(AuthContext);

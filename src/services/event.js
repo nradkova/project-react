@@ -5,13 +5,13 @@ import { createEventSubscription } from "./subscription";
 const createEvent = async (data) => {
 	try {
 		const event = new Parse.Object('Event');
-		event.set('name', data.title);
-		event.set('date', data.author);
+		event.set('name', data.name);
+		event.set('date', data.date);
 		event.set('description', data.description);
 		event.set('creator', Parse.User.current());
-		event.set('location', data.location);
+		event.set('location', new Parse.GeoPoint({latitude: data.location[0], longitude: data.location[1]}));
 		event.set('imageUrl', data.image);
-		event.set('status', "active");
+		event.set('status', data.status);
 		const response = await event.save();
 
 		const subscription = await createEventSubscription(event.id);
@@ -25,17 +25,18 @@ const createEvent = async (data) => {
 }
 
 const editEvent = async (eventId, data) => {
-	const event = Parse.Object.extend('event');
+	const event = Parse.Object.extend('Event');
 	const query = new Parse.Query(event);
 
 	try {
 		const event = await query.get(eventId);
-		event.set('title', data.title);
-		event.set('author', data.author);
+		event.set('name', data.name);
+		event.set('date', data.date);
 		event.set('description', data.description);
 		event.set('creator', Parse.User.current());
-		event.set('category', data.category);
+		event.set('location', new Parse.GeoPoint({latitude: data.location[0], longitude: data.location[1]}));
 		event.set('imageUrl', data.image);
+		event.set('status', data.status);
 		try {
 			const result = await event.save();
 			return result;
@@ -48,7 +49,7 @@ const editEvent = async (eventId, data) => {
 }
 
 const cancelEvent = async (eventId) => {
-	const event = Parse.Object.extend('event');
+	const event = Parse.Object.extend('Event');
 
 	const query = new Parse.Query(event);
 
@@ -259,11 +260,11 @@ const getLastFourEvents = async function () {
 }
 
 const getMostRecentEvents = async function () {
-	const event = Parse.Object.extend('event');
+	const event = Parse.Object.extend('Event');
 	const query = new Parse.Query(event);
 	query.include('creator');
 	query.include('subscription');
-	query.greaterThan('date',Date.now());
+	query.greaterThan('date',new Date());
 	query.descending('date');
 	query.limit(4);
 

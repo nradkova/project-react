@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 import './index.css'
 
-import userService from "../../services/user";
-import AuthContext from "../../context/authContext";
+import userService from "../../../services/user";
+import AuthContext from "../../../context/authContext";
 
-import PageLayout from "../../components/page-layout";
+import PageLayout from "../../../components/page-layout";
 
 
 const Logout = () => {

@@ -3,14 +3,14 @@ import { Link, useParams} from "react-router-dom";
 
 import './index.css';
 
-import useBook from "../../hooks/useBook";
-import AuthContext from "../../context/authContext";
+import useBook from "../../../hooks/useBook";
+import AuthContext from "../../../context/authContext";
 
-import Star from "../../components/star";
-import Loader from "../../components/loader";
-import Rating from "../../components/rating";
-import CustomComment from "../../components/comment";
-import PageLayout from "../../components/page-layout";
+import Star from "../../../components/star";
+import Loader from "../../../components/loader";
+import Rating from "../../../components/rating";
+import CustomComment from "../../../components/comment";
+import PageLayout from "../../../components/page-layout";
 
 const BookDetails = () => {
 	const {isAuthenticated, user } = useContext(AuthContext);

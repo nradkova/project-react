@@ -60,12 +60,15 @@ const eventDataValidation = (type, value) => {
     }
 
     if (type === "date") {
-        const date = Date.parse(`${value.year}-${value.month}-${value.day}T${value.hour}:${value.minute}:00`);
-        if (!date) {
+        const now = Date.now();
+        console.log(now);
+        console.log(value)
+        console.log(now>value)
+        if (!value) {
             return "Date is invalid."
         }
-        const now = Date.now();
-        if (now > date) {
+        if (now > value) {
+            console.log('eeeeee');
             return "You have entered a past date."
         }
     }

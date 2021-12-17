@@ -1,4 +1,4 @@
-.book-form-container {
+.event-form-container {
   background: rgb(236, 237, 227);
   /* background: rgb(243, 243, 241); */
   width: 100vw;
@@ -6,12 +6,12 @@
   margin-bottom: 2%;
 }
 
-.book-form-title {
+.event-form-title {
   text-align: left;
   padding: 10px 40px;
 }
 
-.book-form-title h3 {
+.event-form-title h3 {
   margin: 0;
 }
 
@@ -19,15 +19,15 @@
   margin-right: 20px;
 }
 
-.book-form-body {
+.event-form-body {
   padding: 0 40px;
   display: flex;
   flex-flow: row no-wrap;
   margin-bottom: 25px;
 }
 
-.book-form-body-main,
-.book-form-body-details {
+.event-form-body-main,
+.event-form-body-details {
   box-sizing: border-box;
   padding: 15px;
   /* flex: 1 0 45%; */
@@ -35,12 +35,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 }
 
-.title,
-.author,
-.description,
-.image {
+.event-name,
+.event-date,
+.event-description,
+.event-image {
   border: 1px solid lightgrey;
   box-shadow: inset -1px -1px 2px 1px lightgrey;
   border-radius: 12px;
@@ -53,11 +54,14 @@
   align-items: center;
 }
 
-.title-input,
-.author-input,
-.image-input,
-.description-input,
-.category-input {
+.event-date{
+  margin-bottom: -1%;
+}
+
+.event-name-input,
+.event-date-input,
+.event-image-input,
+.event-description-input {
   /* border: none; */
   padding: 10px 15px;
   border-radius: 6px;
@@ -65,19 +69,24 @@
   border:1px solid lightgrey;
 }
 
-.default-image {
-  padding-top: 15px;
+.event-default-image {
+  padding: 15px 0px;
   width: 50%;
 }
 
-.default-image img {
+.event-default-image img {
   display: block;
   max-width: 19vw;
   height: auto;
 }
 
-.description {
+.event-description {
   margin-bottom: 25px;
+}
+
+.event-date-input-box{
+  width: 15%;
+  height: 20px;
 }
 
 label {
@@ -88,28 +97,6 @@ label {
   cursor: pointer;
   display: block;
   margin-top: 3%;
-}
-
-.categories-list {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  width: 80%;
-}
-
-.category-list-item {
-  background-color: lightgrey;
-  border-radius: 12px;
-  padding: 1px 10px;
-  margin: 4px 10px 4px 0px;
-  cursor: pointer;
-}
-
-.book-form-body-details-remark{
-  margin: 0;
-  color: darkolivegreen;
-  font-size: 0.8em;
 }
 
 .fa-times {
@@ -123,7 +110,7 @@ label {
   margin-right: 10px;
 }
 
-.book-form-footer {
+.event-form-footer {
   padding: 30px 40px;
   display: flex;
   flex-direction: column;
@@ -132,7 +119,7 @@ label {
   position: relative;
 }
 
-.book-form-footer::before {
+.event-form-footer::before {
   content: "";
   position: absolute;
   display: block;
@@ -149,7 +136,7 @@ label {
   );
 }
 
-.book-form-footer .recommend p {
+.event-form-footer .recommend p {
   margin-right: 10%;
   margin-bottom: 5px;
   font-family: "Montserrat", sans-serif;
@@ -159,7 +146,7 @@ label {
   color: #6b989b;
 }
 
-.book-form-footer .recommend h3 {
+.event-form-footer .recommend h3 {
   margin:0px 0px 30px 0px;
   font-size: 20px;
   font-family: "Montserrat", sans-serif;
@@ -168,7 +155,7 @@ label {
   color: #6b989b;
 }
 
-.action-btn {
+.event-action-btn {
   cursor: pointer;
   border: 1px solid #6b989b;
   padding: 14px 30px;
@@ -180,7 +167,7 @@ label {
   transition: 200ms;
 }
 
-.action-btn:hover {
+.event-action-btn:hover {
   background: #fff;
   color: #6b989b;
 }
