@@ -4,8 +4,8 @@ import { DEFAULT_LAG_LTD, DEFAULT_MAP_CENTER, DEFAULT_MAP_CENTER_CITY } from '..
 
 import './index.css'
 
-const MapComponent = ({ getGeoPoint}) => {
-  const [point, setPoint] = useState( DEFAULT_LAG_LTD);
+const MapComponent = ({ getGeoPoint }) => {
+  const [point, setPoint] = useState(DEFAULT_LAG_LTD);
 
   useMapEvent('click', (e) => {
     const data = [e.latlng.lat, e.latlng.lng];
@@ -16,28 +16,28 @@ const MapComponent = ({ getGeoPoint}) => {
   return (
     <Marker position={point} >
       <Popup>
-        New Location <br />{point[0].toString().slice(0, 7)}, {point[1].toString().slice(0, 7)}
+        Your Location <br />{point[0].toString().slice(0, 7)}, {point[1].toString().slice(0, 7)}
       </Popup>
     </Marker>
   )
 }
 
-const MapEvent = ({ getGeoPoint,center,message }) => {
+const MapEvent = ({ getGeoPoint }) => {
   // const [newPoint, setNewPoint] = useState(point);
   // console.log(newPoint);
   return (
     <div className="map-event">
-      <MapContainer center={center|| DEFAULT_MAP_CENTER} zoom={10} scrollWheelZoom={false}>
+      <MapContainer center={DEFAULT_MAP_CENTER} zoom={10} scrollWheelZoom={false}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={center|| DEFAULT_MAP_CENTER}>
+        <Marker position={DEFAULT_MAP_CENTER}>
           <Popup>
-           {message || DEFAULT_MAP_CENTER_CITY}
+           {DEFAULT_MAP_CENTER_CITY}
           </Popup>
         </Marker>
-        <MapComponent center={center} getGeoPoint={getGeoPoint} />
+        <MapComponent getGeoPoint={getGeoPoint} />
       </MapContainer>
     </div>
   )

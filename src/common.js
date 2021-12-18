@@ -60,7 +60,8 @@ export const INITIAL_EVENT_VALUE = {
     imageUrl: "",
     status: "",
     createdAt:"",
-    creator:""
+    creator:"",
+    dateObj:{}
 }
 
 export const INITIAL_EVENT_VALIDATION_ERROR = {

@@ -17,6 +17,7 @@ import BookEdit from './pages/book/book-edit';
 import BookCreate from './pages/book/book-create';
 import EventCreate from './pages/event/event-create';
 import BookDetails from './pages/book/book-details';
+import EventEdit from './pages/event/event-edit';
 
 
 const App = () => {
@@ -33,7 +34,7 @@ const App = () => {
 
       <Route path="/events" element={<Events />} />
       <Route element={<AuthRoute />}>
-        {/* <Route path="/events/:eventId/edit" element={<BookEdit />} /> */}
+        <Route path="/events/:eventId/edit" element={<EventEdit />} />
         <Route path="/events/create" element={<EventCreate />} />
       </Route>
 

@@ -40,4 +40,4 @@ const getNavigation = (isAuthenticated, user) => {
   return isAuthenticated ? authLinks : guestLinks;
 }
 
-export default getNavigation
+export default getNavigation;

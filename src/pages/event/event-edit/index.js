@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useContext } from "react";
 
 import './index.css';
@@ -11,11 +11,13 @@ import MapEvent from "../../../components/map-event";
 import PageLayout from "../../../components/page-layout";
 import ValidationError from "../../../components/validation-error";
 
-const EventCreate = () => {
+const EventEdit = () => {
 	const navigate = useNavigate();
 	const { user } = useContext(AuthContext);
-
+	const { eventId } = useParams();
+	
 	const {
+		eventValue:event,
 		isLoading,
 		isImageLoading,
 		validationError,
@@ -23,17 +25,29 @@ const EventCreate = () => {
 		isSuccess,
 		getGeoPoint,
 		onChangeImageHandler,
-		onBlurInputHandler,
-		onSubmitEventCreateHandler
+		onChangeInputHandler,
+		onSubmitEventEditHandler,
+		setInitialEventEditValue
 	} = useEventForm();
 
 	useEffect(() => {
-		console.log("bb");
+		console.log(event);
+		if (event.creator!==user.username) {
+			return ()=> navigate('/home');
+		}
+	}, [event,user])
+
+
+	useEffect(() => {
 		if (isSuccess) {
 			navigate('/events');
 		}
 	}, [isSuccess, navigate])
 
+	useEffect(() => {
+		setInitialEventEditValue(eventId)
+	}, [eventId, setInitialEventEditValue])
+	
 	if (isLoading) {
 		return (
 			<PageLayout>
@@ -41,26 +55,25 @@ const EventCreate = () => {
 			</PageLayout>
 		)
 	}
-
 	return (
 		<PageLayout>
 			<div className="event-form-container">
 				<div className="event-form-title">
-					<h3><i className="fa fa-arrow-right"></i>New event</h3>
+					<h3><i className="fa fa-arrow-right"></i>Edit event</h3>
 				</div>
-				<form className="event-form-body" onSubmit={onSubmitEventCreateHandler}>
+				<form className="event-form-body" onSubmit={onSubmitEventEditHandler}>
 					<div className="event-form-body-main">
 						<div className="event-name">
-							<input className="event-name-input" type="text" name="name" id="name" onBlur={onBlurInputHandler} />
+							<input className="event-name-input" type="text" name="name" id="name" defaultValue={event.name} onChange={onChangeInputHandler} />
 							<label htmlFor="name"><i className="fa fa-pen"></i>Topic</label>
 							{validationError.name && <ValidationError message={validationError.name} />}
 						</div>
 						<div className="event-date">
-							<input className="event-date-input-box" type="number" name="year" id="year" min={2021} max={2050} placeholder="YYYY" />
-							<input className="event-date-input-box" type="number" name="month" id="month" min={1} max={12} placeholder="MM" />
-							<input className="event-date-input-box" type="number" name="day" id="day" min={1} max={31} placeholder="DD" />
-							<input className="event-date-input-box" type="number" name="hour" id="hour" min={0} max={23} placeholder="HH" />
-							<input className="event-date-input-box" type="number" name="minute" id="minute" min={0} max={59} placeholder="MM" />
+							<input className="event-date-input-box" type="number" name="year" id="year" min={2021} max={2050} placeholder="YYYY" defaultValue={event.dateObj.year}/>
+							<input className="event-date-input-box" type="number" name="month" id="month" min={1} max={12} placeholder="MM" defaultValue={event.dateObj.month}/>
+							<input className="event-date-input-box" type="number" name="day" id="day" min={1} max={31} placeholder="DD" defaultValue={event.dateObj.day}/>
+							<input className="event-date-input-box" type="number" name="hour" id="hour" min={0} max={24} placeholder="HH" defaultValue={event.dateObj.hour}/>
+							<input className="event-date-input-box" type="number" name="minute" id="minute" min={0} max={59} placeholder="MM" defaultValue={event.dateObj.minute}/>
 							<label htmlFor="date"><i className="fa fa-pen"></i>Date and time</label>
 						</div>
 						{validationError.date && <ValidationError message={validationError.date} />}
@@ -76,11 +89,11 @@ const EventCreate = () => {
 					</div>
 					<div className="event-form-body-details">
 						<div className="event-description">
-							<textarea className="event-description-input" type="text" name="description" id="description" cols="50" rows="12" onBlur={onBlurInputHandler} />
+							<textarea className="event-description-input" type="text" name="description" id="description" cols="50" rows="12"defaultValue={event.description} onChange={onChangeInputHandler} />
 							<label htmlFor="description"><i className="fa fa-pen"></i>Description</label>
 							{validationError.description && <ValidationError message={validationError.description} />}
 						</div>
-						<MapEvent getGeoPoint={getGeoPoint} />
+						<MapEvent center={event.location} getGeoPoint={getGeoPoint} message={'Current location'} />
 					</div>
 					<div className="event-form-footer">
 						<div className="recommend">
@@ -88,7 +101,7 @@ const EventCreate = () => {
 							<h3>{user.username}</h3>
 						</div>
 						<div className="event-action">
-							<button className="event-action-btn" type="submit">Add to events</button>
+							<button className="event-action-btn" type="submit">Edit event</button>
 						</div>
 						{validationError.required && <ValidationError message={validationError.required} />}
 					</div>
@@ -98,4 +111,4 @@ const EventCreate = () => {
 	)
 }
 
-export default EventCreate;
+export default EventEdit;

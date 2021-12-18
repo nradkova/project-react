@@ -52,7 +52,7 @@ const useEventForm = () => {
         }
 
         if (event.name === '' || event.description === ''
-            || JSON.stringify(event.location) === JSON.stringify(DEFAULT_LAG_LTD)){
+            || JSON.stringify(event.location) === JSON.stringify(DEFAULT_LAG_LTD)) {
             setValidationError(prev => ({ ...prev, 'required': '*Topic, description, date and location are required.' }))
             return;
         }
@@ -81,21 +81,16 @@ const useEventForm = () => {
         event.status = 'active';
         event.location = point;
 
-        const locationError = eventDataValidation('location', event.location);
-        setValidationError(prev => ({ ...prev, 'location': locationError }));
-
         const dateError = eventDataValidation('date', event.date);
         setValidationError(prev => ({ ...prev, 'date': dateError }));
 
         if (validationError.name || validationError.description
-            || validationError.image || validationError.date || validationError.location) {
-            setValidationError(INITIAL_EVENT_VALIDATION_ERROR);
+            || validationError.image || dateError) {
+            // setValidationError(INITIAL_EVENT_VALIDATION_ERROR);
             return;
         }
 
-        if (event.name === '' || event.description === ''
-            || JSON.stringify(event.location) === JSON.stringify(DEFAULT_LAG_LTD) 
-            || event.date.toString() === '') {
+        if (event.name === '' || event.description === '') {
             setValidationError(prev => ({ ...prev, 'required': '*Topic, description, date and location are required.' }))
             return;
         }
@@ -144,7 +139,7 @@ const useEventForm = () => {
     const onChangeImageHandler = (e) => {
         const value = e.target.files[0];
 
-        console.log('b',value);
+        console.log('b', value);
         const error = eventDataValidation('imageUrl', (value || ''));
         setValidationError(prev => ({ ...prev, 'image': error }))
         if (error) {
@@ -170,7 +165,8 @@ const useEventForm = () => {
         getEventById(eventId)
             .then(res => {
                 setEventValue(res);
-                setImagePreview(res.imageUrl)
+                setPoint(res.location)
+                setImagePreview(res.imageUrl);
                 setIsloading(false);
             })
             .catch(err => console.log(err))
@@ -218,13 +214,14 @@ export default useEventForm;
 // }
 
 const dataParser = (data) => {
+    const monthInput = Number(data.get('month')) - 1;
     const year = data.get('year');
-    const month = ('0' + data.get('month')).slice(-2);
+    const month = ('0' + monthInput).slice(-2);
     const day = ('0' + data.get('day')).slice(-2);
     const hour = ('0' + data.get('hour')).slice(-2);
     const minute = ('0' + data.get('minute')).slice(-2);
-    const date =new Date(year,month,day,hour,minute,0);
-    console.log(year,month);
+    const date = new Date(year, month, day, hour, minute, 0);
+    console.log(year, month);
     const event = {
         name: data.get('name'),
         location: data.get('location'),

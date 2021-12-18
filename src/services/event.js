@@ -284,8 +284,18 @@ const viewModel = (record) => {
 	const subscribed = record.get('subscription').get('subscribed');
 	const createdAt = new Date(record.createdAt)
 		.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
-	const date = new Date(record.get('date'))
-		.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+	const dateRespone=new Date(record.get('date'));
+	const date = dateRespone
+		.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric',hour12: false, });
+		
+		const dateObj={
+		year:dateRespone.getFullYear(),
+		month:(dateRespone.getUTCMonth()+1),
+		day:dateRespone.getUTCDate(),
+		hour:(dateRespone.getUTCHours()+2),
+		minute:dateRespone.getUTCMinutes()
+	}
+	
 	return {
 		id: record.id,
 		createdAt,
@@ -293,11 +303,12 @@ const viewModel = (record) => {
 		description: record.get('description'),
 		imageUrl: record.get('imageUrl'),
 		status: record.get('status'),
-		location:record.get('location'),
+		location:[record.get('location')._latitude,record.get('location')._longitude],
 		date,
 		creator,
 		subscriptionId,
-		subscribed
+		subscribed,
+		dateObj
 	}
 }
 

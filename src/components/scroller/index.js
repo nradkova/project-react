@@ -1,29 +1,34 @@
-import { useState } from 'react';
+import { useRef } from 'react';
 
-import './index.css'
+import './index.css';
+
+const onClickHandler = (e) => {
+  window.scrollTo(0, 0)
+}
+
+const scrollToTop = () => {
+  if (window.scrollY > 0) {
+    window.scrollTo(0, 0);
+  }
+}
 
 const Scroller = () => {
-  const [isSelected, setIsSelected] = useState('');
-
-  const onClickHandler = (e) => {
-    window.scrollTo(0, 0)
-  }
-
+  const scroller = useRef()
+  
+  scrollToTop();
+  
   const setVisible = () => {
-    if (window.innerHeight + 30 >= window.scrollY) {
-      setIsSelected('selected');
+    if (window.innerHeight + 300 >= window.outerHeight) {
+      if (scroller.current) {
+        scroller.current.style.display = "block";
+      }
     }
   }
+
   window.addEventListener('scroll', setVisible);
-
-  window.addEventListener('scroll', () => {
-    if (window.innerHeight + 50 >= window.scrollY) {
-      window.removeEventListener('scroll', setVisible);
-    }
-  })
-
+  
   return (
-    <button className={`scroller-button ${isSelected}`} onClick={onClickHandler}><i className="fas fa-arrow-up"></i></button>
+    <button ref={scroller} className={`scroller-button`} onClick={onClickHandler}><i className="fas fa-arrow-up"></i></button>
   )
 }
 

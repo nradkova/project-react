@@ -3,7 +3,6 @@ import './index.css'
 import Header from '../header'
 import Footer from '../footer'
 import Scroller from '../scroller'
-
 const PageLayout = (props) => {
   return (
     <div className="page-wrapper">
@@ -11,7 +10,7 @@ const PageLayout = (props) => {
       <div className="page-wrapper-inner">
           {props.children}
       </div>
-      <Scroller/>
+      <Scroller />
       <Footer />
     </div>
   )

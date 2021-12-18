@@ -6,8 +6,8 @@ import './index.css';
 import useBookForm from "../../../hooks/useBookForm";
 import AuthContext from "../../../context/authContext";
 
-import Category from "../../../components/category";
 import Loader from "../../../components/loader";
+import Category from "../../../components/category";
 import PageLayout from "../../../components/page-layout";
 import ValidationError from "../../../components/validation-error";
 
@@ -31,6 +31,13 @@ const BookEdit = () => {
 		onSubmitBookEditHandler,
 		setInitialBookEditValue,
 	} = useBookForm(categories);
+
+	useEffect(() => {
+		console.log(book);
+		if (book.creator!==user.username) {
+			return ()=> navigate('/home');
+		}
+	}, [book,user])
 
 	useEffect(() => {
 		if (isSuccess) {
