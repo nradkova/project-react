@@ -38,10 +38,7 @@
   justify-content: space-between;
 }
 
-.event-name,
-.event-date,
-.event-description,
-.event-image {
+.event-status {
   border: 1px solid lightgrey;
   box-shadow: inset -1px -1px 2px 1px lightgrey;
   border-radius: 12px;
@@ -49,13 +46,12 @@
   margin-bottom: 1%;
   width: 80%;
   display: flex;
-  /* flex-direction: column; */
   justify-content: space-around;
   align-items: center;
 }
 
-.event-date{
-  margin-bottom: -1%;
+.event-date.edit{
+  margin-bottom: 1%;
 }
 
 .event-name-input,
@@ -110,16 +106,16 @@ label {
   margin-right: 10px;
 }
 
-.event-form-footer {
+.event-edit-form-footer {
   padding: 30px 40px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
   position: relative;
+  align-items: center;
 }
 
-.event-form-footer::before {
+.event-edit-form-footer::before {
   content: "";
   position: absolute;
   display: block;
@@ -136,7 +132,7 @@ label {
   );
 }
 
-.event-form-footer .recommend p {
+.event-edit-form-footer .recommend p {
   margin-right: 10%;
   margin-bottom: 5px;
   font-family: "Montserrat", sans-serif;
@@ -146,7 +142,7 @@ label {
   color: #6b989b;
 }
 
-.event-form-footer .recommend h3 {
+.event-edit-form-footer .recommend h3 {
   margin:0px 0px 30px 0px;
   font-size: 20px;
   font-family: "Montserrat", sans-serif;
@@ -170,4 +166,15 @@ label {
 .event-action-btn:hover {
   background: #fff;
   color: #6b989b;
+}
+
+.cancel-event-link{
+  text-decoration: none;
+  color: rgb(135, 165, 167);
+  font-weight: bold;
+}
+
+.event-actions.cancel {
+  width: 15%;
+  align-self: center;
 }

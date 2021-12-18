@@ -51,6 +51,7 @@ const signSubscription = async (userId, subscriptionId, subscribed) => {
         console.error('Error while retrieving object EventSubscription', error);
     }
 }
+
 const unsignSubscription = async (userId, eventId) => {
     try {
         const event = await getEventById(eventId);

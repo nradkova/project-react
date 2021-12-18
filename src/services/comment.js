@@ -22,6 +22,28 @@ const getAllCommentsByBookId = async function (bookId) {
 	}
 }
 
+const getAllCommentsByEventId = async function (eventId) {
+	const event = new Parse.Object('Event');
+	event.id = eventId;
+
+	const EventComment = Parse.Object.extend('EventComment');
+	const query = new Parse.Query(EventComment);
+	query.include('creator');
+	query.equalTo('event', event);
+	query.descending('createdAt');
+
+	try {
+		const data = await query.find();
+		const results = data.reduce((a, x) => {
+			a.push(viewModel(x))
+			return a
+		}, [])
+		return results;
+	} catch (error) {
+		console.error('Error while fetching EventComment', error);
+	}
+}
+
 const createBookComment = async (bookId, text) => {
 	const book = new Parse.Object('Book');
 	book.id = bookId;
@@ -35,6 +57,22 @@ const createBookComment = async (bookId, text) => {
 		await bookComment.save();
 	} catch (error) {
 		console.error('Error while creating BookComment: ', error);
+	}
+}
+
+const createEventComment = async (eventId, text) => {
+	const event = new Parse.Object('Event');
+	event.id = eventId;
+
+	const eventComment =new Parse.Object('EventComment');
+	eventComment.set('text', text);
+	eventComment.set('creator', Parse.User.current());
+	eventComment.set('event', event);
+
+	try {
+		await eventComment.save();
+	} catch (error) {
+		console.error('Error while creating EventComment: ', error);
 	}
 }
 
@@ -54,5 +92,7 @@ const viewModel = (record) => {
 
 export {
 	createBookComment,
-	getAllCommentsByBookId
+	createEventComment,
+	getAllCommentsByBookId,
+	getAllCommentsByEventId
 }

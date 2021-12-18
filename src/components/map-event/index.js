@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import { MapContainer, Marker, Popup, TileLayer, useMapEvent } from 'react-leaflet';
-import { DEFAULT_LAG_LTD, DEFAULT_MAP_CENTER, DEFAULT_MAP_CENTER_CITY } from '../../common';
 
 import './index.css'
+import { DEFAULT_LAG_LTD, DEFAULT_MAP_CENTER, DEFAULT_MAP_CENTER_CITY } from '../../common';
 
 const MapComponent = ({ getGeoPoint}) => {
   const [point, setPoint] = useState( DEFAULT_LAG_LTD);
-
+  
   useMapEvent('click', (e) => {
+    if(!getGeoPoint){
+      return null;
+    }
     const data = [e.latlng.lat, e.latlng.lng];
     getGeoPoint(data);
     setPoint(data);
-    console.log(data);
   })
   return (
     <Marker position={point} >
@@ -23,8 +25,6 @@ const MapComponent = ({ getGeoPoint}) => {
 }
 
 const MapEvent = ({ getGeoPoint,center,message }) => {
-  // const [newPoint, setNewPoint] = useState(point);
-  // console.log(newPoint);
   return (
     <div className="map-event">
       <MapContainer center={center|| DEFAULT_MAP_CENTER} zoom={10} scrollWheelZoom={false}>

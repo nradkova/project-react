@@ -52,6 +52,7 @@ const BookDetails = () => {
 
 	return (
 		<PageLayout>
+			<h1>Book</h1>
 			<div className="book-details-container">
 				<div className="book-main">
 					<h4 className="book-author">{book.author}</h4>

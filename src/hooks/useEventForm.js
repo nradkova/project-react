@@ -4,7 +4,7 @@ import { DEFAULT_EVENT_URL, INITIAL_EVENT_VALUE, INITIAL_EVENT_VALIDATION_ERROR,
 
 import uploadImage from '../services/image';
 import { eventDataValidation } from '../utils/validation';
-import { createEvent, editEvent, getEventById } from '../services/event';
+import { cancelEvent, createEvent, editEvent, getEventById } from '../services/event';
 
 
 const useEventForm = () => {
@@ -172,6 +172,12 @@ const useEventForm = () => {
             .catch(err => console.log(err))
     }, [])
 
+    const onClickCancelEventHandler = async (e) => {
+		e.preventDefault();
+		await cancelEvent(eventValue.id);
+        setEventValue(prev => ({ ...prev, status:'cancelled' }));
+	}
+
     const eventFormReset = () => {
         setValidationError(INITIAL_EVENT_VALIDATION_ERROR);
         setIsloading(false);
@@ -194,7 +200,8 @@ const useEventForm = () => {
         onChangeInputHandler,
         onSubmitEventCreateHandler,
         setInitialEventEditValue,
-        onSubmitEventEditHandler
+        onSubmitEventEditHandler,
+        onClickCancelEventHandler
     }
 }
 
