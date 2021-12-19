@@ -104,10 +104,13 @@ const EventEdit = () => {
 					</div>
 					<div className="event-edit-form-footer">
 						<div className="event-actions cancel">
-							<div className="event-actions-icon">
-								<i className="far fa-calendar-check"></i>
-								<Link className="cancel-event-link" to={`/events/${event.id}/cancel`} onClick={onClickCancelEventHandler} >CANCEL EVENT</Link>
-							</div>
+							{event.status === 'active'
+								? <div className="event-actions-icon">
+									<i className="far fa-calendar-check"></i>
+									<Link className="cancel-event-link" to={`/events/${event.id}/cancel`} onClick={onClickCancelEventHandler} >CANCEL EVENT</Link>
+								</div>
+								: null
+							}
 						</div>
 						<div className="recommend">
 							<p>Organised by</p>

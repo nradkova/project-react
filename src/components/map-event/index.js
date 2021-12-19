@@ -4,11 +4,11 @@ import { MapContainer, Marker, Popup, TileLayer, useMapEvent } from 'react-leafl
 import './index.css'
 import { DEFAULT_LAG_LTD, DEFAULT_MAP_CENTER, DEFAULT_MAP_CENTER_CITY } from '../../common';
 
-const MapComponent = ({ getGeoPoint}) => {
-  const [point, setPoint] = useState( DEFAULT_LAG_LTD);
-  
+const MapComponent = ({ getGeoPoint }) => {
+  const [point, setPoint] = useState(DEFAULT_LAG_LTD);
+
   useMapEvent('click', (e) => {
-    if(!getGeoPoint){
+    if (!getGeoPoint) {
       return null;
     }
     const data = [e.latlng.lat, e.latlng.lng];
@@ -24,20 +24,29 @@ const MapComponent = ({ getGeoPoint}) => {
   )
 }
 
-const MapEvent = ({ getGeoPoint,center,message }) => {
+const MapEvent = ({ getGeoPoint, center, message }) => {
+  // const [point, setPoint] = useState(DEFAULT_MAP_CENTER);
+
+  // const mapCenter = center === "" ? DEFAULT_MAP_CENTER : center;
+  // if(JSON.stringify(center)!==JSON.stringify(DEFAULT_MAP_CENTER)){
+  //   setPoint(center);
+  // }
+  // console.log(center);
+
   return (
     <div className="map-event">
-      <MapContainer center={center|| DEFAULT_MAP_CENTER} zoom={10} scrollWheelZoom={false}>
+      <MapContainer center={center || DEFAULT_MAP_CENTER} zoom={8} scrollWheelZoom={false}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={center|| DEFAULT_MAP_CENTER}>
+        <Marker position={center ||DEFAULT_MAP_CENTER}>
           <Popup>
-           {message || DEFAULT_MAP_CENTER_CITY}
+            {message || DEFAULT_MAP_CENTER_CITY}
           </Popup>
         </Marker>
-        <MapComponent center={center} getGeoPoint={getGeoPoint} />
+        <MapComponent  getGeoPoint={getGeoPoint} />
+        {/* <MapComponent center={center} getGeoPoint={getGeoPoint} /> */}
       </MapContainer>
     </div>
   )

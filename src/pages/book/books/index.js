@@ -64,7 +64,7 @@ const Books = () => {
 	const searchResults = (
 		<>
 			{searchMessage.criteria && <p className="search-message">Found &nbsp; <strong>{pagination.count}</strong>	&nbsp; search results for	&nbsp; <strong>{searchMessage.search}</strong>	&nbsp; in 	&nbsp;<strong>{searchMessage.criteria}</strong>	&nbsp;</p>}
-			{query.all && <p className="search-message">Latests books...</p>}
+			{query.all && <p className="search-message">Latest books...</p>}
 			<div className="books-container search">
 				<button className="prev-books" disabled={isDisabledDecreaseButton} onClick={decreaseCounter}>&#10094;</button>
 				<div className="books-inner-container">

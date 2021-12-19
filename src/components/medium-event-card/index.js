@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import './index.css';
 
-const EventCardMedium = ({ id, imageUrl, name, date, status }) => {
+const EventCardMedium = ({ id, imageUrl, name, date, status,createdAt }) => {
    
     return (
         <div className="event-card-medium">
@@ -15,6 +15,7 @@ const EventCardMedium = ({ id, imageUrl, name, date, status }) => {
                     <p><span className="event-card-medium-content-heading" >Topic: </span>{name}</p>
                     <p> <span className="event-card-medium-content-heading date"> Date: </span>{date}</p>
                     <p><span className="event-card-medium-content-heading">Status: </span>{status}</p>
+                    <p className='date-post' > <span className="event-card-medium-content-heading date-post"> Posted on: </span>{createdAt}</p>
                 </div>
             </div>
         </div>

@@ -61,14 +61,10 @@ const eventDataValidation = (type, value) => {
 
     if (type === "date") {
         const now = Date.now();
-        console.log(now);
-        console.log(value)
-        console.log(now>value)
-        if (!value) {
+        if (!value || value.getFullYear()===1899) {
             return "Date is invalid."
         }
         if (now > value) {
-            console.log('eeeeee');
             return "You have entered a past date."
         }
     }

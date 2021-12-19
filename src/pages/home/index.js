@@ -110,7 +110,7 @@ const Home = () => {
         </section>
         <section className="inner-container-events">
           <div className="events-container">
-            {events.map(x => <EventCardMedium key={x.id} id={x.id} imageUrl={x.imageUrl} name={x.name} date={x.date} status={x.status} />)}
+            {events.map(x => <EventCardMedium key={x.id} id={x.id} imageUrl={x.imageUrl} name={x.name} createdAt={x.createdAt} date={x.date} status={x.status} />)}
           </div>
           {events.length > 0
             ? <div className="label-container">

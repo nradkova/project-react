@@ -13,7 +13,7 @@ import CustomComment from "../../../components/comment";
 import PageLayout from "../../../components/page-layout";
 import MapEvent from "../../../components/map-event";
 
-const EditDetails = () => {
+const EventDetails = () => {
 	const { isAuthenticated, user } = useContext(AuthContext);
 	const { eventId } = useParams();
 
@@ -35,9 +35,12 @@ const EditDetails = () => {
 		if (isCreator) {
 			return <Link className="edit-link" to={`/events/${event.id}/edit`}>EDIT EVENT</Link>;
 		}
-		if (canSubscribe) {
+		if ( canSubscribe) {
 			return <Link className="add-to-event-list-link" to={`/events/${event.id}/subscribe`} onClick={onClickAddEventHandler} >ADD TO YOUR LIST</Link>;
 		} else {
+			if(event.status==="cancelled"){
+				return <p className="added-to-event-list">CANCELLED EVENT</p>;
+			}
 			return <p className="added-to-event-list">ADDED TO YOUR LIST</p>;
 		}
 	}
@@ -74,12 +77,15 @@ const EditDetails = () => {
 					<p className="event-description">{event.description}</p>
 					<div className="event-subscribed">
 						{event.subscribed.length > 0
-							? event.subscribed.map(x => <span key={x}>{x}</span>)
+							? event.subscribed.map(x => <span key={x}> <i className="fas fa-user-circle subscribed"></i>{x}</span>)
 							: <p>No one has subscribed yet...</p>
 						}
 					</div>
 				</div>
 				<div className="event-additional">
+					<div className="event-map-container">
+						<MapEvent getGeoPoint={null} center={event.location} message={'Event location'} />
+					</div>
 					<div className="event-comments">
 						{comments.length > 0
 							? comments.map(x => <CustomComment key={x.id} createdAt={x.createdAt} text={x.text} creator={x.creator} />)
@@ -96,9 +102,6 @@ const EditDetails = () => {
 						</div>
 						: null
 					}
-					<div className="event-map-container">
-						<MapEvent getGeoPoint={null} center={event.location} message={'Event location'} />
-					</div>
 				</div>
 				<div className="event-actions">
 					<div className="event-actions-icon">
@@ -111,10 +114,4 @@ const EditDetails = () => {
 	)
 }
 
-export default EditDetails;
-
-	// const onClickDeleteeventHandler = async(e)=>{
-	// 	e.preventDefault();
-	// 	await deleteevent(eventId)
-	// 	navigate('/events')
-	// }
+export default EventDetails;

@@ -13,7 +13,7 @@ const login = async (authData) => {
 	} catch (error) {
 		console.log('Error while logging in user', error);
 		if(error.message==='Invalid username/password.'){
-			throw error;
+			throw  error;
 		}
 	}
 }

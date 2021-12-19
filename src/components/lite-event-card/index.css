@@ -1,4 +1,4 @@
-.event-card-medium {
+.event-card-lite {
   display: flex;
   width: 330px;
   height: 200px;
@@ -8,12 +8,12 @@
   background-color: white;
 }
 
-.event-card-medium-img {
+.event-card-lite-img {
   width: 120px;
  padding: 10px;
   border-right: 4px solid lightgrey;
 }
-.event-card-medium-img img {
+.event-card-lite-img img {
   width: 90px;
   height: 80%;
   object-fit: cover;
@@ -22,7 +22,7 @@
   border-top-left-radius: 6px; */
 }
 
-.event-card-medium-content {
+.event-card-lite-content {
   font-size: 0.8em;
   width: 180px;
   padding-left: 15px;
@@ -30,7 +30,7 @@
   word-break: break-all;
 }
 
-.event-card-medium-content-heading {
+.event-card-lite-content-heading {
   color: grey;
 }
 
@@ -42,7 +42,7 @@
   margin-top: 5px;
 }
 
-.event-card-medium-content-text p:nth-child(even){
+.event-card-lite-content-text p:nth-child(even){
   word-break: break-word;
 }
 

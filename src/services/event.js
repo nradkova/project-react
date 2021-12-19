@@ -14,7 +14,8 @@ const createEvent = async (data) => {
 		event.set('status', data.status);
 		const response = await event.save();
 
-		const subscription = await createEventSubscription(event.id);
+		const subscription = await createEventSubscription(response);
+		// const subscription = await createEventSubscription(event.id);
 		response.set('subscription', subscription);
 		const result = await response.save();
 
@@ -88,8 +89,8 @@ const getAllEvents = async function (pagination) {
 	const event = Parse.Object.extend('Event');
 
 	const query = new Parse.Query(event);
-	query.include('creator');
-	query.include('subscription');
+	// query.include('creator');
+	// query.include('subscription');
 	query.descending('createdAt');
 	query.skip((pagination.counter - 1) * pagination.perPage).limit(pagination.perPage);
 
@@ -113,141 +114,123 @@ const getAllEventsCount = async function () {
 	}
 }
 
-// const geteventsByAuthor = async function (pagination, search) {
-// 	const event = Parse.Object.extend('event');
+const getActiveEvents = async function (pagination) {
+	const event = Parse.Object.extend('Event');
 
-// 	const query = new Parse.Query(event);
-// 	query.include('creator');
-// 	query.include('eventRating');
-// 	query.matches('author', search, 'i');
-// 	query.skip((pagination.counter - 1) * pagination.perPage).limit(pagination.perPage);
+	const query = new Parse.Query(event);
+	// query.include('creator');
+	// query.include('subscription');
+	query.equalTo('status','active');
+	query.greaterThan('date',new Date());
+	query.ascending('date');
+	query.skip((pagination.counter - 1) * pagination.perPage).limit(pagination.perPage);
 
-// 	try {
-// 		const data = await query.find();
-// 		const results = data.map(viewModel);
-// 		return results;
-// 	} catch (error) {
-// 		console.error('Error while fetching event', error);
-// 	}
-// }
+	try {
+		const data = await query.find();
+		const results = data.map(viewModel);
+		return results;
+	} catch (error) {
+		console.error('Error while fetching event', error);
+	}
+}
 
-// const geteventsByAuthorCount = async function (search) {
-// 	const event = Parse.Object.extend('event');
+const getActiveEventsCount = async function () {
+	const event = Parse.Object.extend('Event');
 
-// 	const query = new Parse.Query(event);
-// 	query.matches('author', search, 'i');
+	const query = new Parse.Query(event);
+	// query.include('creator');
+	// query.include('subscription');
+	query.equalTo('status','active');
+	query.greaterThan('date',new Date());
+	query.ascending('date');
+	try {
+		return await query.count();
+	} catch (error) {
+		console.error('Error while fetching event', error);
+	}
+}
 
-// 	try {
-// 		return await query.count();
-// 	} catch (error) {
-// 		console.error('Error while fetching event', error);
-// 	}
-// }
+const getCancelledEvents = async function (pagination) {
+	const event = Parse.Object.extend('Event');
 
-// const geteventsByTitle = async function (pagination, search) {
-// 	const event = Parse.Object.extend('event');
+	const query = new Parse.Query(event);
+	// query.include('creator');
+	// query.include('subscription');
+	query.equalTo('status','cancelled');
+	query.greaterThan('date',new Date());
+	query.ascending('date');
+	query.skip((pagination.counter - 1) * pagination.perPage).limit(pagination.perPage);
 
-// 	const query = new Parse.Query(event);
-// 	query.include('creator');
-// 	query.include('eventRating');
-// 	query.matches('title', search, 'i');
-// 	query.skip((pagination.counter - 1) * pagination.perPage).limit(pagination.perPage);
+	try {
+		const data = await query.find();
+		const results = data.map(viewModel);
+		return results;
+	} catch (error) {
+		console.error('Error while fetching event', error);
+	}
+}
 
-// 	try {
-// 		const data = await query.find();
-// 		const results = data.map(viewModel);
-// 		return results;
-// 	} catch (error) {
-// 		console.error('Error while fetching event', error);
-// 	}
-// }
+const getCancelledEventsCount = async function () {
+	const event = Parse.Object.extend('Event');
 
-// const geteventsByTitleCount = async function (search) {
-// 	const event = Parse.Object.extend('event');
+	const query = new Parse.Query(event);
+	// query.include('creator');
+	// query.include('subscription');
+	query.equalTo('status','cancelled');
+	query.greaterThan('date',new Date());
+	query.ascending('date');
+	try {
+		return await query.count();
+	} catch (error) {
+		console.error('Error while fetching event', error);
+	}
+}
 
-// 	const query = new Parse.Query(event);
-// 	query.matches('title', search, 'i');
+const getMyEvents = async function (username, pagination) {
+	const innerQuery = new Parse.Query('User');
+	innerQuery.equalTo('username', username.toLocaleLowerCase());
+	const event = Parse.Object.extend('Event');
 
-// 	try {
-// 		return await query.count();
-// 	} catch (error) {
-// 		console.error('Error while fetching event', error);
-// 	}
-// }
+	const query = new Parse.Query(event);
+	query.include('creator');
+	// query.include('subscription');
+	query.descending('createdAt');
+	query.matchesQuery('creator', innerQuery);
+	query.skip((pagination.counter - 1) * pagination.perPage).limit(pagination.perPage);
 
+	try {
+		const data = await query.find();
+		const results = data.map(viewModel);
+		return results;
+	} catch (error) {
+		console.error('Error while fetching event', error);
+	}
+}
 
-// const geteventsByCategory = async function (pagination, search) {
-// 	const event = Parse.Object.extend('event');
+const getMyEventsCount = async function (username) {
+	const innerQuery = new Parse.Query('User');
+	innerQuery.equalTo('username', username.toLocaleLowerCase());
+	const event = Parse.Object.extend('Event');
 
-// 	const query = new Parse.Query(event);
-// 	query.include('creator');
-// 	query.include('eventRating');
-// 	query.equalTo('category', search);
-// 	query.skip((pagination.counter - 1) * pagination.perPage).limit(pagination.perPage);
+	const query = new Parse.Query(event);
+	query.include('creator');
+	// query.include('subscription');
+	query.descending('createdAt');
+	query.matchesQuery('creator', innerQuery);
 
-// 	try {
-// 		const data = await query.find();
-// 		const results = data.map(viewModel);
-// 		return results;
-// 	} catch (error) {
-// 		console.error('Error while fetching event', error);
-// 	}
-// }
-
-// const geteventsByCategoryCount = async function (search) {
-// 	const event = Parse.Object.extend('event');
-
-// 	const query = new Parse.Query(event);
-// 	query.equalTo('category', search);
-
-// 	try {
-// 		return await query.count();
-// 	} catch (error) {
-// 		console.error('Error while fetching event', error);
-// 	}
-// }
-
-// const geteventsByCreator = async function (pagination, search) {
-// 	const innerQuery = new Parse.Query('User');
-// 	innerQuery.equalTo('username', search.toLocaleLowerCase());
-
-// 	const query = new Parse.Query('event');
-// 	query.include('creator');
-// 	query.include('eventRating');
-// 	query.matchesQuery('creator', innerQuery);
-// 	query.skip((pagination.counter - 1) * pagination.perPage).limit(pagination.perPage);
-
-// 	try {
-// 		const data = await query.find();
-// 		const results = data.map(viewModel);
-// 		return results;
-// 	} catch (error) {
-// 		console.error('Error while fetching event', error);
-// 	}
-// }
-
-// const geteventsByCreatorCount = async function (search) {
-// 	const innerQuery = new Parse.Query('User');
-// 	innerQuery.equalTo('username', search.toLocaleLowerCase());
-
-// 	const query = new Parse.Query('event');
-// 	query.include('creator');
-// 	query.matchesQuery('creator', innerQuery);
-
-// 	try {
-// 		return await query.count();
-// 	} catch (error) {
-// 		console.error('Error while fetching event', error);
-// 	}
-// }
-
+	try {
+		return await query.count();
+	} catch (error) {
+		console.error('Error while fetching event', error);
+	}
+}
 
 const getLastFourEvents = async function () {
 	const event = Parse.Object.extend('Event');
 
 	const query = new Parse.Query(event);
 	query.include('creator');
-	query.include('subscription');
+	// query.include('subscription');
 	query.descending('createdAt').limit(4);
 
 	try {
@@ -263,14 +246,14 @@ const getMostRecentEvents = async function () {
 	const event = Parse.Object.extend('Event');
 	const query = new Parse.Query(event);
 	query.include('creator');
-	query.include('subscription');
+	// query.include('subscription');
+	query.equalTo('status','active');
 	query.greaterThan('date',new Date());
 	query.descending('date');
 	query.limit(4);
 
 	try {
 		const data = await query.find();
-		console.log(data);
 		const results = data.map(viewModel);
 		return results;
 	} catch (error) {
@@ -283,10 +266,10 @@ const viewModel = (record) => {
 	const subscriptionId = record.get('subscription').id;
 	const subscribed = record.get('subscription').get('subscribed');
 	const createdAt = new Date(record.createdAt)
-		.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+		.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric',hour12: false });
 	const dateRespone=new Date(record.get('date'));
 	const date = dateRespone
-		.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric',hour12: false, });
+		.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric',hour12: false });
 		
 		const dateObj={
 		year:dateRespone.getFullYear(),
@@ -317,8 +300,14 @@ export {
 	editEvent,
 	cancelEvent,
 	getEventById,
+	getMyEvents,
+	getMyEventsCount,
 	getAllEvents,
 	getAllEventsCount,
+	getActiveEvents,
+	getActiveEventsCount,
+	getCancelledEvents,
+	getCancelledEventsCount,
 	getLastFourEvents,
 	getMostRecentEvents
 }

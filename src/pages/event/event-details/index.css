@@ -62,13 +62,21 @@
 .event-subscribed {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: flex-start;
   border: 1px solid lightgrey;
   box-shadow: inset -1px -1px 2px 1px lightgrey;
   border-radius: 12px;
   padding: 12px 10px;
   margin-bottom: 1%;
   width: 80%;
+}
+
+.event-subscribed span{
+  margin-right: 8px;
+}
+
+.fa-user-circle.subscribed {
+  margin-right: 3px;
 }
 
 /* .fa-circle {
@@ -87,9 +95,9 @@
 
 .event-additional {
   width: 35%;
-  /* display: flex;
+  display: flex;
   flex-direction: column;
-  justify-content: space-around; */
+  justify-content: space-between;
 }
 
 .event-comments {
@@ -173,6 +181,7 @@
 
 .event-map-container {
   width: 100%;
+  margin-bottom: 8%;
 }
 
 .event-map-container .map-event {
