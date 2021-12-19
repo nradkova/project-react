@@ -37,7 +37,7 @@ const editEvent = async (eventId, data) => {
 		event.set('creator', Parse.User.current());
 		event.set('location', new Parse.GeoPoint({latitude: data.location[0], longitude: data.location[1]}));
 		event.set('imageUrl', data.image);
-		event.set('status', data.status);
+		// event.set('status', data.status);
 		try {
 			const result = await event.save();
 			return result;

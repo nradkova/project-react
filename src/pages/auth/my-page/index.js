@@ -1,17 +1,16 @@
-import { Link, Navigate } from 'react-router-dom';
-import { useParams,useNavigate } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect, useContext } from "react";
 
 import './index.css';
 
 import authServices from '../../../services/user';
 import AuthContext from "../../../context/authContext";
+import { getMySubscriptions, unsignSubscription } from '../../../services/subscription';
 
 import Title from "../../../components/title";
 import Loader from '../../../components/loader';
 import PageLayout from "../../../components/page-layout";
 import BookCardLite from '../../../components/book-card-lite';
-import { getMySubscriptions, unsignSubscription } from '../../../services/subscription';
 import EventCardLite from '../../../components/lite-event-card';
 
 let pagesReadingCounter = 1;
@@ -25,14 +24,9 @@ const MyPage = () => {
 	const [isLoading, setIsloading] = useState(false);
 	const [readingList, setReadingList] = useState({all:[],view:[]});
 	const [eventList, setEventList] = useState({all:[],view:[]});
-
-	// const [viewReadingList, setViewReadingList] = useState([]);
 	const [totalPages, setTotalPages] = useState({reading:0,events:0});
 	const [readingListButton, setReadingListButton] = useState({increase:true,decrease:true});
 	const [eventListButton, setEventListButton] = useState({increase:true,decrease:true});
-
-	// const [isDisabledDecreaseButton, setIsDisabledDecreaseButton] = useState(true);
-
 
 	useEffect(() => {
 		const fetchData = async () => {

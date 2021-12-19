@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect } from "react";
 
 import './index.css';
 
@@ -90,6 +90,7 @@ const Home = () => {
       </PageLayout>
     )
   }
+  
   console.log('render');
 
   return (

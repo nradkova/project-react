@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import './App.css';
 
-import AuthRoute from './GuardedRoute';
+import {AuthRoute, UserRoute } from './GuardedRoute';
 
 import Home from './pages/home';
 import Landing from './pages/landing';
@@ -26,24 +26,28 @@ const App = () => {
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/books" element={<Books/>} />
+      
+      <Route path="/books" element={<Books />} />
       <Route path="/books/:bookId" element={<BookDetails />} />
       <Route element={<AuthRoute />}>
         <Route path="/books/:bookId/edit" element={<BookEdit />} />
         <Route path="/books/create" element={<BookCreate />} />
       </Route>
-      <Route path="/events/:eventId" element={<EventDetails />} />
+
       <Route path="/events" element={<Events />} />
+      <Route path="/events/:eventId" element={<EventDetails />} />
       <Route element={<AuthRoute />}>
         <Route path="/events/:eventId/edit" element={<EventEdit />} />
         <Route path="/events/create" element={<EventCreate />} />
       </Route>
 
-      <Route path="/my-page/:userId" element={<MyPage />} />
+      <Route element={<UserRoute />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Route>
 
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
       <Route element={<AuthRoute />}>
+        <Route path="/my-page/:userId" element={<MyPage />} />
         <Route path="/logout" element={<Logout />} />
       </Route>
 

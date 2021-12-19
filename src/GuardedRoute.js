@@ -3,9 +3,12 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 import AuthContext from './context/authContext';
 
-const AuthRoute = () => {
+export const AuthRoute = () => {
     const { isAuthenticated } = useContext(AuthContext);
     return isAuthenticated ? <Outlet /> : <Navigate to="/home" />
 }
 
-export default AuthRoute;
+export const UserRoute = () => {
+    const { isAuthenticated } = useContext(AuthContext);
+    return isAuthenticated ? <Navigate to="/home" /> : <Outlet />
+}

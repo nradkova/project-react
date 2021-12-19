@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
 
+import { DEFAULT_MAP_CENTER } from '../common';
 import { getEventById } from '../services/event';
 import { signSubscription } from '../services/subscription';
 import { commentDataValidation } from '../utils/validation';
 import { createEventComment, getAllCommentsByEventId } from '../services/comment';
-import { DEFAULT_LAG_LTD, DEFAULT_MAP_CENTER } from '../common';
 
 const initialEventValue = {
 	id: "",

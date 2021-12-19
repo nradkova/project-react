@@ -78,7 +78,7 @@ const useEventForm = () => {
         const data = new FormData(e.target);
         const event = dataParser(data);
         event.image = imagePreview;
-        event.status = 'active';
+        // event.status = 'active';
         event.location = point;
 
         const dateError = eventDataValidation('date', event.date);
@@ -206,19 +206,6 @@ const useEventForm = () => {
 }
 
 export default useEventForm;
-
-// const dateParser = (data) => {
-//     const year = data.get('year');
-//     const month = ('0' + data.get('month')).slice(-2);
-//     const day = ('0' + data.get('day')).slice(-2);
-//     const hour = ('0' + data.get('hour')).slice(-2);
-//     const minute = ('0' + data.get('minute')).slice(-2);
-//     const dataStr=`${year}-${month}-${day}T${hour}:${minute}:00`;
-//     console.log(dataStr);
-//     const date = Date.parse(dataStr);
-//     const date =new Date(year,month,day,hour,minute,0);
-//     return date;
-// }
 
 const dataParser = (data) => {
     const monthInput = Number(data.get('month')) - 1;
