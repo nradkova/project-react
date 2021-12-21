@@ -104,10 +104,9 @@
 ```
 ## Users Access and Interaction with READ ALOUD:
 
--  `*Guest*` users can expirience all public parts of the application - view all books and events posted, as well as their details and comments attached. They can search through events and books, based on certain criterias.
+-  `Guest` users can expirience all public parts of the application - view all books and events posted, as well as their details and comments attached. They can search through events and books, based on certain criterias.
 
-- `*Authenticated*` users can comment on posts, rate them, subscribe (or unsubscribe) for events, create their own reading list and then add  (or remove) books to it.
+- `Authenticated` users can comment on posts, rate them, subscribe (or unsubscribe) for events, create their own reading list and then add  (or remove) books to it.
 
-- Authenticated users can create and publish posts (books and events). Thus becoming owner of a record, they are `*authorised*` to edit it, cancel it(for a event).
+- Authenticated users can create and publish posts (books and events). Thus becoming owner of a record, they are `authorised` to edit it, cancel it(for a event).
 
-<span style="color:lightgreen; font-size:30px">this text is red</span>
