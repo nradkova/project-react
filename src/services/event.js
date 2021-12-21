@@ -264,7 +264,6 @@ const viewModel = (record) => {
 		hour:(dateRespone.getHours()),
 		minute:dateRespone.getMinutes()
 	}
-	console.log(dateObj);
 	
 	return {
 		id: record.id,

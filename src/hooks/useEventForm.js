@@ -26,33 +26,20 @@ const useEventForm = () => {
         if (validationError.required) {
             setValidationError(prev => ({ ...prev, "required": null }))
         }
-        // if (validationError.name || validationError.description
-        //     || validationError.image || validationError.date 
-        //     || validationError.location ||validationError.required) {
-        //     setValidationError(INITIAL_EVENT_VALIDATION_ERROR);
-        // }
 
         const data = new FormData(e.target);
         const event = dataParser(data);
         event.image = imagePreview;
         event.status = 'active';
         event.location = point;
-        // console.log(data.get('month'));
+
         const dateError = eventDataValidation('date', event.date,data.get('month'));
         setValidationError(prev => ({ ...prev, 'date': dateError }));
-        console.log(dateError);
-
-        console.log(event);
-        console.log(validationError);
-
+       
         if (validationError.name || validationError.description
             || validationError.image || dateError) {
-            // setValidationError(INITIAL_EVENT_VALIDATION_ERROR);
             return;
         }
-
-    //    console.log(JSON.stringify(event.location)===JSON.stringify(DEFAULT_LAG_LTD))
-    //    console.log(JSON.stringify(DEFAULT_LAG_LTD))
 
         if (event.name === '' || event.description === ''
             || JSON.stringify(event.location) === JSON.stringify(DEFAULT_LAG_LTD)) {
@@ -81,7 +68,6 @@ const useEventForm = () => {
         const data = new FormData(e.target);
         const event = dataParser(data);
         event.image = imagePreview;
-        // event.status = 'active';
         event.location = point;
 
         const dateError = eventDataValidation('date', event.date,data.get('month'));
@@ -89,7 +75,6 @@ const useEventForm = () => {
 
         if (validationError.name || validationError.description
             || validationError.image || dateError) {
-            // setValidationError(INITIAL_EVENT_VALIDATION_ERROR);
             return;
         }
 
