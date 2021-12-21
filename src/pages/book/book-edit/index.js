@@ -21,6 +21,7 @@ const BookEdit = () => {
 
 	const {
 		bookValue: book,
+		notCreator,
 		isLoading,
 		isImageLoading,
 		isSuccess,
@@ -30,32 +31,25 @@ const BookEdit = () => {
 		onChangeInputHandler,
 		onSubmitBookEditHandler,
 		setInitialBookEditValue,
-	} = useBookForm(categories);
+	} = useBookForm(user,categories);
 
-	// useEffect(() => {
-	// 	if(book.creator!=="" && book.creator!==user.username){
-	// 	 navigate('/home');
-	// 	 return()=> {
-	// 		 console.log('Not Allowed')
-	// 	 }
-	// 	}
-	// }, [book,navigate])
-
+	
 	useEffect(() => {
 		if (isSuccess) {
 			navigate('/books');
 		}
 	}, [isSuccess, navigate])
-
+	
 	useEffect(() => {
 		setInitialBookEditValue(bookId);
-		if (book.creator !== "" && book.creator !== user.username) {
-			navigate('/home');
-			return null;
-		}
 	}, [bookId])
-
-
+	
+	useEffect(() => {
+		if(notCreator){
+			navigate('/home');
+		}
+	}, [notCreator,navigate])
+	
 	if (isLoading) {
 		return (
 			<PageLayout>

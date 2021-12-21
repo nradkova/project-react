@@ -18,6 +18,7 @@ const EventEdit = () => {
 
 	const {
 		eventValue: event,
+		notCreator,
 		isLoading,
 		isImageLoading,
 		validationError,
@@ -29,20 +30,7 @@ const EventEdit = () => {
 		onSubmitEventEditHandler,
 		setInitialEventEditValue,
 		onClickCancelEventHandler,
-	} = useEventForm();
-	
-	// useEffect(() => {
-	// 	console.log(event);
-	// 	console.log(event.creator!==user.username);
-	// 	console.log(event.creator);
-	// 	if(event.creator!=="" && event.creator!==user.username){
-	// 		console.log(event.creator!=="" && event.creator!==user.username);
-	// 		navigate('/home')
-	// 		return ()=>{
-	// 			console.log('out');
-	// 		}
-	// 	}
-	// }, [event,navigate])
+	} = useEventForm(user);
 	
 	useEffect(() => {
 		if (isSuccess) {
@@ -54,6 +42,12 @@ const EventEdit = () => {
 	useEffect(() => {
 		setInitialEventEditValue(eventId);
 	}, [eventId])
+
+	useEffect(() => {
+		if(notCreator){
+			navigate('/home');
+		}
+	}, [notCreator,navigate])
 	
 
 	if (isLoading) {

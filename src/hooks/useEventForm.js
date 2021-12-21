@@ -7,12 +7,13 @@ import { eventDataValidation } from '../utils/validation';
 import { cancelEvent, createEvent, editEvent, getEventById } from '../services/event';
 
 
-const useEventForm = () => {
+const useEventForm = (user) => {
     const [isLoading, setIsloading] = useState(false);
     const [isImageLoading, setIsImageloading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [point, setPoint] = useState(DEFAULT_LAG_LTD);
     const [eventValue, setEventValue] = useState(INITIAL_EVENT_VALUE);
+    const[notCreator,setNotCreator]=useState(false);
     const [validationError, setValidationError] = useState(INITIAL_EVENT_VALIDATION_ERROR);
     const [imagePreview, setImagePreview] = useState(DEFAULT_EVENT_URL);
 
@@ -156,6 +157,9 @@ const useEventForm = () => {
                 setPoint(res.location)
                 setImagePreview(res.imageUrl);
                 setIsloading(false);
+                if(res.creator!==user.username){
+                    setNotCreator(true);
+                }
             })
             .catch(err => console.log(err))
     }, [])
@@ -178,6 +182,7 @@ const useEventForm = () => {
 
     return {
         eventValue,
+        notCreator,
         isLoading,
         isImageLoading,
         isSuccess,

@@ -34,7 +34,6 @@ const useEvent = (eventId, isAuthenticated, user) => {
 		async function fetchData() {
 			setIsloading(true);
 			const event = await getEventById(eventId);
-			console.log(event);
 			setIsloading(false);
 			setEvent(event);
 			if (isAuthenticated && user.username !== event.creator 
