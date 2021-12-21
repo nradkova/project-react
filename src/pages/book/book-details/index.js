@@ -11,6 +11,7 @@ import Loader from "../../../components/loader";
 import Rating from "../../../components/rating";
 import CustomComment from "../../../components/comment";
 import PageLayout from "../../../components/page-layout";
+import { DEFAULT_BOOK_URL } from "../../../common";
 
 const BookDetails = () => {
 	const {isAuthenticated, user } = useContext(AuthContext);
@@ -67,7 +68,7 @@ const BookDetails = () => {
 						: null
 					}
 					<div className="book-image">
-						<img src={book.imageUrl ? book.imageUrl : "/default_book.png"} alt="Book_cover" />
+						<img src={book.imageUrl ? book.imageUrl : DEFAULT_BOOK_URL} alt="Book_cover" />
 					</div>
 					<p className="book-description">{book.description}</p>
 					<div className="book-categories">

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { DEFAULT_BOOK_URL } from '../../common';
 
 import './index.css'
 
@@ -7,7 +8,7 @@ const BookCardLite = ({onClickRemoveBook, userId,bookId, imageUrl, title, author
     return (
         <div className="book-card-lite">
             <span className="book-card-lite-img">
-                <img src={imageUrl ? imageUrl : "/default_book.png"} alt="Book_cover" />
+                <img src={imageUrl ? imageUrl : DEFAULT_BOOK_URL} alt="Book_cover" />
             </span>
             <div className="book-card-lite-content">
                 <div className="book-card-lite-content-text">

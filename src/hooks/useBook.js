@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { createBookComment, getAllCommentsByBookId } from '../services/comment';
 
 
@@ -29,7 +29,7 @@ const useBook = (bookId,isAuthenticated, user) => {
     
 	const isCreator=isAuthenticated && user.username === book.creator;
 
-	useState(() => {
+	useEffect(() => {
 		async function fetchData() {
 			setIsloading(true);
 			const book = await getBookById(bookId);

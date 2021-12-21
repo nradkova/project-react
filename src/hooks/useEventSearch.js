@@ -13,12 +13,12 @@ import {
 
 // import { searchDataValidation } from "../utils/validation";
 
-const queryParams = {
-    all: true,
-    myEvents: false,
-    active: false,
-    cancelled: false
-}
+// const queryParams = {
+//     all: true,
+//     myEvents: false,
+//     active: false,
+//     cancelled: false
+// }
 
 let isDisabledIncreaseButton = true;
 let isDisabledDecreaseButton = true;
@@ -29,11 +29,14 @@ let searchMessage = {
 }
 
 const useEventSearch = (username) => {
-    const [query, setQuery] = useState(queryParams);
+    const [query, setQuery] = useState({all:true});
+    // const [query, setQuery] = useState(queryParams);
+
     const [events, setEvents] = useState([]);
     const [pagination, setPagination] = useState({ counter: 1, perPage: 2, totalPages: 0, count: 0 });
     const [isLoading, setIsloading] = useState(false);
     // const [validationError, setValidationError] = useState(null);
+    
 
     const requestCountHandler = async () => {
 
@@ -106,28 +109,36 @@ const useEventSearch = (username) => {
     const onClickMyEventsHandler = async () => {
         // setValidationError(null);
         setPagination(prev => ({ ...prev, counter: 1 }));
-        setQuery({ ...queryParams, 'myEvents': username, 'all': null });
+        setQuery({myEvents: username });
+        // setQuery({ ...queryParams, 'myEvents': username, 'all': null });
+
         searchMessage = { criteria: username + ' profile', search: 'events' };
     }
 
     const onClickAllEventsHandler = async () => {
         // setValidationError(null);
         setPagination(prev => ({ ...prev, counter: 1 }));
-        setQuery({ ...queryParams });
+        // setQuery({ ...queryParams });
+        setQuery({all:true });
+
         searchMessage.criteria = null;
     }
 
     const onClickActiveEventsHandler = async () => {
         // setValidationError(null);
         setPagination(prev => ({ ...prev, counter: 1 }));
-        setQuery({ ...queryParams, 'active': true, 'all': null });
+        // setQuery({ ...queryParams, 'active': true, 'all': null });
+        setQuery({active: true});
+
         searchMessage = { criteria: 'active', search: 'events' };
     }
 
     const onClickCancelledEventsHandler = async () => {
         // setValidationError(null);
         setPagination(prev => ({ ...prev, counter: 1 }));
-        setQuery({ ...queryParams, 'cancelled': true, 'all': null });
+        // setQuery({ ...queryParams, 'cancelled': true, 'all': null });
+        setQuery({cancelled: true});
+
         searchMessage = { criteria: 'cancelled', search: 'events' };
     }
 

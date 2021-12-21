@@ -1,6 +1,4 @@
 import Parse from "../config/server";
-// import { getEventById } from "./event";
-
 
 const getSubscriptionByEventId = async (eventId) => {
     const subscription = new Parse.Object('EventSubscription');
@@ -48,21 +46,6 @@ const createEventSubscription = async (event) => {
 
 }
 
-// const createEventSubscription = async (eventId) => {
-//     const subscription = new Parse.Object('EventSubscription');
-//     subscription.set('subscribed', []);
-//     subscription.set('event', eventId);
-
-//     try {
-//         const result = await subscription.save();
-//         console.log('EventSubscription created', result);
-//         return result;
-//     } catch (error) {
-//         console.error('Error while creating EventSubscription: ', error);
-//     }
-
-// }
-
 const signSubscription = async (userId, subscriptionId, subscribed) => {
     const subscription = new Parse.Object('EventSubscription');
     const query = new Parse.Query(subscription);
@@ -90,8 +73,8 @@ const unsignSubscription = async (username,subscriptionId) => {
         const data = await query.get(subscriptionId);
 
         const list = data.get('subscribed');
-        const updated = list.splice(list.indexOf(username), 1);
-        data.set('subscribed', updated);
+        list.splice(list.indexOf(username), 1);
+        data.set('subscribed', list);
 
         const result = await data.save();
         console.log('EventSubscription updated', result);
@@ -100,25 +83,6 @@ const unsignSubscription = async (username,subscriptionId) => {
         console.error('Error while updating EventSubscription: ', error);
     }
 };
-
-// const unsignSubscription = async (userId, eventId) => {
-//     try {
-//         const event = await getEventById(eventId);
-//         const list = event.subscribed;
-//         const updated = list.splice(list.indexOf(userId), 1);
-
-//         const subscription = new Parse.Object('EventSubscription');
-//         const query = new Parse.Query(subscription);
-
-//         const data = await query.get(event.subscriptionId);
-//         data.set('subscribed', updated);
-
-//         const result = await data.save();
-//         console.log('EventSubscription updated', result);
-//     } catch (error) {
-//         console.error('Error while updating EventSubscription: ', error);
-//     }
-// };
 
 const viewModel = (record) => {
 	const dateRespone=new Date(record.get('event').get('date'));

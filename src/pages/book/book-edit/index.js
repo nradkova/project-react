@@ -32,12 +32,14 @@ const BookEdit = () => {
 		setInitialBookEditValue,
 	} = useBookForm(categories);
 
-	useEffect(() => {
-		console.log(book);
-		if (book.creator!==user.username) {
-			return ()=> navigate('/home');
-		}
-	}, [book,user])
+	// useEffect(() => {
+	// 	if(book.creator!=="" && book.creator!==user.username){
+	// 	 navigate('/home');
+	// 	 return()=> {
+	// 		 console.log('Not Allowed')
+	// 	 }
+	// 	}
+	// }, [book,navigate])
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -47,7 +49,8 @@ const BookEdit = () => {
 
 	useEffect(() => {
 		setInitialBookEditValue(bookId)
-	}, [bookId, setInitialBookEditValue])
+	}, [bookId])
+
 	
 	if (isLoading) {
 		return (

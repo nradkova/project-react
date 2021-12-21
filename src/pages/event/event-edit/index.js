@@ -28,26 +28,33 @@ const EventEdit = () => {
 		onChangeInputHandler,
 		onSubmitEventEditHandler,
 		setInitialEventEditValue,
-		onClickCancelEventHandler
+		onClickCancelEventHandler,
 	} = useEventForm();
-
-	// useEffect(() => {
-	// 	if (event.creator!==user.username) {
-	// 		console.log(event);
-	// 		return ()=> navigate('/home');
-	// 	}
-	// }, [event])
-
-
+	
+	useEffect(() => {
+		console.log(event);
+		console.log(event.creator!==user.username);
+		console.log(event.creator);
+		if(event.creator!=="" && event.creator!==user.username){
+			console.log(event.creator!=="" && event.creator!==user.username);
+			navigate('/home')
+			return ()=>{
+				console.log('out');
+			}
+		}
+	}, [event,navigate])
+	
 	useEffect(() => {
 		if (isSuccess) {
 			navigate('/events');
 		}
 	}, [isSuccess, navigate])
-
+	
+	
 	useEffect(() => {
-		setInitialEventEditValue(eventId)
-	}, [eventId, setInitialEventEditValue])
+		setInitialEventEditValue(eventId);
+	}, [eventId])
+	
 
 	if (isLoading) {
 		return (
@@ -56,6 +63,7 @@ const EventEdit = () => {
 			</PageLayout>
 		)
 	}
+	
 	return (
 		<PageLayout>
 			<div className="event-form-container">
@@ -107,6 +115,7 @@ const EventEdit = () => {
 							{event.status === 'active'
 								? <div className="event-actions-icon">
 									<i className="far fa-calendar-check"></i>
+									{/* <Link className="cancel-event-link" to={`/events`} onClick={onClickCancelEventHandler} >CANCEL EVENT</Link> */}
 									<Link className="cancel-event-link" to={`/events/${event.id}/cancel`} onClick={onClickCancelEventHandler} >CANCEL EVENT</Link>
 								</div>
 								: null

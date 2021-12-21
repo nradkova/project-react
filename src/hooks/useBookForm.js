@@ -171,7 +171,8 @@ const useBookForm = (categories) => {
         onChangeInputHandler,
         onSubmitBookCreateHandler,
         setInitialBookEditValue,
-        onSubmitBookEditHandler
+        onSubmitBookEditHandler,
+        // bookFormReset
     }
 }
 

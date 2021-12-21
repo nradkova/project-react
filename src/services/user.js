@@ -134,7 +134,6 @@ const removeBookFromUserReadingList = async (userId, bookId) => {
 
 	const User = new Parse.User();
 	const query = new Parse.Query(User);
-
 	try {
 		const user = await query.get(userId);
 		try {

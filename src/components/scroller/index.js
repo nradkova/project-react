@@ -2,6 +2,7 @@ import { useRef } from 'react';
 
 import './index.css';
 
+
 const onClickHandler = (e) => {
   window.scrollTo(0, 0)
 }

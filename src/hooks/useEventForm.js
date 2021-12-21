@@ -37,8 +37,8 @@ const useEventForm = () => {
         event.image = imagePreview;
         event.status = 'active';
         event.location = point;
-
-        const dateError = eventDataValidation('date', event.date);
+        // console.log(data.get('month'));
+        const dateError = eventDataValidation('date', event.date,data.get('month'));
         setValidationError(prev => ({ ...prev, 'date': dateError }));
         console.log(dateError);
 
@@ -50,6 +50,9 @@ const useEventForm = () => {
             // setValidationError(INITIAL_EVENT_VALIDATION_ERROR);
             return;
         }
+
+    //    console.log(JSON.stringify(event.location)===JSON.stringify(DEFAULT_LAG_LTD))
+    //    console.log(JSON.stringify(DEFAULT_LAG_LTD))
 
         if (event.name === '' || event.description === ''
             || JSON.stringify(event.location) === JSON.stringify(DEFAULT_LAG_LTD)) {
@@ -81,7 +84,7 @@ const useEventForm = () => {
         // event.status = 'active';
         event.location = point;
 
-        const dateError = eventDataValidation('date', event.date);
+        const dateError = eventDataValidation('date', event.date,data.get('month'));
         setValidationError(prev => ({ ...prev, 'date': dateError }));
 
         if (validationError.name || validationError.description
@@ -98,6 +101,7 @@ const useEventForm = () => {
         editEvent(eventValue.id, event)
             .then(res => {
                 setIsloading(true);
+               
                 setEventValue(prev => ({ ...prev, res }));
                 setIsSuccess(true);
             })
@@ -139,7 +143,6 @@ const useEventForm = () => {
     const onChangeImageHandler = (e) => {
         const value = e.target.files[0];
 
-        console.log('b', value);
         const error = eventDataValidation('imageUrl', (value || ''));
         setValidationError(prev => ({ ...prev, 'image': error }))
         if (error) {
@@ -176,6 +179,7 @@ const useEventForm = () => {
 		e.preventDefault();
 		await cancelEvent(eventValue.id);
         setEventValue(prev => ({ ...prev, status:'cancelled' }));
+        setIsSuccess(true);
 	}
 
     const eventFormReset = () => {
@@ -201,21 +205,20 @@ const useEventForm = () => {
         onSubmitEventCreateHandler,
         setInitialEventEditValue,
         onSubmitEventEditHandler,
-        onClickCancelEventHandler
+        onClickCancelEventHandler,
+        eventFormReset
     }
 }
 
 export default useEventForm;
 
 const dataParser = (data) => {
-    const monthInput = Number(data.get('month')) - 1;
     const year = data.get('year');
-    const month = ('0' + monthInput).slice(-2);
-    const day = ('0' + data.get('day')).slice(-2);
-    const hour = ('0' + data.get('hour')).slice(-2);
-    const minute = ('0' + data.get('minute')).slice(-2);
+    const month = Number(data.get('month')) - 1;
+    const day = data.get('day');
+    const hour = data.get('hour');
+    const minute = data.get('minute');
     const date = new Date(year, month, day, hour, minute, 0);
-    console.log(year, month);
     const event = {
         name: data.get('name'),
         location: data.get('location'),

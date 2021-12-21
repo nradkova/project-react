@@ -178,3 +178,26 @@ label {
   background: #fff;
   color: #6b989b;
 }
+
+@media screen and (max-width: 870px) {
+  .book-form-body {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .book-form-body-main,
+  .book-form-body-details {
+    width: 100%;
+  }
+
+  .default-image {
+    width: 80%;
+  }
+
+  .default-image img {
+    min-width: 340px;
+    margin: 0px auto;
+  }
+ 
+}

@@ -1,11 +1,12 @@
 .event-card-lite {
   display: flex;
-  width: 330px;
-  height: 200px;
+  width: 269px;
+  height: 164px;
   border-radius: 6px;
   box-shadow: 2px 2px 8px 2px grey;
   margin: 20px;
   background-color: white;
+  font-size: 0.9em;
 }
 
 .event-card-lite-img {

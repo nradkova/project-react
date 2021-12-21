@@ -51,7 +51,7 @@ const bookDataValidation = (type, value) => {
 
     return null;
 }
-const eventDataValidation = (type, value) => {
+const eventDataValidation = (type, value,month) => {
 
     if (type === "name") {
         if (value.trim().length < 2) {
@@ -61,7 +61,8 @@ const eventDataValidation = (type, value) => {
 
     if (type === "date") {
         const now = Date.now();
-        if (!value || value.getFullYear()===1899) {
+        console.log(value);
+        if (!value || value.getFullYear()===1899||month==='') {
             return "Date is invalid."
         }
         if (now > value) {
@@ -96,7 +97,7 @@ const searchDataValidation = (criteria, value) => {
 
 const commentDataValidation = (value) => {
     if (value.trim().length === 0 || value.trim().length > 400) {
-        return "*Your comment can not be more than 400 characters.";
+        return "*Your comment can not be 0 or more than 400 characters.";
     }
     return null;
 }

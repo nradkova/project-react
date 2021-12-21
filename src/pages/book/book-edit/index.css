@@ -184,3 +184,20 @@ label {
   background: #fff;
   color: #6b989b;
 }
+
+@media screen and (max-width: 870px) {
+  .event-form-body {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .event-form-body-main,
+  .event-form-body-details {
+    width: 80%;
+  }
+
+  .event-default-image img {
+    width: 100%;
+  }
+}

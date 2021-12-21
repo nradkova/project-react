@@ -158,3 +158,28 @@
   margin-top: 0;
   color: red;
 }
+
+@media screen and (max-width: 850px) {
+  .book-details-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .book-main {
+    width: 80%;
+  }
+
+  .book-additional {
+    margin-top: 2%;
+    width: 70%;
+  }
+
+  .book-image img {
+    width: 100%;
+  }
+  .book-actions {
+    width: 30%;
+    order: -1;
+    margin-bottom: 2%;
+    align-self: center;
+  }
+}

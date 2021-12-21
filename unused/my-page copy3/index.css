@@ -3,7 +3,6 @@
   flex-direction: column;
   justify-content: space-between;
   min-height: 70vh;
-  margin-bottom: 3%;
 }
 
 
@@ -12,7 +11,7 @@
   display: block;
   position: absolute;
   width: 100%;
-  min-height: 80%;
+  min-height: 66%;
   opacity: 0.1;
   background-image:  url('../../../components/images/background.jpg');
   background-size: cover;
@@ -76,11 +75,4 @@
 
 .empty-reading-list{
   margin-top: 0px;
-}
-
-@media screen and (max-width: 850px) {
-  .my-page-navigation:before {
-    width: 131vw;
-    min-height: 80%;
-}
 }

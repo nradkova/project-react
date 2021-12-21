@@ -12,6 +12,7 @@ import Loader from "../../../components/loader";
 import CustomComment from "../../../components/comment";
 import PageLayout from "../../../components/page-layout";
 import MapEvent from "../../../components/map-event";
+import { DEFAULT_EVENT_URL } from "../../../common";
 
 const EventDetails = () => {
 	const { isAuthenticated, user } = useContext(AuthContext);
@@ -72,7 +73,7 @@ const EventDetails = () => {
 						}
 					</div>
 					<div className="event-image">
-						<img src={event.imageUrl ? event.imageUrl : "/default_event.png"} alt="Event_cover" />
+						<img src={event.imageUrl ? event.imageUrl :DEFAULT_EVENT_URL} alt="Event_cover" />
 					</div>
 					<p className="event-description">{event.description}</p>
 					<div className="event-subscribed">
@@ -84,7 +85,7 @@ const EventDetails = () => {
 				</div>
 				<div className="event-additional">
 					<div className="event-map-container">
-						<MapEvent getGeoPoint={null} center={event.location} message={'Event location'} />
+						{event.location && <MapEvent getGeoPoint={null} center={event.location} message={'Event location'} />}
 					</div>
 					<div className="event-comments">
 						{comments.length > 0

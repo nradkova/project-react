@@ -32,7 +32,7 @@ const MapEvent = ({ getGeoPoint, center, message }) => {
   //   setPoint(center);
   // }
   // console.log(center);
-
+console.log(center);
   return (
     <div className="map-event">
       <MapContainer center={center || DEFAULT_MAP_CENTER} zoom={8} scrollWheelZoom={false}>

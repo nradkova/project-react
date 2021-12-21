@@ -4,15 +4,21 @@ import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
 import App from './App';
-import  AuthContextProvider from './AuthContextProvider';
+import ErrorBoundary from './ErrorBoundary';
+import AuthContextProvider from './AuthContextProvider';
+import NotificationContextProvider from './NotificationContextProvider';
 
 ReactDOM.render(
   <React.StrictMode>
-    <AuthContextProvider>
-        <BrowserRouter>
+    <ErrorBoundary>
+      <AuthContextProvider>
+        <NotificationContextProvider>
+        <BrowserRouter basename="/read-aloud">
           <App />
         </BrowserRouter>
+        </NotificationContextProvider>
       </AuthContextProvider>
+    </ErrorBoundary>
   </React.StrictMode>,
   document.getElementById('root')
 );

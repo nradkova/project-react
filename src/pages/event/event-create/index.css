@@ -171,3 +171,26 @@ label {
   background: #fff;
   color: #6b989b;
 }
+
+@media screen and (max-width: 870px) {
+  .event-form-body {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .event-form-body-main,
+  .event-form-body-details {
+    width: 100%;
+  }
+
+  .event-default-image {
+    width: 80%;
+  }
+
+  .event-default-image img {
+    min-width: 340px;
+    margin: 0px auto;
+  }
+ 
+}

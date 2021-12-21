@@ -273,11 +273,12 @@ const viewModel = (record) => {
 		
 		const dateObj={
 		year:dateRespone.getFullYear(),
-		month:(dateRespone.getUTCMonth()+1),
-		day:dateRespone.getUTCDate(),
-		hour:(dateRespone.getUTCHours()+2),
-		minute:dateRespone.getUTCMinutes()
+		month:(dateRespone.getMonth()+1),
+		day:dateRespone.getDate(),
+		hour:(dateRespone.getHours()),
+		minute:dateRespone.getMinutes()
 	}
+	console.log(dateObj);
 	
 	return {
 		id: record.id,
