@@ -1,5 +1,5 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useContext } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import './index.css';
 
@@ -31,18 +31,18 @@ const EventEdit = () => {
 		onClickCancelEventHandler,
 	} = useEventForm();
 	
-	useEffect(() => {
-		console.log(event);
-		console.log(event.creator!==user.username);
-		console.log(event.creator);
-		if(event.creator!=="" && event.creator!==user.username){
-			console.log(event.creator!=="" && event.creator!==user.username);
-			navigate('/home')
-			return ()=>{
-				console.log('out');
-			}
-		}
-	}, [event,navigate])
+	// useEffect(() => {
+	// 	console.log(event);
+	// 	console.log(event.creator!==user.username);
+	// 	console.log(event.creator);
+	// 	if(event.creator!=="" && event.creator!==user.username){
+	// 		console.log(event.creator!=="" && event.creator!==user.username);
+	// 		navigate('/home')
+	// 		return ()=>{
+	// 			console.log('out');
+	// 		}
+	// 	}
+	// }, [event,navigate])
 	
 	useEffect(() => {
 		if (isSuccess) {
@@ -115,7 +115,6 @@ const EventEdit = () => {
 							{event.status === 'active'
 								? <div className="event-actions-icon">
 									<i className="far fa-calendar-check"></i>
-									{/* <Link className="cancel-event-link" to={`/events`} onClick={onClickCancelEventHandler} >CANCEL EVENT</Link> */}
 									<Link className="cancel-event-link" to={`/events/${event.id}/cancel`} onClick={onClickCancelEventHandler} >CANCEL EVENT</Link>
 								</div>
 								: null

@@ -134,7 +134,6 @@ input.popup-postedBy:checked ~ i.fa-id-badge,
 input.popup-category:checked ~ i.fa-list-ul,
 input.popup-author:checked ~ i.fa-edit {
   color: red;
-  /* background-color: lightgrey; */
 }
 
 .search-message,

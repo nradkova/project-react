@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import './index.css'
+import './index.css';
 
 import { rateBook } from '../../services/rating';
 

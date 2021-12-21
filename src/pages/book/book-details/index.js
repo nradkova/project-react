@@ -2,6 +2,7 @@ import {useContext } from "react";
 import { Link, useParams} from "react-router-dom";
 
 import './index.css';
+import { DEFAULT_BOOK_URL } from "../../../common";
 
 import useBook from "../../../hooks/useBook";
 import AuthContext from "../../../context/authContext";
@@ -11,7 +12,6 @@ import Loader from "../../../components/loader";
 import Rating from "../../../components/rating";
 import CustomComment from "../../../components/comment";
 import PageLayout from "../../../components/page-layout";
-import { DEFAULT_BOOK_URL } from "../../../common";
 
 const BookDetails = () => {
 	const {isAuthenticated, user } = useContext(AuthContext);
@@ -108,9 +108,3 @@ const BookDetails = () => {
 }
 
 export default BookDetails;
-
-	// const onClickDeleteBookHandler = async(e)=>{
-	// 	e.preventDefault();
-	// 	await deleteBook(bookId)
-	// 	navigate('/books')
-	// }

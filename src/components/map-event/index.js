@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MapContainer, Marker, Popup, TileLayer, useMapEvent } from 'react-leaflet';
 
-import './index.css'
+import './index.css';
 import { DEFAULT_LAG_LTD, DEFAULT_MAP_CENTER, DEFAULT_MAP_CENTER_CITY } from '../../common';
 
 

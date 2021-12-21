@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
-import './index.css'
+import './index.css';
 import { DEFAULT_BOOK_URL } from '../../common';
 
 
