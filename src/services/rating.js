@@ -43,7 +43,6 @@ const createBookRating = async (bookId) => {
 const rateBook = async (userId, bookId, value) => {
     try {
         const book = await getBookById(bookId);
-        console.log(book);
 
         const updatedVoted = book.voted.slice();
         updatedVoted.push(userId);
@@ -54,8 +53,7 @@ const rateBook = async (userId, bookId, value) => {
         data.set('voted', updatedVoted);
         data.set('star', updatedValue);
 
-        const result = await data.save();
-        console.log('BookRating updated', result);
+       await data.save();
     } catch (error) {
         console.error('Error while updating BookRating: ', error);
     }
