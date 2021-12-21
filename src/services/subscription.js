@@ -54,7 +54,7 @@ const signSubscription = async (userId, subscriptionId, subscribed) => {
         data.set('subscribed', [...subscribed, userId]);
 
         try {
-            const result=await data.save();
+            await data.save();
         } catch (error) {
             console.error('Error while updating EventSubscription', error);
         }
@@ -74,7 +74,7 @@ const unsignSubscription = async (username,subscriptionId) => {
         list.splice(list.indexOf(username), 1);
         data.set('subscribed', list);
 
-        const result = await data.save();
+         await data.save();
         return true;
     } catch (error) {
         console.error('Error while updating EventSubscription: ', error);

@@ -17,8 +17,8 @@ const BookEdit = () => {
 	const { user } = useContext(AuthContext);
 	const { bookId } = useParams();
 
-	const categories=[];
-	
+	const categories = [];
+
 	const {
 		bookValue: book,
 		isLoading,
@@ -48,10 +48,14 @@ const BookEdit = () => {
 	}, [isSuccess, navigate])
 
 	useEffect(() => {
-		setInitialBookEditValue(bookId)
+		setInitialBookEditValue(bookId);
+		if (book.creator !== "" && book.creator !== user.username) {
+			navigate('/home');
+			return null;
+		}
 	}, [bookId])
 
-	
+
 	if (isLoading) {
 		return (
 			<PageLayout>
@@ -82,7 +86,7 @@ const BookEdit = () => {
 							{isImageLoading ? <Loader /> : <img src={imagePreview} alt="Book_Image" />}
 						</div>
 						<div className="image">
-							<input className="image-input" type="file" accept="image/*" lang="en" name="imageUrl" id="imageUrl"  onChange={onChangeImageHandler} />
+							<input className="image-input" type="file" accept="image/*" lang="en" name="imageUrl" id="imageUrl" onChange={onChangeImageHandler} />
 							<label htmlFor="image"><i className="fas fa-image"></i>Image</label>
 							{validationError.image && <ValidationError message={validationError.image} />}
 						</div>
