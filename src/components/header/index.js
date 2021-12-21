@@ -11,7 +11,7 @@ import LogoLink from '../logo-link';
 
 const Header = () => {
   const { user,isAuthenticated } = useContext(AuthContext);
-  const [links, setLinks] = useState([])
+  const [links, setLinks] = useState([]);
 
   useEffect(() => {
     setLinks(getNavigation(isAuthenticated, user))

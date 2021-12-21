@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
-import { DEFAULT_BOOK_URL } from '../../common';
 
 import './index.css'
+import { DEFAULT_BOOK_URL } from '../../common';
+
 
 const BookCardLite = ({onClickRemoveBook, userId,bookId, imageUrl, title, author}) => {
 

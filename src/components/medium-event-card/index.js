@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { DEFAULT_EVENT_URL } from '../../common';
 
 import './index.css';
+import { DEFAULT_EVENT_URL } from '../../common';
 
 const EventCardMedium = ({ id, imageUrl, name, date, status,createdAt }) => {
    

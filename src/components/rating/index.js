@@ -5,7 +5,6 @@ import './index.css'
 import { rateBook } from '../../services/rating';
 
 const Rating = ({userId,bookId}) => {
-
     const [isDisabled, setIsDisabled] = useState(false);
 
     const onSubmitRatingHandler = (e) => {

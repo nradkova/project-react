@@ -1,7 +1,4 @@
-import { useState } from 'react'
-import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from 'react-leaflet'
-// import 'leaflet/dist/leaflet.css';
-// import 'leaflet/dist/images/marker-icon.png';
+import { MapContainer, Marker, Popup, TileLayer} from 'react-leaflet'
 
 import './index.css'
 
