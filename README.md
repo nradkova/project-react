@@ -1,70 +1,113 @@
-# Getting Started with Create React App
+[![DeepScan grade](https://deepscan.io/api/teams/16321/projects/19599/branches/511204/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=16321&pid=19599&bid=511204)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[https://nradkova.github.io/read-aloud](https://nradkova.github.io/read-aloud/) 
 
-## Available Scripts
+## <span style="color:lightgreen; font-size:30px">**READ ALOUD**</span>
 
-In the project directory, you can run:
+### <span style="color:lightgreen">A PLATFORM FOR PEOPLE WHO LOVE BOOKS AND ARE READY TO SHARE THEIR PASSION</span>
 
-### `npm start`
+---------------------![screenshot](cover_book.png)----------------------
+## A project for SoftUni React JS course
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Technologies used:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- React JS
+- Leaflet React      
+- Parse
+- HTML & CSS
 
-### `npm test`
+## Services used:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Back4app as BaaS
+- Cloudinary as cloud storage
+- Github Pages for deployment
+- OpenStreetMap for mapping and geolocation
 
-### `npm run build`
+## Database classes:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- User
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```javascript
+{
+  "username": String,
+  "password": String,
+  "readingList": Relation <Book>,
+  "eventList": Relation <Event>
+}
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Book
 
-### `npm run eject`
+```javascript
+{
+  "title": String,
+  "author": String,
+  "description": String,
+  "imageUrl": String,
+  "category": Array,
+  "bookRating":  Pointer <BookRating>,
+  "creator": Pointer <User>
+}
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- BookComment
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```javascript
+{
+  "text": String,
+  "book": Pointer <Book>,
+  "creator": Pointer <User>
+}
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- BookRating
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```javascript
+{
+  "star": Number,
+  "voted": Array
+}
+```
 
-## Learn More
+- Event
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```javascript
+{
+  "name": String,
+  "description": String,
+  "status": String,
+  "imageUrl": String,
+  "date": Date,
+  "location": GeoPoint,
+  "creator": Pointer <User>
+  "subscription":  Pointer <EventSubscription>
+}
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- EventComment
 
-### Code Splitting
+```javascript
+{
+  "text": String,
+  "event": Pointer <Event>,
+  "creator": Pointer <User>
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- EventSubscription
 
-### Analyzing the Bundle Size
+```javascript
+{
+  "event": Pointer <Event>,
+  "subscribed": Array
+}
+```
+## Users Access and Interaction with READ ALOUD:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+-  `*Guest*` users can expirience all public parts of the application - view all books and events posted, as well as their details and comments attached. They can search through events and books, based on certain criterias.
 
-### Making a Progressive Web App
+- `*Authenticated*` users can comment on posts, rate them, subscribe (or unsubscribe) for events, create their own reading list and then add  (or remove) books to it.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- Authenticated users can create and publish posts (books and events). Thus becoming owner of a record, they are `*authorised*` to edit it, cancel it(for a event).
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<span style="color:lightgreen; font-size:30px">this text is red</span>
