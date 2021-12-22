@@ -32,8 +32,8 @@
 - Authenticated users can create and publish posts (books and events). Thus becoming owner of a record, they are `authorised` to edit it, cancel it (for an event).
 
 ## API Architecture
-`Child and common components` are grouped in `components` folder, while `major components` assigned to render pages are in `pages` folder, each containing its own logic and style in `.js` and `.css` files. Custom hooks, like `useBook`, `useBookForm`, `useBookSearch`, `useAuthForm` and others, are used for forms & CRUD operations. They are responsible to communicate with `data validation` and `services for authentication and fetching data`.
-Leaflet map component is an instance `MapContainer` and has its own React context, providing descendant components like `Marker`, `Popup` and hooks - `useMap`.
+`Child and common components` are grouped in `components` folder, while `major components` assigned to render pages are in `pages` folder, each containing its own logic and style in `.js` and `.css` files. Custom hooks, like `useBook`, `useBookForm`, `useBookSearch`, `useAuthForm` and others, are used for forms & CRUD operations. They are responsible to communicate with `data validation` and `services` for authentication and fetching data.
+Leaflet map component is an instance of `MapContainer` and has its own React context, providing descendant components like `Marker`, `Popup` and hooks - `useMap`.
 
 ## Database classes:
 
@@ -44,7 +44,6 @@ Leaflet map component is an instance `MapContainer` and has its own React contex
   "username": String,
   "password": String,
   "readingList": Relation <Book>,
-  "eventList": Relation <Event>
 }
 ```
 
