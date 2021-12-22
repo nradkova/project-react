@@ -108,5 +108,5 @@
 
 - `Authenticated` users can comment on posts, rate them, subscribe (or unsubscribe) for events, create their own reading list and then add  (or remove) books to it.
 
-- Authenticated users can create and publish posts (books and events). Thus becoming owner of a record, they are `authorised` to edit it, cancel it(for a event).
+- Authenticated users can create and publish posts (books and events). Thus becoming owner of a record, they are `authorised` to edit it, cancel it (for an event).
 
