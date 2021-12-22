@@ -23,6 +23,18 @@
 - Github Pages for deployment
 - OpenStreetMap for mapping and geolocation
 
+## Users Access and Interaction with READ ALOUD:
+
+-  `Guest` users can expirience all public parts of the application - view all books and events posted, as well as their details and comments attached. They can search through events and books, based on certain criterias.
+
+- `Authenticated` users can comment on posts, rate them, subscribe (or unsubscribe) for events, create their own reading list and then add  (or remove) books to it.
+
+- Authenticated users can create and publish posts (books and events). Thus becoming owner of a record, they are `authorised` to edit it, cancel it (for an event).
+
+## API Architecture
+`Child and common components` are grouped in `components` folder, while `major components` assigned to render pages are in `pages` folder, each containing its own logic and style in `.js` and `.css` files. Custom hooks, like `useBook`, `useBookForm`, `useBookSearch`, `useAuthForm` and others, are used for forms & CRUD operations. They are responsible to communicate with `data validation` and `services for authentication and fetching data`.
+Leaflet map component is an instance `MapContainer` and has its own React context, providing descendant components like `Marker`, `Popup` and hooks - `useMap`.
+
 ## Database classes:
 
 - User
@@ -102,11 +114,3 @@
   "subscribed": Array
 }
 ```
-## Users Access and Interaction with READ ALOUD:
-
--  `Guest` users can expirience all public parts of the application - view all books and events posted, as well as their details and comments attached. They can search through events and books, based on certain criterias.
-
-- `Authenticated` users can comment on posts, rate them, subscribe (or unsubscribe) for events, create their own reading list and then add  (or remove) books to it.
-
-- Authenticated users can create and publish posts (books and events). Thus becoming owner of a record, they are `authorised` to edit it, cancel it (for an event).
-
