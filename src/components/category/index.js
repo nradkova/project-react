@@ -12,12 +12,11 @@ const Category = ({ selectedCategories }) => {
             selectedCategories.splice(index,1);
         }
     }
-    
     return (
         <div className="category-container">
             {categories.map((x, i) => (
                 <label key={x} className="checkbox-label" >{x}
-                    <input className="category-input" type="checkbox" id={i} name={x} onChange={onChangeSelectedHandler} />
+                    <input className="category-input" type="checkbox" id={i} name={x}  onChange={onChangeSelectedHandler} />
                     <span className="checkmark"></span>
                 </label>
             ))}
