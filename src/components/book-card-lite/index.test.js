@@ -1,4 +1,4 @@
-import { render, screen,fireEvent} from '@testing-library/react';
+import { render} from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
 import BookCardLite from './index.js';
@@ -16,8 +16,8 @@ describe('BookCardLite component',()=>{
     render(<BrowserRouter>
               <BookCardLite author={'aaa'} />
           </BrowserRouter>);
-    const titleNode=document.querySelectorAll('.book-card-lite-content-heading')[1].parentNode;
-    expect(titleNode.textContent).toBe('  Author: aaa');
+    const authorNode=document.querySelectorAll('.book-card-lite-content-heading')[1].parentNode;
+    expect(authorNode.textContent).toBe('  Author: aaa');
   });
 
   test('rendering of card id in view link', () => {
@@ -28,7 +28,7 @@ describe('BookCardLite component',()=>{
     expect(link.getAttribute('href')).toBe('/books/aaa');
   });
 
-  test('rendering of card and user id  in remove link', () => {
+  test('rendering of card and user id in remove link', () => {
     render(<BrowserRouter>
               <BookCardLite  bookId={'aaa'} userId={'bbb'} />
           </BrowserRouter>);

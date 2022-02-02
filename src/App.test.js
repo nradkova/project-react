@@ -11,13 +11,6 @@ describe('App component',()=>{
     const greeting = screen.getByText(/you love reading/i);
     expect(greeting).toBeInTheDocument();
   });
-  // test('initial rendering of enter link', () => {
-  //   render(<BrowserRouter>
-  //             <App />
-  //         </BrowserRouter>);
-  //   const link = document.querySelector('.fa-book-reader');
-  //   expect(link).toBeInTheDocument();
-  // });
   test('initial rendering of enter link', () => {
     render(<BrowserRouter>
               <App />
