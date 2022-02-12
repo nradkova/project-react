@@ -1,5 +1,5 @@
-import { screen, render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { screen, render} from '@testing-library/react';
+import { BrowserRouter} from 'react-router-dom';
 
 import Header from './index.js';
 import getNavigation from '../../utils/navigation';
@@ -54,5 +54,4 @@ describe('Header component', () => {
     </BrowserRouter>);
     expect(screen.getByText(date)).toBeInTheDocument();
   });
-
 });
