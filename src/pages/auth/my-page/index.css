@@ -37,13 +37,15 @@
   margin-right: 8px;
 }
 
-.my-page-reading-list-items-container {
+.my-page-reading-list-items-container,
+.my-page-events-list-items-container{
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
 
-.my-page-reading-list-items {
+.my-page-reading-list-items,
+.my-page-events-list-items {
   display: flex;
 }
 
@@ -88,7 +90,7 @@
     border-bottom: none;
   }
   .my-page-reading-list-items,
-  .my-page-reading-list-items {
+  .my-page-events-list-items {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
