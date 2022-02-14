@@ -6,7 +6,7 @@
 
 ### <span style="color:lightgreen">A PLATFORM FOR PEOPLE WHO LOVE BOOKS AND ARE READY TO SHARE THEIR PASSION</span>
 
----------------------![screenshot](cover_book.png)----------------------
+![screenshot](Screenshot_ReadAloud.png)
 ## A project for SoftUni React JS course
 
 ## Technologies used:
