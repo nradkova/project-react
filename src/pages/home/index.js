@@ -6,7 +6,6 @@ import { getLastFourBooks, getMostLikedBooks } from "../../services/book";
 import { getLastFourEvents, getMostRecentEvents } from "../../services/event";
 
 import Loader from "../../components/loader";
-import PageLayout from "../../components/page-layout";
 import BookCardMedium from "../../components/book-card-medium";
 import EventCardMedium from "../../components/medium-event-card";
 
@@ -84,15 +83,15 @@ const Home = () => {
 
   if (isLoading) {
     return (
-      <PageLayout>
+      <>
         {pageIntro}
         <Loader />
-      </PageLayout>
+      </>
     )
   }
 
   return (
-    <PageLayout>
+    <>
       {pageIntro}
       <div className="inner-container-books-events">
         <section className="inner-container-books">
@@ -120,7 +119,7 @@ const Home = () => {
           }
         </section>
       </div>
-    </PageLayout>
+      </>
   )
 }
 

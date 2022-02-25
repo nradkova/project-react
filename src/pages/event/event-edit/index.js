@@ -52,14 +52,14 @@ const EventEdit = () => {
 
 	if (isLoading) {
 		return (
-			<PageLayout>
+			<>
 				<Loader />
-			</PageLayout>
+			</>
 		)
 	}
 	
 	return (
-		<PageLayout>
+		<>
 			<div className="event-form-container">
 				<div className="event-form-title">
 					<h3><i className="fa fa-arrow-right"></i>Edit event</h3>
@@ -125,7 +125,7 @@ const EventEdit = () => {
 					</div>
 				</form>
 			</div>
-		</PageLayout>
+		</>
 	)
 }
 
