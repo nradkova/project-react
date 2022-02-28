@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import './index.css';
-import { DEFAULT_EVENT_URL } from "../../../common";
+import { DEFAULT_EVENT_URL } from "../../../constants/common";
 
 import useEvent from "../../../hooks/useEvent";
 import AuthContext from "../../../context/authContext";

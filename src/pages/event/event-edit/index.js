@@ -8,7 +8,6 @@ import useEventForm from "../../../hooks/useEventForm";
 
 import Loader from "../../../components/loader";
 import MapEvent from "../../../components/map-event";
-import PageLayout from "../../../components/page-layout";
 import ValidationError from "../../../components/validation-error";
 
 const EventEdit = () => {

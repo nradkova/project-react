@@ -2,7 +2,7 @@ import {useContext } from "react";
 import { Link, useParams} from "react-router-dom";
 
 import './index.css';
-import { DEFAULT_BOOK_URL } from "../../../common";
+import { DEFAULT_BOOK_URL } from "../../../constants/common";
 
 import useBook from "../../../hooks/useBook";
 import AuthContext from "../../../context/authContext";
